@@ -40,7 +40,7 @@ jobs:
 
   publish:
     needs: prepare_release
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.CD_RUNNER_LABELS || '["self-hosted","Linux","X64"]') }}
     environment: production
     steps:
       - name: Checkout prepared release commit
@@ -157,11 +157,24 @@ jobs:
         if: steps.release.outputs.should_finalize_release == 'true'
         run: npm sbom --sbom-format=cyclonedx --sbom-type=library --omit dev > sbom.cdx.json
 
-      - name: Attest SBOM
+      - name: Retain release SBOM
         if: steps.release.outputs.should_finalize_release == 'true' && hashFiles('sbom.cdx.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-sbom
+          path: sbom.cdx.json
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Attest SBOM
+        if: steps.release.outputs.should_finalize_release == 'true' && hashFiles('sbom.cdx.json') != '' && github.event.repository.private == false
         uses: actions/attest-build-provenance@v3
         with:
           subject-path: sbom.cdx.json
+
+      - name: Report private-repository attestation limitation
+        if: steps.release.outputs.should_finalize_release == 'true' && hashFiles('sbom.cdx.json') != '' && github.event.repository.private == true
+        run: echo "::notice title=SBOM retained without GitHub attestation::Artifact attestations for private repositories require GitHub Enterprise Cloud; the SBOM remains retained as a release artifact."
 
       - name: Ensure release tag points at prepared commit
         if: steps.release.outputs.should_finalize_release == 'true'
@@ -247,6 +260,8 @@ jobs:
           FLAGS: ${{ steps.release.outputs.flags }}
           PACKAGE_NAME: ${{ steps.release.outputs.package_name }}
           PACKAGE_VERSION: ${{ steps.release.outputs.release_version }}
+          REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+          RUNNER_ENVIRONMENT: ${{ runner.environment }}
         run: |
           set -euo pipefail
           if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
@@ -259,7 +274,12 @@ jobs:
             exit 0
           fi
 
-          npm publish ${FLAGS} --provenance --registry https://registry.npmjs.org
+          if [ "${RUNNER_ENVIRONMENT}" = "github-hosted" ] && [ "${REPOSITORY_PRIVATE}" != "true" ]; then
+            npm publish ${FLAGS} --provenance --registry https://registry.npmjs.org
+          else
+            echo "::notice title=npm provenance unavailable::Publishing with the protected NPM_TOKEN because npm provenance does not support this runner/repository combination."
+            npm publish ${FLAGS} --registry https://registry.npmjs.org
+          fi
 
       - name: Publish GitHub Release
         if: steps.release.outputs.should_finalize_release == 'true'
