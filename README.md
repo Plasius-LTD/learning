@@ -69,4 +69,7 @@ npm run build
 npm run pack:check
 ```
 
-Node.js 24 is required. Releases are published only through the approved GitHub CD workflow.
+Node.js 24 is required. Releases are published only through the approved GitHub
+CD workflow on configurable trusted self-hosted runners. Release coverage and
+the CycloneDX SBOM are retained even when an external coverage or provenance
+service is unavailable.
