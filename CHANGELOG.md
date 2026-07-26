@@ -18,3 +18,5 @@ All notable changes to this project are documented in this file.
   unsupported npm/private-repository provenance paths.
 - Kept reusable release preparation outside the publication environment so
   inherited organisation GitHub App credentials remain available.
+- Declared and mapped the release-prep GitHub App key explicitly at the
+  reusable-workflow boundary so missing credentials fail during validation.
