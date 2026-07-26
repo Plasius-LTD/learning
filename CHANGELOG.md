@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.1.0] - 2026-07-26
+
 ### Added
 
 - Initial versioned learning-domain contracts and deterministic assessment model.
@@ -20,3 +34,6 @@ All notable changes to this project are documented in this file.
   inherited organisation GitHub App credentials remain available.
 - Declared and mapped the release-prep GitHub App key explicitly at the
   reusable-workflow boundary so missing credentials fail during validation.
+
+
+[0.1.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.1.0
