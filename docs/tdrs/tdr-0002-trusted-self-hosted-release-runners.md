@@ -10,10 +10,12 @@ Both release preparation and npm publication run on the configurable
 `CD_RUNNER_LABELS` repository variable, defaulting to
 `["self-hosted", "Linux", "X64"]`. Publication remains bound to the protected
 production environment. The reusable preparation job stays outside an
-environment boundary so `secrets: inherit` can pass the organisation-owned
-release-prep GitHub App key into it; that job cannot access the npm publication
-token. Package validation, the coverage gate, immutable tag and GitHub Release
-remain unchanged.
+environment boundary. The caller explicitly maps the required organisation-owned
+release-prep GitHub App key into the reusable workflow so GitHub validates the
+credential contract before starting the job; that job cannot access the npm
+publication token.
+Package validation, the coverage gate, immutable tag and GitHub Release remain
+unchanged.
 
 The release retains LCOV for 30 days and its CycloneDX SBOM for 90 days. npm's
 provenance service currently requires a cloud-hosted runner and does not support
