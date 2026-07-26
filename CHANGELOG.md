@@ -16,3 +16,5 @@ All notable changes to this project are documented in this file.
 - Routed release preparation and npm publication through configurable trusted
   self-hosted runners, retaining LCOV and SBOM evidence while avoiding
   unsupported npm/private-repository provenance paths.
+- Kept reusable release preparation outside the publication environment so
+  inherited organisation GitHub App credentials remain available.
