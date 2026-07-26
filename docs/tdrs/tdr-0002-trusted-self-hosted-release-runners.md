@@ -20,13 +20,17 @@ GitHub Release finalization; npm publication remains authenticated solely by
 the protected `NPM_TOKEN`.
 Package validation and the coverage gate remain unchanged.
 
+Both self-hosted release jobs install GitHub CLI 2.96.0 into `RUNNER_TEMP` from
+the official Linux AMD64 archive and verify its published SHA-256 checksum
+before adding it to the job path. Release correctness therefore does not depend
+on mutable, system-wide runner tooling.
+
 The release retains LCOV for 30 days and its CycloneDX SBOM for 90 days. npm's
-provenance service currently requires a cloud-hosted runner and does not support
-private source repositories. The workflow therefore requests npm provenance
-only for a public repository on a GitHub-hosted runner; a self-hosted or private
-release uses the protected `NPM_TOKEN` and records a workflow notice. GitHub
-artifact attestation is likewise skipped for this private repository on the
-organisation's current plan, while the SBOM itself remains retained.
+provenance service currently requires a cloud-hosted runner. The workflow
+therefore requests npm provenance only on a GitHub-hosted runner; a self-hosted
+release uses the protected `NPM_TOKEN` and records a workflow notice. The public
+repository still receives a GitHub SBOM artifact attestation through the
+existing attestation step.
 
 ## Consequences
 
@@ -37,7 +41,9 @@ organisation's current plan, while the SBOM itself remains retained.
   version metadata, tags, and GitHub Releases. Its publication-job token is
   restricted to the current repository and revoked when the job finishes,
   while npm publication remains protected by the production environment.
-- The repository preserves validation and durable evidence, but cannot claim
-  unsupported npm or GitHub provenance.
+- GitHub CLI upgrades require an explicit version and checksum review in the
+  repository rather than an untracked runner-image change.
+- The repository preserves validation, retained evidence and GitHub SBOM
+  attestation without making an unsupported npm provenance claim.
 - If npm adds self-hosted trusted publishing later, the conditional publication
   branch can be removed after a separately reviewed release test.

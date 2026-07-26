@@ -11,6 +11,8 @@ All notable changes to this project are documented in this file.
   - (placeholder)
 
 - **Fixed**
+  - Installed a checksum-pinned GitHub CLI in both self-hosted release jobs so
+    tag and GitHub Release finalization do not depend on runner image state.
   - Finalized workflow-bearing version tags and GitHub Releases with a
     current-repository GitHub App token that has explicit Contents and
     Workflows write permissions, while keeping npm publication on
