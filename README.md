@@ -74,4 +74,6 @@ CD workflow on configurable trusted self-hosted runners. Release coverage and
 the CycloneDX SBOM are retained even when an external coverage or provenance
 service is unavailable. Release tags and GitHub Releases use a current-repository
 GitHub App token with explicit Contents and Workflows write permissions; npm
-publication continues to use only the protected `NPM_TOKEN`.
+publication continues to use only the protected `NPM_TOKEN`. Both release jobs
+install a checksum-pinned GitHub CLI under `RUNNER_TEMP`, so runner images do
+not need a mutable system-wide `gh` installation.

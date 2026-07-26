@@ -95,6 +95,10 @@ jobs:
           permission-contents: write
           permission-pull-requests: write
 
+      - name: Install pinned GitHub CLI
+        shell: bash
+        run: .github/scripts/install-github-cli.sh
+
       - name: Use Node.js 24
         uses: actions/setup-node@v4
         with:
