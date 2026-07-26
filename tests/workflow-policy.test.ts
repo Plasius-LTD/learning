@@ -81,6 +81,15 @@ describe("production release workflow policy", () => {
     expect(installGithubCliScript).toContain('"${GITHUB_PATH:?');
   });
 
+  it("publishes from the verified current release branch head", () => {
+    expect(releasePrepareWorkflow).toContain(
+      'COMMIT_SHA=$(git rev-parse HEAD)',
+    );
+    expect(releasePrepareWorkflow).not.toContain(
+      'git log -n 1 --format=%H -- "${PACKAGE_JSON}"',
+    );
+  });
+
   it("keeps release workflows off pull-request triggers", () => {
     expect(cdWorkflow).toMatch(/on:\s*\n\s+workflow_dispatch:/u);
     expect(releasePrepareWorkflow).toMatch(/on:\s*\n\s+workflow_call:/u);

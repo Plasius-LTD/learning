@@ -11,6 +11,9 @@ All notable changes to this project are documented in this file.
   - (placeholder)
 
 - **Fixed**
+  - Selected the verified current release-branch HEAD for publication so a
+    `bump=none` recovery cannot check out workflow tooling from an older package
+    metadata commit.
   - Installed a checksum-pinned GitHub CLI in both self-hosted release jobs so
     tag and GitHub Release finalization do not depend on runner image state.
   - Finalized workflow-bearing version tags and GitHub Releases with a

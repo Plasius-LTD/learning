@@ -76,4 +76,6 @@ service is unavailable. Release tags and GitHub Releases use a current-repositor
 GitHub App token with explicit Contents and Workflows write permissions; npm
 publication continues to use only the protected `NPM_TOKEN`. Both release jobs
 install a checksum-pinned GitHub CLI under `RUNNER_TEMP`, so runner images do
-not need a mutable system-wide `gh` installation.
+not need a mutable system-wide `gh` installation. Publication checks out the
+verified current release-branch HEAD, including the workflow tooling used by a
+`bump=none` recovery.
