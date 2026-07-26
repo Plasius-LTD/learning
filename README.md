@@ -72,4 +72,6 @@ npm run pack:check
 Node.js 24 is required. Releases are published only through the approved GitHub
 CD workflow on configurable trusted self-hosted runners. Release coverage and
 the CycloneDX SBOM are retained even when an external coverage or provenance
-service is unavailable.
+service is unavailable. Release tags and GitHub Releases use a current-repository
+GitHub App token with explicit Contents and Workflows write permissions; npm
+publication continues to use only the protected `NPM_TOKEN`.
