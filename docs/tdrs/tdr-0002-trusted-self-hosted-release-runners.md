@@ -25,6 +25,11 @@ the official Linux AMD64 archive and verify its published SHA-256 checksum
 before adding it to the job path. Release correctness therefore does not depend
 on mutable, system-wide runner tooling.
 
+Release preparation returns the verified current release-branch HEAD as the
+publication commit after version and changelog checks pass. This keeps
+`bump=none` recovery attached to the current reviewed workflow tooling rather
+than the historical commit that last changed `package.json`.
+
 The release retains LCOV for 30 days and its CycloneDX SBOM for 90 days. npm's
 provenance service currently requires a cloud-hosted runner. The workflow
 therefore requests npm provenance only on a GitHub-hosted runner; a self-hosted
@@ -43,6 +48,8 @@ existing attestation step.
   while npm publication remains protected by the production environment.
 - GitHub CLI upgrades require an explicit version and checksum review in the
   repository rather than an untracked runner-image change.
+- Recovery releases include the reviewed workflow and installer files present
+  on the verified release branch.
 - The repository preserves validation, retained evidence and GitHub SBOM
   attestation without making an unsupported npm provenance claim.
 - If npm adds self-hosted trusted publishing later, the conditional publication
