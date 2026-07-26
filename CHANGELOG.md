@@ -11,7 +11,10 @@ All notable changes to this project are documented in this file.
   - (placeholder)
 
 - **Fixed**
-  - (placeholder)
+  - Finalized workflow-bearing version tags and GitHub Releases with a
+    current-repository GitHub App token that has explicit Contents and
+    Workflows write permissions, while keeping npm publication on
+    `NPM_TOKEN`.
 
 - **Security**
   - (placeholder)
