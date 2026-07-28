@@ -103,6 +103,26 @@ function validateModule(
     );
   }
 
+  const referencePrice = module.pricing.referencePrice;
+  if (
+    referencePrice
+    && (
+      referencePrice.currency !== "GBP"
+      || !CANONICAL_TOKEN_SUBUNITS.test(referencePrice.minorUnits)
+      || referencePrice.basis !== "nominal-reference"
+      || referencePrice.cashRedemptionAllowed !== false
+    )
+  ) {
+    issues.push(
+      issue(
+        "invalid-reference-price",
+        "Reference prices must use canonical GBP minor units, the nominal reference basis and prohibit cash redemption.",
+        `${base}.pricing.referencePrice`,
+        module.id,
+      ),
+    );
+  }
+
   const criterionIds = new Set<string>();
   const dimensionTotals: Record<AssessmentDimensionV1, number> = {
     structure: 0,
