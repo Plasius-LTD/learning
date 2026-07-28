@@ -18,6 +18,9 @@ All notable changes to this project are documented in this file.
     original `1.0.0` manifest unchanged.
 
 - **Fixed**
+  - Routed public-repository release preparation and npm publication explicitly
+    through the quarantined self-hosted runner group while retaining its
+    workflow and repository allowlists.
   - Selected the verified current release-branch HEAD for publication so a
     `bump=none` recovery cannot check out workflow tooling from an older package
     metadata commit.

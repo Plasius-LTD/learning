@@ -71,7 +71,9 @@ permissions:
 
 jobs:
   prepare:
-    runs-on: ${{ fromJSON(vars.CD_RUNNER_LABELS || '["self-hosted","Linux","X64"]') }}
+    runs-on:
+      group: ${{ vars.CD_RUNNER_GROUP || 'Public CI - Quarantined' }}
+      labels: ${{ fromJSON(vars.CD_RUNNER_LABELS || '["self-hosted","Linux","X64"]') }}
     outputs:
       name: ${{ steps.release.outputs.name }}
       version: ${{ steps.release.outputs.version }}

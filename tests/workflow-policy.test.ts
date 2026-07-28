@@ -10,13 +10,17 @@ const installGithubCliScript = readFileSync(
   new URL("../.github/scripts/install-github-cli.sh", import.meta.url),
   "utf8",
 );
-const trustedProductionRunner =
-  "runs-on: ${{ fromJSON(vars.CD_RUNNER_LABELS || '[\"self-hosted\",\"Linux\",\"X64\"]') }}";
+const trustedProductionRunnerGroup =
+  "group: ${{ vars.CD_RUNNER_GROUP || 'Public CI - Quarantined' }}";
+const trustedProductionRunnerLabels =
+  "labels: ${{ fromJSON(vars.CD_RUNNER_LABELS || '[\"self-hosted\",\"Linux\",\"X64\"]') }}";
 
 describe("production release workflow policy", () => {
   it("runs release preparation and publication on configurable trusted runners", () => {
-    expect(cdWorkflow).toContain(trustedProductionRunner);
-    expect(releasePrepareWorkflow).toContain(trustedProductionRunner);
+    expect(cdWorkflow).toContain(trustedProductionRunnerGroup);
+    expect(cdWorkflow).toContain(trustedProductionRunnerLabels);
+    expect(releasePrepareWorkflow).toContain(trustedProductionRunnerGroup);
+    expect(releasePrepareWorkflow).toContain(trustedProductionRunnerLabels);
     expect(cdWorkflow).not.toContain("runs-on: ubuntu-latest");
     expect(releasePrepareWorkflow).not.toContain("runs-on: ubuntu-latest");
   });
