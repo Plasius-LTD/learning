@@ -540,6 +540,22 @@ const modules: LearningModuleVersionV1[] = [
   }),
 ];
 
+/**
+ * Uniform price for the immutable 1.1.0 pilot catalog.
+ *
+ * The GBP value is product-copy reference metadata under the published
+ * 10p-per-Token economy reference rate. It does not create redemption rights.
+ */
+export const JUNIOR_CODER_MODULE_PRICE_V1_1 = Object.freeze({
+  tokenSubunits: "50000",
+  referencePrice: Object.freeze({
+    currency: "GBP" as const,
+    minorUnits: "500",
+    basis: "nominal-reference" as const,
+    cashRedemptionAllowed: false as const,
+  }),
+});
+
 /** Initial immutable Junior Coder path manifest for pilot grants and shadow pricing. */
 export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1: LearningPathVersionV1 = {
   id: "junior-coder.robot-rescue-arcade",
@@ -552,3 +568,29 @@ export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1: LearningPathVersionV1 = {
   featureFlag: "learning.junior-coder.catalog.enabled",
   modules,
 };
+
+/**
+ * Uniformly priced successor to the immutable 1.0.0 pilot catalog.
+ *
+ * All modules remain independently sellable and retain their existing content,
+ * manifests and safeguards. The new module and path versions bind the new price
+ * without altering previously published records.
+ */
+export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1: LearningPathVersionV1 = {
+  ...JUNIOR_CODER_ROBOT_RESCUE_PATH_V1,
+  version: "1.1.0",
+  modules: JUNIOR_CODER_ROBOT_RESCUE_PATH_V1.modules.map((entry) => ({
+    ...entry,
+    version: "1.1.0",
+    contentRevision: "2026-07-28.1",
+    pricing: {
+      ...entry.pricing,
+      tokenSubunits: JUNIOR_CODER_MODULE_PRICE_V1_1.tokenSubunits,
+      referencePrice: JUNIOR_CODER_MODULE_PRICE_V1_1.referencePrice,
+    },
+  })),
+};
+
+/** Current pilot catalog for server adapters that intentionally follow releases. */
+export const JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT =
+  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1;

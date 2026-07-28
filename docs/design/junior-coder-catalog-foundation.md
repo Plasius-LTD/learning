@@ -38,7 +38,12 @@ Agent definitions are capability descriptions, not provider prompts. They constr
 
 ## Commercial state
 
-The initial manifest uses ordinary Token subunits and per-module pilot shadow prices. Its `pilot-grant-only` state deliberately prevents a consumer from treating the manifest as public-checkout authorization. Module Allowance settlement belongs to `@plasius/economy` and the site transaction coordinator.
+The initial immutable manifest uses ordinary Token subunits and per-module
+pilot shadow prices. Its `1.1.0` successor applies the approved uniform
+50 Token / non-redeemable £5 reference price. Both remain
+`pilot-grant-only`, which deliberately prevents a consumer from treating price
+metadata as public-checkout authorization. Module Allowance settlement belongs
+to `@plasius/economy` and the site transaction coordinator.
 
 ## Verification
 

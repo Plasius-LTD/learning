@@ -163,9 +163,19 @@ export interface ModuleAgentFeedbackV1 {
 }
 
 /** Ordinary Token subunits used as a pilot shadow or fixed price. */
+export interface ModuleReferencePriceV1 {
+  /** Reference copy only; this is never a cash balance or redemption promise. */
+  currency: "GBP";
+  /** Canonical GBP minor units. */
+  minorUnits: string;
+  basis: "nominal-reference";
+  cashRedemptionAllowed: false;
+}
+
 export interface ModulePricingV1 {
   state: CommercialStateV1;
   tokenSubunits: string;
+  referencePrice?: ModuleReferencePriceV1;
   includesMaterials: true;
   includesAssessmentRetries: true;
   includesAgents: true;
@@ -222,7 +232,11 @@ export interface ModuleEntitlementV1 {
   subjectAccountId: string;
   moduleId: string;
   moduleVersion: string;
-  source: "pilot-grant" | "module-allowance-purchase" | "support-grant";
+  source:
+    | "pilot-grant"
+    | "module-allowance-purchase"
+    | "support-grant"
+    | "admin-test-grant";
   state: "pending" | "active" | "revoked";
   economyTransactionId?: string;
   grantedAt: string;
@@ -272,6 +286,7 @@ export interface LearningValidationIssueV1 {
     | "facilitator-material-leak"
     | "learner-material-leak"
     | "invalid-token-subunits"
+    | "invalid-reference-price"
     | "rubric-total"
     | "rubric-dimension-total"
     | "duplicate-criterion-id"

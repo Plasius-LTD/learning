@@ -5,10 +5,17 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - Added an immutable `1.1.0` Junior Coder path containing nineteen
+    independently versioned modules at a uniform 50 Token / non-redeemable £5
+    reference price.
+  - Added canonical GBP reference-price metadata and an explicit
+    `admin-test-grant` entitlement source that is distinct from economic
+    purchases.
 
 - **Changed**
-  - (placeholder)
+  - Exposed `JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT` for server adapters that
+    deliberately follow published catalog successors while preserving the
+    original `1.0.0` manifest unchanged.
 
 - **Fixed**
   - Selected the verified current release-branch HEAD for publication so a
