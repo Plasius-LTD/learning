@@ -41,7 +41,9 @@ jobs:
 
   publish:
     needs: prepare_release
-    runs-on: ${{ fromJSON(vars.CD_RUNNER_LABELS || '["self-hosted","Linux","X64"]') }}
+    runs-on:
+      group: ${{ vars.CD_RUNNER_GROUP || 'Public CI - Quarantined' }}
+      labels: ${{ fromJSON(vars.CD_RUNNER_LABELS || '["self-hosted","Linux","X64"]') }}
     environment: production
     steps:
       - name: Create release-finalization GitHub App token
