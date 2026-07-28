@@ -5,6 +5,20 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.0] - 2026-07-28
+
+- **Added**
   - Added an immutable `1.1.0` Junior Coder path containing nineteen
     independently versioned modules at a uniform 50 Token / non-redeemable £5
     reference price.
@@ -55,3 +69,4 @@ All notable changes to this project are documented in this file.
 
 
 [0.1.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.1.0
+[0.2.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.0
