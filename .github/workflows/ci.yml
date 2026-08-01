@@ -10,11 +10,10 @@ permissions:
   contents: read
 
 jobs:
-  build-test:
-    runs-on:
-      group: ${{ vars.CI_RUNNER_GROUP || 'Public CI - Quarantined' }}
-      labels: ${{ fromJSON(vars.CI_RUNNER_LABELS || '["self-hosted","Linux","X64"]') }}
-    steps:
+  pull-request-build-test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps: &ci_steps
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -109,3 +108,10 @@ jobs:
       - name: Report Codecov upload warning
         if: always() && steps.codecov.outcome == 'failure'
         run: echo "::warning title=Codecov upload unavailable::Coverage remains enforced locally and retained as a workflow artifact; the external upload will be retried on the next run."
+
+  main-build-test:
+    if: github.event_name == 'push'
+    runs-on:
+      group: ${{ vars.CI_RUNNER_GROUP || 'Public CI - Quarantined' }}
+      labels: ${{ fromJSON(vars.CI_RUNNER_LABELS || '["self-hosted","Linux","X64"]') }}
+    steps: *ci_steps

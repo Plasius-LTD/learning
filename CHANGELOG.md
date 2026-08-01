@@ -17,9 +17,9 @@ All notable changes to this project are documented in this file.
 
 - **Fixed**
   - (placeholder)
-  - Routed pull-request and main CI explicitly through the governed
-    `Public CI - Quarantined` runner group so the public-repository trust
-    boundary is explicit and consistent with release workflows.
+  - Isolated public pull-request CI on GitHub-hosted Linux while keeping
+    release-bearing main CI explicitly on the governed
+    `Public CI - Quarantined` self-hosted runner group.
 
 - **Security**
   - (placeholder)

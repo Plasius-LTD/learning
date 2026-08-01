@@ -115,13 +115,13 @@ npm run build
 npm run pack:check
 ```
 
-Node.js 24 is required. Pull-request/main CI and releases run only through the
-approved GitHub workflows on configurable trusted self-hosted runners. CI and
-both release jobs explicitly select the approved `Public CI - Quarantined`
-runner group by default. `CI_RUNNER_GROUP` / `CI_RUNNER_LABELS` and
-`CD_RUNNER_GROUP` / `CD_RUNNER_LABELS` are reserved for governed operator
-configuration. The organisation group remains restricted to allowlisted
-workflows and selected repositories. Release coverage and
+Node.js 24 is required. Public pull-request code is validated on an isolated
+GitHub-hosted Linux runner with read-only workflow permissions. Main-branch CI
+and both release jobs explicitly select the approved
+`Public CI - Quarantined` self-hosted runner group. `CI_RUNNER_GROUP` /
+`CI_RUNNER_LABELS` and `CD_RUNNER_GROUP` / `CD_RUNNER_LABELS` are reserved for
+governed operator configuration. The organisation group remains restricted to
+allowlisted `main` workflows and selected repositories. Release coverage and
 the CycloneDX SBOM are retained even when an external coverage or provenance
 service is unavailable. Release tags and GitHub Releases use a current-repository
 GitHub App token with explicit Contents and Workflows write permissions; npm
