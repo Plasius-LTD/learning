@@ -64,18 +64,26 @@ the exact catalog module that owns its rubric, mission and badges.
 import {
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
+  ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
 } from "@plasius/learning";
 
 const roadHopper = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "road-hopper-rally",
 );
+const robotMaze = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "robot-maze-dash",
+);
 
-if (!roadHopper) throw new Error("Road Hopper Rally is missing");
+if (!roadHopper || !robotMaze) throw new Error("Junior Coder module is missing");
 
 assertValidMissionAuthoringBundle(
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   roadHopper,
+);
+assertValidMissionAuthoringBundle(
+  ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
+  robotMaze,
 );
 ```
 
@@ -92,6 +100,9 @@ assertValidMissionAuthoringBundle(
   → explain → reward`, and readiness checks never affect the score.
 - Learner evidence and rewards can bind only to visible goals; protected goal
   IDs stay in the facilitator projection.
+- Visual-programming missions must provide an equivalent labelled control for
+  every drag interaction so learners can complete the same work with keyboard
+  or pointer buttons.
 - Rubric criteria total exactly 100 points.
 - Completion requires a score of at least 80 and every mandatory criterion.
 - Module agents may explain evidence and propose a bounded next step, but cannot assign scores or rewards.

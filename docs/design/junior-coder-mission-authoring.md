@@ -2,12 +2,16 @@
 
 ## Status
 
-Implementation design for `Plasius-LTD/learning#3`, under Story
+Implementation design for `Plasius-LTD/learning#3` and
+`Plasius-LTD/learning#18`, under Stories
 `Plasius-LTD/plasius-ltd-site#1714`, Feature
-`Plasius-LTD/plasius-ltd-site#1704`, and Epic
+`Plasius-LTD/plasius-ltd-site#1704`, and
+`Plasius-LTD/plasius-ltd-site#1715`, Feature
+`Plasius-LTD/plasius-ltd-site#1705`, and Epic
 `Plasius-LTD/plasius-ltd-site#1701`.
 
-The inherited rollout flag is `learning.junior-coder.workspace.enabled`.
+The inherited rollout flags are `learning.junior-coder.workspace.enabled` and
+`learning.junior-coder.games.enabled`.
 Publishing these contracts does not activate learner access.
 
 ## Outcome
@@ -118,15 +122,22 @@ Evidence records describe what must be captured (`assessment-result`,
 the evidence itself. Retention is one of `attempt`, `entitlement` or
 `adult-signoff`; consumers remain responsible for enforcing the selected policy.
 
-## Exemplar
+## Published mission bundles
 
-The package exports one original Road Hopper Rally mission-authoring bundle. It
+The package exports an original Road Hopper Rally mission-authoring bundle. It
 demonstrates the full stage sequence, an unscored prediction, learner starter
 artifacts, visible and protected goals, a keyboard alternative to pointer input,
 deterministic evidence, an optional remix and an evidence-bound badge reference.
 
-The exemplar is not a prerequisite for Road Hopper Rally or any other sellable
-module. It is an authoring reference and test fixture.
+Robot Maze Dash mission one adds the first visual-programming authoring bundle.
+It defines move and turn learning, a visual program artifact, deterministic maze
+goals, protected wall and action-limit checks, and labelled Move up/Move down
+controls that are equivalent to block dragging. The learner projection contains
+no route answer or protected expected command list.
+
+Neither bundle is a prerequisite for another sellable module. Each is an
+independently versioned authoring authority and a tested reference for its own
+module adapter.
 
 ## Validation
 
