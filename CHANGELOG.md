@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.3] - 2026-08-01
+
+- **Added**
+  - (placeholder)
   - Added the versioned Skywing Sprint mission-one learner/facilitator
     authoring bundle with documented lift, gravity and gate controls, an
     explicit Run action, reduced-motion telemetry and evidence-bound rewards.
@@ -125,3 +139,4 @@ All notable changes to this project are documented in this file.
 [0.2.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.0
 [0.2.1]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.1
 [0.2.2]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.2
+[0.2.3]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.3
