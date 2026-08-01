@@ -276,6 +276,190 @@ export interface PublishedStaticProjectSnapshotV1 {
   expiresAt: string;
 }
 
+/** Canonical learner journey shared by interactive and printable adapters. */
+export const MISSION_AUTHORING_CONTRACT_VERSION_V1 = "1.0.0" as const;
+
+export type MissionStageKindV1 =
+  | "learn"
+  | "predict"
+  | "build"
+  | "run"
+  | "assess"
+  | "inspect"
+  | "fix"
+  | "explain"
+  | "reward";
+
+export type MissionArtifactKindV1 =
+  | "starter-code"
+  | "starter-assets"
+  | "sample-data"
+  | "printable"
+  | "facilitator-note"
+  | "answer-key"
+  | "protected-test";
+
+/** Metadata only: storage and authorized delivery remain adapter concerns. */
+export interface MissionArtifactReferenceV1 {
+  id: string;
+  kind: MissionArtifactKindV1;
+  audience: CourseMaterialAudienceV1;
+  solutionBearing: boolean;
+}
+
+export interface MissionReadinessCheckV1 {
+  id: string;
+  prompt: string;
+  scored: false;
+}
+
+export interface MissionStageCardV1 {
+  kind: MissionStageKindV1;
+  instruction: string;
+  artifactIds: string[];
+}
+
+export interface MissionAuthoringGoalV1 {
+  id: string;
+  statement: string;
+  visibility: "visible" | "protected";
+  criterionIds: string[];
+  completionRequired: boolean;
+  aiRequired: boolean;
+}
+
+export type MissionInteractionModeV1 =
+  | "keyboard"
+  | "pointer"
+  | "drag"
+  | "audio"
+  | "colour"
+  | "motion"
+  | "text"
+  | "shape"
+  | "symbol"
+  | "reduced-motion";
+
+export interface MissionInteractionRequirementV1 {
+  id: string;
+  description: string;
+  primaryMode: MissionInteractionModeV1;
+  alternativeIds: string[];
+}
+
+export interface MissionAccessibilityAlternativeV1 {
+  id: string;
+  modes: MissionInteractionModeV1[];
+  equivalentOutcome: true;
+  description: string;
+}
+
+export type MissionEvidenceKindV1 =
+  | "assessment-result"
+  | "learner-explanation"
+  | "project-snapshot"
+  | "adult-signoff";
+
+export type MissionEvidenceRetentionV1 =
+  | "attempt"
+  | "entitlement"
+  | "adult-signoff";
+
+export interface MissionEvidenceRequirementV1 {
+  id: string;
+  goalIds: string[];
+  kind: MissionEvidenceKindV1;
+  retention: MissionEvidenceRetentionV1;
+  containsPersonalData: false;
+}
+
+export interface MissionSideAdventureV1 {
+  id: string;
+  prompt: string;
+  completionRequired: false;
+}
+
+export interface MissionRewardBindingV1 {
+  id: string;
+  badgeId: string;
+  goalIds: string[];
+  deterministic: true;
+  random: false;
+  tokenConvertible: false;
+}
+
+/** The only mission projection safe to return to a learner. */
+export interface LearnerMissionAuthoringV1 {
+  estimatedMinutes: number;
+  stages: MissionStageCardV1[];
+  readinessChecks: MissionReadinessCheckV1[];
+  artifacts: MissionArtifactReferenceV1[];
+  goals: MissionAuthoringGoalV1[];
+  interactions: MissionInteractionRequirementV1[];
+  accessibilityAlternatives: MissionAccessibilityAlternativeV1[];
+  evidenceRequirements: MissionEvidenceRequirementV1[];
+  sideAdventures: MissionSideAdventureV1[];
+  rewardBindings: MissionRewardBindingV1[];
+}
+
+/** Protected authoring data must never be projected through learner APIs. */
+export interface FacilitatorMissionAuthoringV1 {
+  artifacts: MissionArtifactReferenceV1[];
+  protectedGoals: MissionAuthoringGoalV1[];
+  prompts: string[];
+}
+
+/** Additive authoring detail keyed to one immutable catalog mission. */
+export interface MissionAuthoringBundleV1 {
+  version: string;
+  moduleId: string;
+  moduleVersion: string;
+  missionId: string;
+  learner: LearnerMissionAuthoringV1;
+  facilitator: FacilitatorMissionAuthoringV1;
+}
+
+export interface MissionAuthoringValidationIssueV1 {
+  code:
+    | "bundle-version-mismatch"
+    | "module-reference-mismatch"
+    | "mission-reference-mismatch"
+    | "invalid-duration"
+    | "missing-stage"
+    | "duplicate-stage"
+    | "stage-order"
+    | "missing-readiness-check"
+    | "scored-readiness-check"
+    | "missing-starter-artifact"
+    | "learner-artifact-leak"
+    | "facilitator-artifact-leak"
+    | "unknown-artifact"
+    | "duplicate-id"
+    | "missing-visible-goal"
+    | "missing-protected-goal"
+    | "invalid-goal-projection"
+    | "duplicate-goal-id"
+    | "unknown-criterion"
+    | "criterion-visibility-mismatch"
+    | "rubric-total"
+    | "rubric-dimension-total"
+    | "duplicate-criterion-id"
+    | "missing-mandatory-safety"
+    | "missing-safety-evidence"
+    | "ai-dependent-completion"
+    | "inaccessible-interaction"
+    | "unknown-accessibility-alternative"
+    | "non-equivalent-accessibility-alternative"
+    | "missing-evidence"
+    | "unknown-evidence-goal"
+    | "personal-data-evidence"
+    | "missing-side-adventure"
+    | "mandatory-side-adventure"
+    | "invalid-reward";
+  message: string;
+  path: string;
+}
+
 export interface LearningValidationIssueV1 {
   code:
     | "duplicate-module-id"

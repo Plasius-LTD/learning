@@ -5,6 +5,7 @@ const readWorkflow = (name: string): string =>
   readFileSync(new URL(`../.github/workflows/${name}.yml`, import.meta.url), "utf8");
 
 const cdWorkflow = readWorkflow("cd");
+const ciWorkflow = readWorkflow("ci");
 const releasePrepareWorkflow = readWorkflow("release-prepare");
 const installGithubCliScript = readFileSync(
   new URL("../.github/scripts/install-github-cli.sh", import.meta.url),
@@ -14,6 +15,28 @@ const trustedProductionRunnerGroup =
   "group: ${{ vars.CD_RUNNER_GROUP || 'Public CI - Quarantined' }}";
 const trustedProductionRunnerLabels =
   "labels: ${{ fromJSON(vars.CD_RUNNER_LABELS || '[\"self-hosted\",\"Linux\",\"X64\"]') }}";
+const trustedCiRunnerGroup =
+  "group: ${{ vars.CI_RUNNER_GROUP || 'Public CI - Quarantined' }}";
+const trustedCiRunnerLabels =
+  "labels: ${{ fromJSON(vars.CI_RUNNER_LABELS || '[\"self-hosted\",\"Linux\",\"X64\"]') }}";
+
+describe("continuous integration workflow policy", () => {
+  it("isolates public PR code and reserves quarantined runners for main CI", () => {
+    expect(ciWorkflow).toMatch(
+      /pull-request-build-test:\s*\n\s+if: github\.event_name == 'pull_request'\s*\n\s+runs-on: ubuntu-latest/u,
+    );
+    expect(ciWorkflow).toMatch(
+      /main-build-test:\s*\n\s+if: github\.event_name == 'push'\s*\n\s+runs-on:\s*\n/u,
+    );
+    expect(ciWorkflow).toContain(trustedCiRunnerGroup);
+    expect(ciWorkflow).toContain(trustedCiRunnerLabels);
+    expect(ciWorkflow).not.toContain("runs-on: [self-hosted, Linux, X64]");
+    expect(ciWorkflow).toMatch(/pull_request:\s*\n\s+branches: \[main\]/u);
+    expect(ciWorkflow).toMatch(/push:\s*\n\s+branches: \[main\]/u);
+    expect(ciWorkflow).toContain("steps: &ci_steps");
+    expect(ciWorkflow).toContain("steps: *ci_steps");
+  });
+});
 
 describe("production release workflow policy", () => {
   it("runs release preparation and publication on configurable trusted runners", () => {

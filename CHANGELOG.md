@@ -6,15 +6,28 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added reusable versioned mission-authoring contracts, deterministic
+    validators and an original Road Hopper Rally exemplar covering the complete
+    nine-stage learner journey.
 
 - **Changed**
   - (placeholder)
+  - Centralized rubric validation so catalog and mission authoring checks share
+    the same deterministic 20/50/20/10 scoring authority.
 
 - **Fixed**
   - (placeholder)
+  - Isolated public pull-request CI on GitHub-hosted Linux while keeping
+    release-bearing main CI explicitly on the governed
+    `Public CI - Quarantined` self-hosted runner group.
 
 - **Security**
   - (placeholder)
+  - Enforced learner/facilitator artifact and goal separation, non-AI
+    completion, mandatory safety evidence, accessibility alternatives,
+    personal-data-free evidence, and deterministic non-Token rewards.
+  - Pinned patched transitive development versions of `brace-expansion` and
+    `esbuild` after the task-start dependency audit.
 
 ## [0.2.0] - 2026-07-28
 

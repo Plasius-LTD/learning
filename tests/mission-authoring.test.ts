@@ -1,0 +1,244 @@
+import { describe, expect, it } from "vitest";
+
+import {
+  JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
+  ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
+  assertValidMissionAuthoringBundle,
+  type MissionAuthoringBundleV1,
+  validateMissionAuthoringBundle,
+} from "../src/index.js";
+
+const roadHopper = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "road-hopper-rally",
+)!;
+
+function cloneBundle(): MissionAuthoringBundleV1 {
+  return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
+}
+
+function issueCodes(bundle: MissionAuthoringBundleV1): string[] {
+  return validateMissionAuthoringBundle(bundle, roadHopper).map(
+    (entry) => entry.code,
+  );
+}
+
+describe("Junior Coder mission authoring", () => {
+  it("publishes one complete Road Hopper Rally authoring exemplar", () => {
+    const bundle = ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle.moduleId).toBe("junior-coder.road-hopper-rally");
+    expect(bundle.moduleVersion).toBe("1.1.0");
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.readinessChecks.every((check) => !check.scored)).toBe(
+      true,
+    );
+    expect(validateMissionAuthoringBundle(bundle, roadHopper)).toEqual([]);
+    expect(() => assertValidMissionAuthoringBundle(bundle, roadHopper)).not.toThrow();
+  });
+
+  it("rejects mismatched catalog and mission references", () => {
+    const bundle = cloneBundle();
+    bundle.version = "9.9.9";
+    bundle.moduleVersion = "9.9.9";
+    bundle.missionId = "road-hopper-rally-mission-99";
+
+    expect(issueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "bundle-version-mismatch",
+        "module-reference-mismatch",
+        "mission-reference-mismatch",
+      ]),
+    );
+  });
+
+  it("rejects missing, duplicate and out-of-order stages", () => {
+    const missing = cloneBundle();
+    missing.learner.stages.splice(2, 1);
+    expect(issueCodes(missing)).toContain("missing-stage");
+
+    const duplicate = cloneBundle();
+    duplicate.learner.stages[2] = structuredClone(duplicate.learner.stages[1]!);
+    expect(issueCodes(duplicate)).toContain("duplicate-stage");
+
+    const reordered = cloneBundle();
+    [reordered.learner.stages[0], reordered.learner.stages[1]] = [
+      reordered.learner.stages[1]!,
+      reordered.learner.stages[0]!,
+    ];
+    expect(issueCodes(reordered)).toContain("stage-order");
+  });
+
+  it("requires a 15–25 minute mission and unscored readiness checks", () => {
+    const bundle = cloneBundle();
+    bundle.learner.estimatedMinutes = 26;
+    bundle.learner.readinessChecks[0]!.scored = true as false;
+
+    expect(issueCodes(bundle)).toEqual(
+      expect.arrayContaining(["invalid-duration", "scored-readiness-check"]),
+    );
+
+    bundle.learner.readinessChecks = [];
+    expect(issueCodes(bundle)).toContain("missing-readiness-check");
+  });
+
+  it("requires learner-safe starter artifacts and valid stage references", () => {
+    const bundle = cloneBundle();
+    bundle.learner.artifacts = [];
+
+    expect(issueCodes(bundle)).toEqual(
+      expect.arrayContaining(["missing-starter-artifact", "unknown-artifact"]),
+    );
+
+    const leaked = cloneBundle();
+    leaked.learner.artifacts[0] = {
+      id: "leaked-answer",
+      kind: "answer-key",
+      audience: "learner",
+      solutionBearing: true,
+    };
+    expect(issueCodes(leaked)).toContain("learner-artifact-leak");
+  });
+
+  it("keeps learner and facilitator goal and artifact projections separate", () => {
+    const bundle = cloneBundle();
+    bundle.learner.goals[0]!.visibility = "protected" as "visible";
+    bundle.facilitator.artifacts[0]!.audience = "learner" as "facilitator";
+    bundle.facilitator.protectedGoals[0]!.completionRequired = true;
+
+    expect(issueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "invalid-goal-projection",
+        "facilitator-artifact-leak",
+      ]),
+    );
+  });
+
+  it("rejects duplicated goals and unknown or wrongly projected criteria", () => {
+    const bundle = cloneBundle();
+    bundle.facilitator.protectedGoals[0]!.id = bundle.learner.goals[0]!.id;
+    bundle.learner.goals[1]!.criterionIds = ["missing-criterion"];
+    bundle.learner.goals[2]!.criterionIds = ["road-hopper-rally-edge-one"];
+
+    expect(issueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "duplicate-goal-id",
+        "unknown-criterion",
+        "criterion-visibility-mismatch",
+      ]),
+    );
+  });
+
+  it("rejects missing projected goals, empty criterion bindings and duplicate authored IDs", () => {
+    const bundle = cloneBundle();
+    bundle.learner.goals[0]!.criterionIds = [];
+    bundle.learner.artifacts[1]!.id = bundle.learner.artifacts[0]!.id;
+    bundle.learner.accessibilityAlternatives.push(
+      structuredClone(bundle.learner.accessibilityAlternatives[0]!),
+    );
+
+    expect(issueCodes(bundle)).toEqual(
+      expect.arrayContaining(["unknown-criterion", "duplicate-id"]),
+    );
+
+    bundle.learner.goals = [];
+    bundle.facilitator.protectedGoals = [];
+    expect(issueCodes(bundle)).toEqual(
+      expect.arrayContaining(["missing-visible-goal", "missing-protected-goal"]),
+    );
+  });
+
+  it("rejects malformed rubrics, AI-dependent completion and missing safety evidence", () => {
+    const malformedModule = structuredClone(roadHopper);
+    malformedModule.assessment.criteria[0]!.points = 19;
+
+    expect(
+      validateMissionAuthoringBundle(cloneBundle(), malformedModule).map(
+        (entry) => entry.code,
+      ),
+    ).toEqual(expect.arrayContaining(["rubric-total", "rubric-dimension-total"]));
+
+    const bundle = cloneBundle();
+    bundle.learner.goals[0]!.aiRequired = true;
+    bundle.learner.goals.find((goal) =>
+      goal.criterionIds.includes("road-hopper-rally-safety"),
+    )!.completionRequired = false;
+
+    expect(issueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "ai-dependent-completion",
+        "missing-safety-evidence",
+      ]),
+    );
+  });
+
+  it("requires an equivalent alternative for inaccessible single-mode interactions", () => {
+    const bundle = cloneBundle();
+    bundle.learner.interactions[0]!.alternativeIds = [];
+    expect(issueCodes(bundle)).toContain("inaccessible-interaction");
+
+    const dangling = cloneBundle();
+    dangling.learner.interactions[0]!.alternativeIds = ["missing-alternative"];
+    expect(issueCodes(dangling)).toContain("unknown-accessibility-alternative");
+
+    const unequal = cloneBundle();
+    unequal.learner.accessibilityAlternatives[0]!.equivalentOutcome = false as true;
+    expect(issueCodes(unequal)).toContain(
+      "non-equivalent-accessibility-alternative",
+    );
+  });
+
+  it("rejects missing, dangling or personal-data-bearing evidence", () => {
+    const missing = cloneBundle();
+    missing.learner.evidenceRequirements = [];
+    expect(issueCodes(missing)).toContain("missing-evidence");
+
+    const dangling = cloneBundle();
+    dangling.learner.evidenceRequirements[0]!.goalIds = ["missing-goal"];
+    expect(issueCodes(dangling)).toContain("unknown-evidence-goal");
+
+    const personal = cloneBundle();
+    personal.learner.evidenceRequirements[0]!.containsPersonalData = true as false;
+    expect(issueCodes(personal)).toContain("personal-data-evidence");
+
+    const protectedReference = cloneBundle();
+    protectedReference.learner.evidenceRequirements[0]!.goalIds = [
+      protectedReference.facilitator.protectedGoals[0]!.id,
+    ];
+    expect(issueCodes(protectedReference)).toContain("unknown-evidence-goal");
+  });
+
+  it("keeps side adventures optional and rewards deterministic and evidence-bound", () => {
+    const bundle = cloneBundle();
+    bundle.learner.sideAdventures[0]!.completionRequired = true as false;
+    bundle.learner.rewardBindings[0]!.random = true as false;
+    bundle.learner.rewardBindings[0]!.tokenConvertible = true as false;
+    bundle.learner.rewardBindings[0]!.goalIds = [];
+
+    expect(issueCodes(bundle)).toEqual(
+      expect.arrayContaining(["mandatory-side-adventure", "invalid-reward"]),
+    );
+
+    const absent = cloneBundle();
+    absent.learner.sideAdventures = [];
+    expect(issueCodes(absent)).toContain("missing-side-adventure");
+
+    const protectedReference = cloneBundle();
+    protectedReference.learner.rewardBindings[0]!.goalIds = [
+      protectedReference.facilitator.protectedGoals[0]!.id,
+    ];
+    expect(issueCodes(protectedReference)).toContain("invalid-reward");
+  });
+
+  it("formats all validation failures through the assertion helper", () => {
+    const bundle = cloneBundle();
+    bundle.learner.estimatedMinutes = 5;
+    bundle.learner.readinessChecks = [];
+
+    expect(() => assertValidMissionAuthoringBundle(bundle, roadHopper)).toThrow(
+      /invalid-duration[\s\S]*missing-readiness-check/u,
+    );
+  });
+});

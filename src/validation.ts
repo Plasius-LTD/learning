@@ -1,16 +1,9 @@
 import type {
-  AssessmentDimensionV1,
   LearningModuleVersionV1,
   LearningPathVersionV1,
   LearningValidationIssueV1,
 } from "./contracts.js";
-
-const DIMENSION_TOTALS: Record<AssessmentDimensionV1, number> = {
-  structure: 20,
-  behaviour: 50,
-  resilience: 20,
-  safety: 10,
-};
+import { validateAssessmentRubric } from "./rubric-validation.js";
 
 const CANONICAL_TOKEN_SUBUNITS = /^(0|[1-9][0-9]*)$/u;
 
@@ -123,71 +116,9 @@ function validateModule(
     );
   }
 
-  const criterionIds = new Set<string>();
-  const dimensionTotals: Record<AssessmentDimensionV1, number> = {
-    structure: 0,
-    behaviour: 0,
-    resilience: 0,
-    safety: 0,
-  };
-  let rubricTotal = 0;
-
-  for (const criterion of module.assessment.criteria) {
-    rubricTotal += criterion.points;
-    dimensionTotals[criterion.dimension] += criterion.points;
-    if (criterionIds.has(criterion.id)) {
-      issues.push(
-        issue(
-          "duplicate-criterion-id",
-          `Duplicate assessment criterion ${criterion.id}.`,
-          `${base}.assessment.criteria`,
-          module.id,
-        ),
-      );
-    }
-    criterionIds.add(criterion.id);
-  }
-
-  if (rubricTotal !== 100) {
-    issues.push(
-      issue(
-        "rubric-total",
-        `Assessment rubric totals ${rubricTotal}; expected 100.`,
-        `${base}.assessment.criteria`,
-        module.id,
-      ),
-    );
-  }
-
-  for (const [dimension, expected] of Object.entries(DIMENSION_TOTALS) as Array<
-    [AssessmentDimensionV1, number]
-  >) {
-    if (dimensionTotals[dimension] !== expected) {
-      issues.push(
-        issue(
-          "rubric-dimension-total",
-          `${dimension} criteria total ${dimensionTotals[dimension]}; expected ${expected}.`,
-          `${base}.assessment.criteria`,
-          module.id,
-        ),
-      );
-    }
-  }
-
-  if (
-    !module.assessment.criteria.some(
-      (criterion) => criterion.dimension === "safety" && criterion.mandatory,
-    )
-  ) {
-    issues.push(
-      issue(
-        "missing-mandatory-safety",
-        "Every module requires a mandatory safety criterion.",
-        `${base}.assessment.criteria`,
-        module.id,
-      ),
-    );
-  }
+  issues.push(
+    ...validateAssessmentRubric(module.assessment, `${base}.assessment`, module.id),
+  );
 
   if (module.hardware.mode === "physical-first" && module.hardware.items.length === 0) {
     issues.push(
@@ -281,3 +212,11 @@ export function assertValidLearningPath(path: LearningPathVersionV1): void {
     .join("\n");
   throw new Error(`Invalid learning path:\n${summary}`);
 }
+
+export { validateAssessmentRubric } from "./rubric-validation.js";
+export {
+  JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+  ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
+  assertValidMissionAuthoringBundle,
+  validateMissionAuthoringBundle,
+} from "./mission-authoring.js";
