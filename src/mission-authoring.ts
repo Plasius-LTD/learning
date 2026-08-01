@@ -754,6 +754,231 @@ export const ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 
   },
 };
 
+/**
+ * Original first mission for Skywing Sprint. Learner content documents the
+ * flight controls without exposing protected numeric targets or source answers.
+ */
+export const SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.skywing-sprint",
+  moduleVersion: "1.1.0",
+  missionId: "skywing-sprint-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read how lift, gravity and gate-gap functions change Skywing's flight.",
+        artifactIds: ["skywing-sprint-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict whether Skywing will rise or fall after one lift pulse.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the three documented settings in the starter JavaScript.",
+        artifactIds: ["skywing-sprint-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private flight preview.",
+        artifactIds: ["skywing-sprint-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic flight checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted setting with the first goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one setting, run again and observe the flight telemetry.",
+        artifactIds: ["skywing-sprint-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how lift and gravity changed Skywing's vertical speed.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge when the score and safety check pass.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "skywing-sprint-m1-predict-velocity",
+        prompt: "Point to the setting that changes Skywing's upward push.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "skywing-sprint-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "skywing-sprint-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "skywing-sprint-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "skywing-sprint-m1-starts",
+        statement: "The JavaScript settings are valid and the private preview starts.",
+        visibility: "visible",
+        criterionIds: ["skywing-sprint-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "skywing-sprint-m1-safe-flight",
+        statement: "Lift and gravity create a controllable flight through the rescue gate.",
+        visibility: "visible",
+        criterionIds: [
+          "skywing-sprint-goal-one",
+          "skywing-sprint-goal-two",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "skywing-sprint-m1-private-runtime",
+        statement: "The game stays inside the private educational preview boundary.",
+        visibility: "visible",
+        criterionIds: ["skywing-sprint-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "skywing-sprint-m1-run-control",
+        description: "Start the private flight simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["skywing-sprint-m1-keyboard-run"],
+      },
+      {
+        id: "skywing-sprint-m1-flight-control",
+        description: "Send a lift pulse while the preview is running.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "skywing-sprint-m1-flight-motion",
+        description: "Observe Skywing moving through the animated gate preview.",
+        primaryMode: "motion",
+        alternativeIds: ["skywing-sprint-m1-reduced-motion"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "skywing-sprint-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same preview.",
+      },
+      {
+        id: "skywing-sprint-m1-reduced-motion",
+        modes: ["text"],
+        equivalentOutcome: true,
+        description: "Use the position, velocity and gate-status text instead of animation.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "skywing-sprint-m1-assessment",
+        goalIds: [
+          "skywing-sprint-m1-starts",
+          "skywing-sprint-m1-safe-flight",
+          "skywing-sprint-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "skywing-sprint-m1-explanation",
+        goalIds: ["skywing-sprint-m1-safe-flight"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "skywing-sprint-m1-remix",
+        prompt: "Invent a new gate name and choose one setting to make the flight gentler.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "skywing-sprint-m1-badge",
+        badgeId: "skywing-sprint-mission-complete",
+        goalIds: [
+          "skywing-sprint-m1-starts",
+          "skywing-sprint-m1-safe-flight",
+          "skywing-sprint-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "skywing-sprint-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "skywing-sprint-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "skywing-sprint-m1-protected-resilience",
+        statement: "The runtime clamps unsafe values and terminates bounded simulations.",
+        visibility: "protected",
+        criterionIds: [
+          "skywing-sprint-edge-one",
+          "skywing-sprint-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner which direction a positive velocity moves Skywing before suggesting a setting change.",
+      "Use the visible telemetry and function reference; never reveal protected numeric targets or expected source fragments.",
+    ],
+  },
+};
+
 /** Original first-mission exemplar; no protected content appears in learner data. */
 export const ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   version: MISSION_AUTHORING_CONTRACT_VERSION_V1,

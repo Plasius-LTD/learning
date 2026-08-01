@@ -65,6 +65,7 @@ import {
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
+  SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
 } from "@plasius/learning";
 
@@ -74,8 +75,13 @@ const roadHopper = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const robotMaze = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "robot-maze-dash",
 );
+const skywing = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "skywing-sprint",
+);
 
-if (!roadHopper || !robotMaze) throw new Error("Junior Coder module is missing");
+if (!roadHopper || !robotMaze || !skywing) {
+  throw new Error("Junior Coder module is missing");
+}
 
 assertValidMissionAuthoringBundle(
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
@@ -84,6 +90,10 @@ assertValidMissionAuthoringBundle(
 assertValidMissionAuthoringBundle(
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
   robotMaze,
+);
+assertValidMissionAuthoringBundle(
+  SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
+  skywing,
 );
 ```
 
