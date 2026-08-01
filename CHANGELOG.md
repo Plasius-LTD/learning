@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.1] - 2026-08-01
+
+- **Added**
+  - (placeholder)
   - Added reusable versioned mission-authoring contracts, deterministic
     validators and an original Road Hopper Rally exemplar covering the complete
     nine-stage learner journey.
@@ -83,3 +97,4 @@ All notable changes to this project are documented in this file.
 
 [0.1.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.0
+[0.2.1]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.1
