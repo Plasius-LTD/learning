@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.2] - 2026-08-01
+
+- **Added**
+  - (placeholder)
   - Added the versioned Robot Maze Dash mission-one learner/facilitator
     authoring bundle, including a complete nine-stage visual-programming
     journey and equivalent non-drag block-order controls.
@@ -104,3 +118,4 @@ All notable changes to this project are documented in this file.
 [0.1.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.0
 [0.2.1]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.1
+[0.2.2]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.2
