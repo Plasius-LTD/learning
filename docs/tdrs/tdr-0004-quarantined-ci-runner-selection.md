@@ -9,10 +9,11 @@ the governed `Public CI - Quarantined` runner group as well as the existing
 `CI_RUNNER_LABELS` allow governed operator configuration while preserving the
 quarantined defaults.
 
-A label-only selector left valid pull-request runs queued while allowlisted
-runners in the restricted public group were online and idle. Explicit group
-selection makes the intended trust boundary part of the workflow contract and
-matches the established release-job pattern.
+During the delivery incident, the label-only selector did not identify which
+governed group GitHub was expected to use while pull-request runs remained
+queued. Explicit group selection makes the intended trust boundary part of the
+workflow contract and matches the established release-job pattern. Runner
+listener health and GitHub scheduling remain separate operational concerns.
 
 The group remains restricted to selected repositories and allowlisted workflow
 paths. CI keeps its existing least-privilege permissions, lint, typecheck,
