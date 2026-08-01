@@ -2,8 +2,8 @@
 
 ## Status
 
-Implementation design for `Plasius-LTD/learning#3` and
-`Plasius-LTD/learning#18`, under Stories
+Implementation design for `Plasius-LTD/learning#3`,
+`Plasius-LTD/learning#18`, and `Plasius-LTD/learning#20`, under Stories
 `Plasius-LTD/plasius-ltd-site#1714`, Feature
 `Plasius-LTD/plasius-ltd-site#1704`, and
 `Plasius-LTD/plasius-ltd-site#1715`, Feature
@@ -135,7 +135,15 @@ goals, protected wall and action-limit checks, and labelled Move up/Move down
 controls that are equivalent to block dragging. The learner projection contains
 no route answer or protected expected command list.
 
-Neither bundle is a prerequisite for another sellable module. Each is an
+Skywing Sprint mission one adds the first velocity-and-gravity game bundle. It
+teaches a bounded JavaScript update loop through documented `setLift()`,
+`setGravity()` and `setGateGap()` controls, an explicit play-button interaction,
+and keyboard-equivalent flight controls. Its learner projection describes the
+visible flight, gate and private-runtime goals without exposing the protected
+numeric target values, expected source fragments or resilience checks. The
+facilitator projection owns those solution-bearing details.
+
+No bundle is a prerequisite for another sellable module. Each is an
 independently versioned authoring authority and a tested reference for its own
 module adapter.
 

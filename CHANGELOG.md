@@ -6,6 +6,9 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Skywing Sprint mission-one learner/facilitator
+    authoring bundle with documented lift, gravity and gate controls, an
+    explicit Run action, reduced-motion telemetry and evidence-bound rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +18,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept Skywing Sprint numeric target values, expected source fragments and
+    resilience checks in the facilitator projection while completion remains
+    deterministic, AI-independent and personal-data-free.
 
 ## [0.2.2] - 2026-08-01
 
