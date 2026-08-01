@@ -535,6 +535,225 @@ export function assertValidMissionAuthoringBundle(
   throw new Error(`Invalid mission authoring bundle:\n${summary}`);
 }
 
+/**
+ * Original visual-programming mission for Robot Maze Dash. Learner content
+ * contains no protected route, answer key or hidden assessment expectation.
+ */
+export const ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.robot-maze-dash",
+  moduleVersion: "1.1.0",
+  missionId: "robot-maze-dash-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Meet the move, turn-left and turn-right action blocks and read what each command does.",
+        artifactIds: ["robot-maze-dash-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict where the robot will stop after it follows the blocks from top to bottom.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Arrange the action blocks so the rescue robot can reach the beacon.",
+        artifactIds: ["robot-maze-dash-m1-program"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to watch the robot follow your visual program.",
+        artifactIds: ["robot-maze-dash-m1-program"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic mission checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted block with the first goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Move, add or remove one action block, then run the mission again.",
+        artifactIds: ["robot-maze-dash-m1-program"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how the order of your blocks changed the robot path.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge when the score and safety check pass.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "robot-maze-dash-m1-read-order",
+        prompt: "Point to the first action the robot will follow.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "robot-maze-dash-m1-program",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "robot-maze-dash-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "robot-maze-dash-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "robot-maze-dash-m1-starts",
+        statement: "The visual program is structurally valid and starts.",
+        visibility: "visible",
+        criterionIds: ["robot-maze-dash-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "robot-maze-dash-m1-reaches-beacon",
+        statement: "The robot follows the action order and reaches the rescue beacon.",
+        visibility: "visible",
+        criterionIds: [
+          "robot-maze-dash-goal-one",
+          "robot-maze-dash-goal-two",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "robot-maze-dash-m1-safe-preview",
+        statement: "The robot stays inside the private maze simulator boundary.",
+        visibility: "visible",
+        criterionIds: ["robot-maze-dash-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "robot-maze-dash-m1-reorder-blocks",
+        description: "Change the order of visual action blocks.",
+        primaryMode: "drag",
+        alternativeIds: ["robot-maze-dash-m1-button-reorder"],
+      },
+      {
+        id: "robot-maze-dash-m1-run-control",
+        description: "Start the private maze simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["robot-maze-dash-m1-keyboard-run"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "robot-maze-dash-m1-button-reorder",
+        modes: ["keyboard", "pointer"],
+        equivalentOutcome: true,
+        description: "Use labelled Move up and Move down buttons instead of dragging a block.",
+      },
+      {
+        id: "robot-maze-dash-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Start the same simulation by pressing Enter or Space on the Run button.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "robot-maze-dash-m1-assessment",
+        goalIds: [
+          "robot-maze-dash-m1-starts",
+          "robot-maze-dash-m1-reaches-beacon",
+          "robot-maze-dash-m1-safe-preview",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "robot-maze-dash-m1-explanation",
+        goalIds: ["robot-maze-dash-m1-reaches-beacon"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "robot-maze-dash-m1-remix",
+        prompt: "Invent a different safe route and describe which action block must change first.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "robot-maze-dash-m1-badge",
+        badgeId: "robot-maze-dash-mission-complete",
+        goalIds: [
+          "robot-maze-dash-m1-starts",
+          "robot-maze-dash-m1-reaches-beacon",
+          "robot-maze-dash-m1-safe-preview",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "robot-maze-dash-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "robot-maze-dash-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "robot-maze-dash-m1-protected-bounds",
+        statement: "The interpreter stops safely at walls, bounds and its action limit.",
+        visibility: "protected",
+        criterionIds: [
+          "robot-maze-dash-edge-one",
+          "robot-maze-dash-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to point to the first action block before suggesting a change.",
+      "Use the command reference and visible goal; never reveal the protected route or expected block list.",
+    ],
+  },
+};
+
 /** Original first-mission exemplar; no protected content appears in learner data. */
 export const ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   version: MISSION_AUTHORING_CONTRACT_VERSION_V1,

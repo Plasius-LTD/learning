@@ -217,6 +217,7 @@ export { validateAssessmentRubric } from "./rubric-validation.js";
 export {
   JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
+  ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
   validateMissionAuthoringBundle,
 } from "./mission-authoring.js";

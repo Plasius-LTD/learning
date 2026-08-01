@@ -6,6 +6,9 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Robot Maze Dash mission-one learner/facilitator
+    authoring bundle, including a complete nine-stage visual-programming
+    journey and equivalent non-drag block-order controls.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +18,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept Robot Maze Dash route answers and protected boundary checks in the
+    facilitator projection while learner goals remain deterministic and
+    personal-data-free.
 
 ## [0.2.1] - 2026-08-01
 
