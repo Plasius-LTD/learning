@@ -17,6 +17,9 @@ All notable changes to this project are documented in this file.
 
 - **Fixed**
   - (placeholder)
+  - Routed pull-request and main CI explicitly through the governed
+    `Public CI - Quarantined` runner group so public-repository jobs cannot
+    remain stranded behind an implicit label-only selector.
 
 - **Security**
   - (placeholder)

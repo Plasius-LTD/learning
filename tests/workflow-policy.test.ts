@@ -5,6 +5,7 @@ const readWorkflow = (name: string): string =>
   readFileSync(new URL(`../.github/workflows/${name}.yml`, import.meta.url), "utf8");
 
 const cdWorkflow = readWorkflow("cd");
+const ciWorkflow = readWorkflow("ci");
 const releasePrepareWorkflow = readWorkflow("release-prepare");
 const installGithubCliScript = readFileSync(
   new URL("../.github/scripts/install-github-cli.sh", import.meta.url),
@@ -14,6 +15,21 @@ const trustedProductionRunnerGroup =
   "group: ${{ vars.CD_RUNNER_GROUP || 'Public CI - Quarantined' }}";
 const trustedProductionRunnerLabels =
   "labels: ${{ fromJSON(vars.CD_RUNNER_LABELS || '[\"self-hosted\",\"Linux\",\"X64\"]') }}";
+const trustedCiRunnerGroup =
+  "group: ${{ vars.CI_RUNNER_GROUP || 'Public CI - Quarantined' }}";
+const trustedCiRunnerLabels =
+  "labels: ${{ fromJSON(vars.CI_RUNNER_LABELS || '[\"self-hosted\",\"Linux\",\"X64\"]') }}";
+
+describe("continuous integration workflow policy", () => {
+  it("routes pull-request and main CI explicitly through the governed runner group", () => {
+    expect(ciWorkflow).toContain(trustedCiRunnerGroup);
+    expect(ciWorkflow).toContain(trustedCiRunnerLabels);
+    expect(ciWorkflow).not.toContain("runs-on: ubuntu-latest");
+    expect(ciWorkflow).not.toContain("runs-on: [self-hosted, Linux, X64]");
+    expect(ciWorkflow).toMatch(/pull_request:\s*\n\s+branches: \[main\]/u);
+    expect(ciWorkflow).toMatch(/push:\s*\n\s+branches: \[main\]/u);
+  });
+});
 
 describe("production release workflow policy", () => {
   it("runs release preparation and publication on configurable trusted runners", () => {
