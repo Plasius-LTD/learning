@@ -173,6 +173,14 @@ trail-length and orb-status telemetry for reduced-motion learners. Protected
 coordinates, numeric targets, expected source fragments and bounded list or
 collision checks remain in the facilitator projection.
 
+Star Defender Squadron mission one adds an original JavaScript space-rescue
+bundle. It teaches documented `createSquadron()`, `setRescueWave()`,
+`setShieldHealth()` and `launchRescueBeam()` calls, an explicit play-button
+interaction and equivalent entity, pattern, shield, beam and rescue telemetry
+for reduced-motion learners. Protected numeric targets, pattern answers,
+expected source fragments and bounded entity or projectile checks remain in the
+facilitator projection.
+
 No bundle is a prerequisite for another sellable module. Each is an
 independently versioned authoring authority and a tested reference for its own
 module adapter.

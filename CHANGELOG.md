@@ -6,6 +6,10 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Star Defender Squadron mission-one learner/facilitator
+    authoring bundle with documented JavaScript entity, wave-pattern, shield
+    health and rescue-projectile concepts, an action-icon run control,
+    reduced-motion telemetry and evidence-bound rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +19,10 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept Star Defender Squadron numeric targets, expected source fragments,
+    pattern answers and bounded entity/projectile edge checks in the
+    facilitator projection while completion remains deterministic,
+    AI-independent and personal-data-free.
 
 ## [0.2.7] - 2026-08-08
 

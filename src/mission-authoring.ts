@@ -1431,6 +1431,232 @@ export const PIXEL_TRAIL_CHALLENGE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBun
 };
 
 /**
+ * Original first mission for Star Defender Squadron. Learners launch bounded
+ * JavaScript entities, patterns, health and rescue projectiles while protected
+ * pass targets and runtime edge cases remain facilitator-only.
+ */
+export const STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.star-defender-squadron",
+  moduleVersion: "1.1.0",
+  missionId: "star-defender-squadron-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read what createSquadron(), setRescueWave(), setShieldHealth() and launchRescueBeam() do in the private JavaScript preview.",
+        artifactIds: ["star-defender-squadron-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict where the squadron and rescue beam will travel, and which health value will change after the wave.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the four documented JavaScript calls so the original squadron launches a safe rescue wave.",
+        artifactIds: ["star-defender-squadron-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private Star Defender preview.",
+        artifactIds: ["star-defender-squadron-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic squadron checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted JavaScript line with the first mission goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one squadron, wave, shield or beam setting, then rerun and inspect the entity and health telemetry.",
+        artifactIds: ["star-defender-squadron-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how the wave pattern moved the entities and how shields protected the rescue mission.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge when the score and private-runtime safety check pass.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "star-defender-squadron-m1-find-wave",
+        prompt: "Point to the JavaScript call that chooses the rescue-wave pattern.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "star-defender-squadron-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "star-defender-squadron-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "star-defender-squadron-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "star-defender-squadron-m1-starts",
+        statement: "The JavaScript settings are valid and the private squadron preview starts.",
+        visibility: "visible",
+        criterionIds: ["star-defender-squadron-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "star-defender-squadron-m1-rescue-wave",
+        statement: "The original squadron follows the chosen pattern, keeps safe shield health and launches a rescue beam.",
+        visibility: "visible",
+        criterionIds: [
+          "star-defender-squadron-goal-one",
+          "star-defender-squadron-goal-two",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "star-defender-squadron-m1-private-runtime",
+        statement: "The program stays inside the private JavaScript worker and host-provided space-rescue API.",
+        visibility: "visible",
+        criterionIds: ["star-defender-squadron-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "star-defender-squadron-m1-run-control",
+        description: "Start the private JavaScript squadron simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["star-defender-squadron-m1-keyboard-run"],
+      },
+      {
+        id: "star-defender-squadron-m1-code-control",
+        description: "Edit the documented squadron, wave, shield and beam calls.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "star-defender-squadron-m1-wave-motion",
+        description: "Observe squadron entities, wave paths, shields and the rescue beam.",
+        primaryMode: "motion",
+        alternativeIds: ["star-defender-squadron-m1-telemetry"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "star-defender-squadron-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same preview.",
+      },
+      {
+        id: "star-defender-squadron-m1-telemetry",
+        modes: ["text", "shape", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read entity count, pattern, shield health, beam state and rescue result without animation or colour dependence.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "star-defender-squadron-m1-assessment",
+        goalIds: [
+          "star-defender-squadron-m1-starts",
+          "star-defender-squadron-m1-rescue-wave",
+          "star-defender-squadron-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "star-defender-squadron-m1-explanation",
+        goalIds: ["star-defender-squadron-m1-rescue-wave"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "star-defender-squadron-m1-remix",
+        prompt: "Invent an original rescue-squadron emblem and describe a new safe wave pattern for a later level.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "star-defender-squadron-m1-badge",
+        badgeId: "star-defender-squadron-mission-complete",
+        goalIds: [
+          "star-defender-squadron-m1-starts",
+          "star-defender-squadron-m1-rescue-wave",
+          "star-defender-squadron-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "star-defender-squadron-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "star-defender-squadron-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "star-defender-squadron-m1-protected-resilience",
+        statement: "The worker rejects invalid entity, pattern, health and projectile settings and terminates bounded wave simulations.",
+        visibility: "protected",
+        criterionIds: [
+          "star-defender-squadron-edge-one",
+          "star-defender-squadron-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to predict the squadron path and shield change before suggesting a JavaScript edit.",
+      "Use the function reference and visible telemetry; never reveal protected numeric targets, pattern answers or expected source fragments.",
+    ],
+  },
+};
+
+/**
  * Original first mission for Rescue Crew Commander. The learner arranges a
  * typed visual program and can inspect its synchronized JavaScript projection,
  * while protected route and action-limit checks stay facilitator-only.
