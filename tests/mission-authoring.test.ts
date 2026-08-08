@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  BEACON_BOT_MISSION_ONE_AUTHORING_V1,
   JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
@@ -48,6 +49,10 @@ const starDefenderSquadron = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "star-defender-squadron",
 )!;
 
+const beaconBot = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "beacon-bot",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -58,7 +63,151 @@ function issueCodes(bundle: MissionAuthoringBundleV1): string[] {
   );
 }
 
+function beaconIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
+  return validateMissionAuthoringBundle(bundle, beaconBot).map(
+    (entry) => entry.code,
+  );
+}
+
 describe("Junior Coder mission authoring", () => {
+  it("publishes a complete Beacon Bot simulator and hardware-disclosure mission", () => {
+    const bundle = BEACON_BOT_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle.moduleId).toBe("junior-coder.beacon-bot");
+    expect(bundle.moduleVersion).toBe("1.1.0");
+    expect(bundle.missionId).toBe("beacon-bot-mission-1");
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.stages.find((stage) => stage.kind === "learn")?.instruction)
+      .toContain("setVisibleSignal()");
+    expect(bundle.learner.stages.find((stage) => stage.kind === "learn")?.instruction)
+      .toContain("readIrReceiver()");
+    expect(bundle.learner.stages.find((stage) => stage.kind === "run")?.instruction)
+      .toContain("Run action button");
+    expect(bundle.learner.functionReference).toHaveLength(4);
+    expect(bundle.learner.functionReference).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          signature: "setVisibleSignal(colour)",
+          parameters: [expect.objectContaining({ name: "colour" })],
+          effect: expect.any(String),
+          example: expect.stringContaining("setVisibleSignal"),
+        }),
+        expect.objectContaining({
+          signature: "readIrReceiver()",
+          parameters: [],
+          effect: expect.any(String),
+          example: expect.stringContaining("readIrReceiver"),
+        }),
+      ]),
+    );
+    expect(bundle.hardware).toEqual(
+      expect.objectContaining({
+        requirementsVersion: "1.0.0",
+        hardwareIncluded: false,
+        completePathItemIds: expect.arrayContaining([
+          "pico-2-w",
+          "breadboard",
+          "usb-data-cable",
+          "jumper-wires",
+          "led-pack",
+          "led-resistors",
+          "ir-pair",
+        ]),
+        incrementalItemIds: ["led-pack", "led-resistors", "ir-pair"],
+      }),
+    );
+    expect(bundle.hardware?.components).toHaveLength(beaconBot.hardware.items.length);
+    expect(bundle.hardware?.components.every(
+      (component) => component.verificationStatus === "pending-bench-test"
+        && component.compatibilityClaimed === false
+        && component.physicalCompletionEligible === false,
+    )).toBe(true);
+    expect(bundle.hardware?.safeguards).toEqual(
+      expect.objectContaining({
+        adultAssemblyRequired: true,
+        adultAcknowledgementRequiredForExport: true,
+        websiteMayControlHardware: false,
+        simulatorCompletionAvailable: true,
+        simulatedBadgeId: "beacon-bot-mission-complete",
+        physicalBadgeId: "beacon-bot-physical-builder",
+        physicalBadgeRequiresAdultSignoff: true,
+        unrelatedHardwareNotRequired: expect.arrayContaining([
+          "Camera Module 3",
+          "motor driver or motors",
+          "servo",
+        ]),
+      }),
+    );
+    expect(validateMissionAuthoringBundle(bundle, beaconBot)).toEqual([]);
+    expect(() => assertValidMissionAuthoringBundle(bundle, beaconBot)).not.toThrow();
+  });
+
+  it("rejects Beacon Bot compatibility claims and physical completion for unverified components", () => {
+    const bundle = structuredClone(BEACON_BOT_MISSION_ONE_AUTHORING_V1);
+    const component = bundle.hardware!.components.find(
+      (entry) => entry.itemId === "ir-pair",
+    )!;
+    component.compatibilityClaimed = true;
+    component.physicalCompletionEligible = true;
+
+    expect(beaconIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "hardware-verification-claim",
+        "unsafe-physical-export",
+      ]),
+    );
+  });
+
+  it("rejects mismatched Beacon Bot hardware versions, items and acquisition scopes", () => {
+    const bundle = structuredClone(BEACON_BOT_MISSION_ONE_AUTHORING_V1);
+    bundle.hardware!.requirementsVersion = "9.9.9";
+    bundle.hardware!.completePathItemIds.pop();
+    bundle.hardware!.incrementalItemIds.push("unknown-item");
+    bundle.hardware!.components[0]!.quantity = 99;
+    bundle.hardware!.components[1]!.acquisitionScope = "incremental";
+
+    expect(beaconIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "hardware-requirements-version-mismatch",
+        "hardware-item-mismatch",
+      ]),
+    );
+  });
+
+  it("rejects unsafe Beacon Bot export safeguards and hardware badge bindings", () => {
+    const bundle = structuredClone(BEACON_BOT_MISSION_ONE_AUTHORING_V1);
+    bundle.hardware!.safeguards.websiteMayControlHardware = true as false;
+    bundle.hardware!.safeguards.adultAssemblySteps = [];
+    bundle.hardware!.safeguards.simulatedBadgeId = "beacon-bot-physical-builder";
+    bundle.hardware!.safeguards.physicalBadgeId = "missing-physical-badge";
+
+    expect(beaconIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "unsafe-physical-export",
+        "invalid-hardware-reward",
+      ]),
+    );
+  });
+
+  it("rejects incomplete learner function documentation and non-robot hardware projections", () => {
+    const bundle = structuredClone(BEACON_BOT_MISSION_ONE_AUTHORING_V1);
+    bundle.learner.functionReference![0]!.effect = "";
+    bundle.learner.functionReference![1]!.parameters = [
+      {
+        name: "",
+        type: "",
+        description: "",
+      },
+    ];
+
+    expect(beaconIssueCodes(bundle)).toContain("invalid-function-reference");
+    expect(validateMissionAuthoringBundle(bundle, roadHopper).map(
+      (entry) => entry.code,
+    )).toContain("hardware-module-mismatch");
+  });
+
   it("publishes an accessible Star Defender Squadron JavaScript mission", () => {
     const bundle = STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1;
 
