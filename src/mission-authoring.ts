@@ -979,6 +979,231 @@ export const SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 =
   },
 };
 
+/**
+ * Original first mission for Paddle Pulse. Learners tune documented paddle
+ * and ball controls without receiving protected collision targets or answers.
+ */
+export const PADDLE_PULSE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.paddle-pulse",
+  moduleVersion: "1.1.0",
+  missionId: "paddle-pulse-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read how paddle width, ball speed and bounce angle change an energy-ball rally.",
+        artifactIds: ["paddle-pulse-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict which direction the energy ball will travel after it reaches the paddle.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the three documented settings in the starter JavaScript.",
+        artifactIds: ["paddle-pulse-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private energy-court preview.",
+        artifactIds: ["paddle-pulse-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic rally checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted setting with the first goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one setting, run again and observe the bounce telemetry.",
+        artifactIds: ["paddle-pulse-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how paddle width and bounce angle changed the energy ball path.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge when the score and safety check pass.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "paddle-pulse-m1-find-angle",
+        prompt: "Point to the setting that changes the direction of the bounce.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "paddle-pulse-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "paddle-pulse-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "paddle-pulse-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "paddle-pulse-m1-starts",
+        statement: "The JavaScript settings are valid and the private preview starts.",
+        visibility: "visible",
+        criterionIds: ["paddle-pulse-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "paddle-pulse-m1-controlled-bounce",
+        statement: "The paddle returns the energy ball toward the target wall with a controllable angle.",
+        visibility: "visible",
+        criterionIds: [
+          "paddle-pulse-goal-one",
+          "paddle-pulse-goal-two",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "paddle-pulse-m1-private-runtime",
+        statement: "The game stays inside the private educational preview boundary.",
+        visibility: "visible",
+        criterionIds: ["paddle-pulse-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "paddle-pulse-m1-run-control",
+        description: "Start the private energy-court simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["paddle-pulse-m1-keyboard-run"],
+      },
+      {
+        id: "paddle-pulse-m1-paddle-control",
+        description: "Move the paddle left or right during practice.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "paddle-pulse-m1-ball-motion",
+        description: "Observe the energy ball moving and bouncing across the court.",
+        primaryMode: "motion",
+        alternativeIds: ["paddle-pulse-m1-telemetry"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "paddle-pulse-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same preview.",
+      },
+      {
+        id: "paddle-pulse-m1-telemetry",
+        modes: ["text", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Use position, direction and target-status text instead of ball animation.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "paddle-pulse-m1-assessment",
+        goalIds: [
+          "paddle-pulse-m1-starts",
+          "paddle-pulse-m1-controlled-bounce",
+          "paddle-pulse-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "paddle-pulse-m1-explanation",
+        goalIds: ["paddle-pulse-m1-controlled-bounce"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "paddle-pulse-m1-remix",
+        prompt: "Invent an original energy power-up and describe one bounded setting it would change.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "paddle-pulse-m1-badge",
+        badgeId: "paddle-pulse-mission-complete",
+        goalIds: [
+          "paddle-pulse-m1-starts",
+          "paddle-pulse-m1-controlled-bounce",
+          "paddle-pulse-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "paddle-pulse-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "paddle-pulse-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "paddle-pulse-m1-protected-resilience",
+        statement: "The runtime clamps unsafe settings and terminates bounded collision simulations.",
+        visibility: "protected",
+        criterionIds: [
+          "paddle-pulse-edge-one",
+          "paddle-pulse-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner which setting changes direction before suggesting a code edit.",
+      "Use visible telemetry and the function reference; never reveal protected numeric targets or expected source fragments.",
+    ],
+  },
+};
+
 /** Original first-mission exemplar; no protected content appears in learner data. */
 export const ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
