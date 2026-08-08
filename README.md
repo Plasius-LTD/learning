@@ -62,6 +62,7 @@ the exact catalog module that owns its rubric, mission and badges.
 
 ```ts
 import {
+  BEACON_BOT_MISSION_ONE_AUTHORING_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
@@ -98,6 +99,9 @@ const pixelTrailChallenge = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const starDefenderSquadron = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "star-defender-squadron",
 );
+const beaconBot = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "beacon-bot",
+);
 
 if (
   !roadHopper ||
@@ -107,7 +111,8 @@ if (
   !meteorShield ||
   !rescueCrewCommander ||
   !pixelTrailChallenge ||
-  !starDefenderSquadron
+  !starDefenderSquadron ||
+  !beaconBot
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -144,6 +149,10 @@ assertValidMissionAuthoringBundle(
   STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
   starDefenderSquadron,
 );
+assertValidMissionAuthoringBundle(
+  BEACON_BOT_MISSION_ONE_AUTHORING_V1,
+  beaconBot,
+);
 ```
 
 ## Contract rules
@@ -166,13 +175,20 @@ assertValidMissionAuthoringBundle(
 - Completion requires a score of at least 80 and every mandatory criterion.
 - Module agents may explain evidence and propose a bounded next step, but cannot assign scores or rewards.
 - Physical requirements are disclosed by a versioned manifest before purchase.
+- Robotics authoring distinguishes the complete reusable path kit from the
+  module's incremental items. Each component carries verification,
+  compatibility-claim and physical-completion status.
+- Unverified components cannot claim compatibility or physical completion.
+  Simulator completion remains separate; physical export and its distinct
+  badge require adult acknowledgement and evidence.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),
 [the mission authoring design](docs/design/junior-coder-mission-authoring.md),
 [ADR 0001](docs/adrs/adr-0001-learning-domain-and-catalog-boundary.md), and
 [ADR 0002](docs/adrs/adr-0002-immutable-module-repricing-and-admin-test-source.md),
-and [ADR 0003](docs/adrs/adr-0003-mission-authoring-manifests-are-additive-and-separated.md).
+[ADR 0003](docs/adrs/adr-0003-mission-authoring-manifests-are-additive-and-separated.md),
+and [ADR 0004](docs/adrs/adr-0004-robot-mission-hardware-disclosures-are-additive-and-fail-closed.md).
 
 ## Development
 

@@ -6,6 +6,9 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Beacon Bot mission-one learner/facilitator bundle,
+    documented bounded C++-style simulator functions, complete and incremental
+    hardware disclosure, simulator evidence and separate physical safeguards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +18,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept every Beacon Bot component unverified, compatibility-unclaimed,
+    public-sale blocked and ineligible for physical completion until adult
+    bench-test evidence exists; the website cannot control hardware.
 
 ## [0.2.8] - 2026-08-08
 

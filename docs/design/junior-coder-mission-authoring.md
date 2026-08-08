@@ -4,16 +4,21 @@
 
 Implementation design for `Plasius-LTD/learning#3`,
 `Plasius-LTD/learning#18`, `Plasius-LTD/learning#20`,
-`Plasius-LTD/learning#22`, `Plasius-LTD/learning#24`, and
-`Plasius-LTD/learning#26`, and `Plasius-LTD/learning#28`, under Stories
+`Plasius-LTD/learning#22`, `Plasius-LTD/learning#24`,
+`Plasius-LTD/learning#26`, `Plasius-LTD/learning#28`, and
+`Plasius-LTD/learning#32`, under Stories
 `Plasius-LTD/plasius-ltd-site#1714`, Feature
 `Plasius-LTD/plasius-ltd-site#1704`, and
 `Plasius-LTD/plasius-ltd-site#1715`, Feature
 `Plasius-LTD/plasius-ltd-site#1705`, and Epic
 `Plasius-LTD/plasius-ltd-site#1701`.
 
+Beacon Bot is delivered under Story `Plasius-LTD/plasius-ltd-site#1717` and
+Feature `Plasius-LTD/plasius-ltd-site#1706`.
+
 The inherited rollout flags are `learning.junior-coder.workspace.enabled` and
-`learning.junior-coder.games.enabled`.
+`learning.junior-coder.games.enabled`; robot missions additionally inherit
+`learning.junior-coder.robotics.enabled`.
 Publishing these contracts does not activate learner access.
 
 ## Outcome
@@ -180,6 +185,18 @@ interaction and equivalent entity, pattern, shield, beam and rescue telemetry
 for reduced-motion learners. Protected numeric targets, pattern answers,
 expected source fragments and bounded entity or projectile checks remain in the
 facilitator projection.
+
+Beacon Bot mission one adds the first simulator-backed robotics authoring
+bundle. It documents `setVisibleSignal()`, `waitMs()`, `repeatSignal()` and
+`readIrReceiver()` with signatures, parameters, effects and examples. The
+learner completes a private simulator and receives only the simulated badge.
+Its additive hardware projection lists the full reusable kit, the three
+incremental Beacon Bot items, per-item verification and compatibility status,
+adult assembly, power, cable and software requirements, plus unrelated
+hardware that is not required. All current component entries remain pending
+bench test, compatibility-unclaimed and physically ineligible. Physical export
+requires an adult acknowledgement, the website may never control hardware and
+the physical badge continues to require adult sign-off.
 
 No bundle is a prerequisite for another sellable module. Each is an
 independently versioned authoring authority and a tested reference for its own

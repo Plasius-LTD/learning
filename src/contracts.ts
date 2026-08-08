@@ -388,6 +388,22 @@ export interface MissionRewardBindingV1 {
   tokenConvertible: false;
 }
 
+export interface MissionFunctionParameterV1 {
+  name: string;
+  type: string;
+  description: string;
+}
+
+/** Learner-safe documentation for one bounded host or simulator function. */
+export interface MissionFunctionReferenceV1 {
+  id: string;
+  signature: string;
+  summary: string;
+  parameters: MissionFunctionParameterV1[];
+  effect: string;
+  example: string;
+}
+
 /** The only mission projection safe to return to a learner. */
 export interface LearnerMissionAuthoringV1 {
   estimatedMinutes: number;
@@ -400,6 +416,7 @@ export interface LearnerMissionAuthoringV1 {
   evidenceRequirements: MissionEvidenceRequirementV1[];
   sideAdventures: MissionSideAdventureV1[];
   rewardBindings: MissionRewardBindingV1[];
+  functionReference?: MissionFunctionReferenceV1[];
 }
 
 /** Protected authoring data must never be projected through learner APIs. */
@@ -407,6 +424,50 @@ export interface FacilitatorMissionAuthoringV1 {
   artifacts: MissionArtifactReferenceV1[];
   protectedGoals: MissionAuthoringGoalV1[];
   prompts: string[];
+}
+
+export type MissionHardwareAcquisitionScopeV1 =
+  | "complete-path"
+  | "incremental";
+
+/** Per-item verification authority for a physical mission disclosure. */
+export interface MissionHardwareComponentDisclosureV1 {
+  itemId: string;
+  quantity: number;
+  acquisitionScope: MissionHardwareAcquisitionScopeV1;
+  verificationStatus: HardwareVerificationStatusV1;
+  compatibilityClaimed: boolean;
+  physicalCompletionEligible: boolean;
+}
+
+/** Adult and simulator boundaries that consuming workspaces must preserve. */
+export interface MissionPhysicalSafeguardsV1 {
+  adultAssemblyRequired: true;
+  adultAcknowledgementRequiredForExport: true;
+  websiteMayControlHardware: false;
+  simulatorCompletionAvailable: true;
+  simulatedBadgeId: string;
+  physicalBadgeId: string;
+  physicalBadgeRequiresAdultSignoff: true;
+  adultAssemblySteps: string[];
+  powerRequirements: string[];
+  cableRequirements: string[];
+  softwarePrerequisites: string[];
+  warnings: string[];
+  unrelatedHardwareNotRequired: string[];
+}
+
+/**
+ * Additive mission-level projection of one immutable catalog hardware manifest.
+ * It distinguishes the complete reusable path kit from this module's additions.
+ */
+export interface MissionHardwareDisclosureV1 {
+  requirementsVersion: string;
+  hardwareIncluded: false;
+  completePathItemIds: string[];
+  incrementalItemIds: string[];
+  components: MissionHardwareComponentDisclosureV1[];
+  safeguards: MissionPhysicalSafeguardsV1;
 }
 
 /** Additive authoring detail keyed to one immutable catalog mission. */
@@ -417,6 +478,7 @@ export interface MissionAuthoringBundleV1 {
   missionId: string;
   learner: LearnerMissionAuthoringV1;
   facilitator: FacilitatorMissionAuthoringV1;
+  hardware?: MissionHardwareDisclosureV1;
 }
 
 export interface MissionAuthoringValidationIssueV1 {
@@ -455,7 +517,14 @@ export interface MissionAuthoringValidationIssueV1 {
     | "personal-data-evidence"
     | "missing-side-adventure"
     | "mandatory-side-adventure"
-    | "invalid-reward";
+    | "invalid-reward"
+    | "hardware-module-mismatch"
+    | "hardware-requirements-version-mismatch"
+    | "hardware-item-mismatch"
+    | "hardware-verification-claim"
+    | "unsafe-physical-export"
+    | "invalid-hardware-reward"
+    | "invalid-function-reference";
   message: string;
   path: string;
 }

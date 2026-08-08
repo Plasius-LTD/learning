@@ -518,6 +518,175 @@ export function validateMissionAuthoringBundle(
     }
   }
 
+  if (learner.functionReference) {
+    const functionIds = new Set(
+      learner.functionReference.map((entry) => entry.id),
+    );
+    const invalidFunctionReference =
+      functionIds.size !== learner.functionReference.length
+      || learner.functionReference.length === 0
+      || learner.functionReference.some((entry) => {
+        const parameterNames = new Set(
+          entry.parameters.map((parameter) => parameter.name),
+        );
+        return entry.id.trim().length === 0
+          || entry.signature.trim().length === 0
+          || entry.summary.trim().length === 0
+          || entry.effect.trim().length === 0
+          || entry.example.trim().length === 0
+          || parameterNames.size !== entry.parameters.length
+          || entry.parameters.some(
+            (parameter) =>
+              parameter.name.trim().length === 0
+              || parameter.type.trim().length === 0
+              || parameter.description.trim().length === 0,
+          );
+      });
+    if (invalidFunctionReference) {
+      issues.push(
+        authoringIssue(
+          "invalid-function-reference",
+          "Function references require unique IDs, signatures, parameters, effects and examples.",
+          "learner.functionReference",
+        ),
+      );
+    }
+  }
+
+  const hardware = bundle.hardware;
+  if (hardware) {
+    if (
+      module.category !== "robot"
+      || module.hardware.mode !== "physical-first"
+      || !module.hardware.simulatorAvailable
+    ) {
+      issues.push(
+        authoringIssue(
+          "hardware-module-mismatch",
+          "Mission hardware disclosure requires a simulator-backed physical robot module.",
+          "hardware",
+        ),
+      );
+    }
+
+    if (hardware.requirementsVersion !== module.hardware.requirementsVersion) {
+      issues.push(
+        authoringIssue(
+          "hardware-requirements-version-mismatch",
+          `Hardware disclosure ${hardware.requirementsVersion} does not match catalog requirements ${module.hardware.requirementsVersion}.`,
+          "hardware.requirementsVersion",
+        ),
+      );
+    }
+
+    const catalogHardwareById = new Map(
+      module.hardware.items.map((item) => [item.id, item]),
+    );
+    const completePathIds = new Set(hardware.completePathItemIds);
+    const incrementalIds = new Set(hardware.incrementalItemIds);
+    const componentIds = new Set(hardware.components.map((component) => component.itemId));
+    const catalogIds = new Set(catalogHardwareById.keys());
+    const hasDuplicateHardwareIds =
+      completePathIds.size !== hardware.completePathItemIds.length
+      || incrementalIds.size !== hardware.incrementalItemIds.length
+      || componentIds.size !== hardware.components.length;
+    const hasUnknownOrMissingItems =
+      hasDuplicateHardwareIds
+      || completePathIds.size !== catalogIds.size
+      || componentIds.size !== catalogIds.size
+      || [...catalogIds].some(
+        (itemId) => !completePathIds.has(itemId) || !componentIds.has(itemId),
+      )
+      || [...incrementalIds].some((itemId) => !catalogIds.has(itemId));
+    const hasMismatchedComponent = hardware.components.some((component) => {
+      const catalogItem = catalogHardwareById.get(component.itemId);
+      const expectedScope = incrementalIds.has(component.itemId)
+        ? "incremental"
+        : "complete-path";
+      return !catalogItem
+        || component.quantity !== catalogItem.quantity
+        || component.acquisitionScope !== expectedScope;
+    });
+    if (hasUnknownOrMissingItems || hasMismatchedComponent) {
+      issues.push(
+        authoringIssue(
+          "hardware-item-mismatch",
+          "Complete, incremental and per-component hardware disclosures must match the immutable catalog manifest.",
+          "hardware.components",
+        ),
+      );
+    }
+
+    if (
+      hardware.components.some(
+        (component) =>
+          component.verificationStatus !== "verified"
+          && component.compatibilityClaimed,
+      )
+      || (
+        module.hardware.verificationStatus !== "verified"
+        && !module.hardware.publicSaleBlocked
+      )
+    ) {
+      issues.push(
+        authoringIssue(
+          "hardware-verification-claim",
+          "Unverified hardware cannot claim compatibility or unblock public physical sale.",
+          "hardware.components",
+        ),
+      );
+    }
+
+    const safeguards = hardware.safeguards;
+    if (
+      safeguards.adultAssemblyRequired !== true
+      || safeguards.adultAcknowledgementRequiredForExport !== true
+      || safeguards.websiteMayControlHardware !== false
+      || safeguards.simulatorCompletionAvailable !== true
+      || safeguards.physicalBadgeRequiresAdultSignoff !== true
+      || safeguards.adultAssemblySteps.length === 0
+      || safeguards.powerRequirements.length === 0
+      || safeguards.cableRequirements.length === 0
+      || safeguards.softwarePrerequisites.length === 0
+      || safeguards.warnings.length === 0
+      || hardware.components.some(
+        (component) =>
+          component.physicalCompletionEligible
+          && (
+            component.verificationStatus !== "verified"
+            || module.hardware.verificationStatus !== "verified"
+          ),
+      )
+    ) {
+      issues.push(
+        authoringIssue(
+          "unsafe-physical-export",
+          "Physical export and completion require adult acknowledgement, verified hardware and a website that never controls hardware.",
+          "hardware.safeguards",
+        ),
+      );
+    }
+
+    const simulatedBadge = module.badges.find(
+      (badge) => badge.id === safeguards.simulatedBadgeId,
+    );
+    const physicalBadge = module.badges.find(
+      (badge) => badge.id === safeguards.physicalBadgeId,
+    );
+    if (
+      simulatedBadge?.evidence === "adult-physical-signoff"
+      || physicalBadge?.evidence !== "adult-physical-signoff"
+    ) {
+      issues.push(
+        authoringIssue(
+          "invalid-hardware-reward",
+          "Simulated and physical badges must be distinct, and only the physical badge may require adult sign-off.",
+          "hardware.safeguards",
+        ),
+      );
+    }
+  }
+
   return issues;
 }
 
@@ -1653,6 +1822,400 @@ export const STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1: MissionAuthoringBu
       "Ask the learner to predict the squadron path and shield change before suggesting a JavaScript edit.",
       "Use the function reference and visible telemetry; never reveal protected numeric targets, pattern answers or expected source fragments.",
     ],
+  },
+};
+
+/**
+ * First Beacon Bot robotics mission. The learner completes a bounded simulator
+ * route; every physical item remains unverified, public-sale blocked and
+ * ineligible for physical completion until an adult bench-test authority says
+ * otherwise.
+ */
+export const BEACON_BOT_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.beacon-bot",
+  moduleVersion: "1.1.0",
+  missionId: "beacon-bot-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read what setVisibleSignal(), waitMs(), repeatSignal() and readIrReceiver() do in the private Beacon Bot simulator.",
+        artifactIds: ["beacon-bot-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict the visible signal order, elapsed time and simulated IR reading before the sequence runs.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the four documented C++-style calls to create one bounded rescue signal.",
+        artifactIds: ["beacon-bot-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private Beacon Bot simulator.",
+        artifactIds: ["beacon-bot-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic beacon checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted C++-style line with the first signal goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one signal, wait, repeat or simulated IR setting, then rerun and inspect the text telemetry.",
+        artifactIds: ["beacon-bot-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how the function calls created a timed signal and how the simulated receiver changed the result.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the simulated badge when the score and private-runtime safety check pass; physical completion remains adult-only.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "beacon-bot-m1-find-wait",
+        prompt: "Point to the documented call that controls how long a visible signal stays on.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "beacon-bot-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "beacon-bot-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "beacon-bot-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "beacon-bot-m1-starts",
+        statement: "The documented C++-style settings are valid and the private simulator starts.",
+        visibility: "visible",
+        criterionIds: ["beacon-bot-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "beacon-bot-m1-signal-sequence",
+        statement: "The beacon produces a bounded timed pattern and reports one simulated IR receiver state.",
+        visibility: "visible",
+        criterionIds: ["beacon-bot-goal-one", "beacon-bot-goal-two"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "beacon-bot-m1-private-runtime",
+        statement: "The program stays inside the private simulator and never accesses physical hardware, the network or browser storage.",
+        visibility: "visible",
+        criterionIds: ["beacon-bot-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "beacon-bot-m1-run-control",
+        description: "Start the private Beacon Bot signal simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["beacon-bot-m1-keyboard-run"],
+      },
+      {
+        id: "beacon-bot-m1-code-control",
+        description: "Edit the documented signal, timing, repeat and receiver calls.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "beacon-bot-m1-signal-colour",
+        description: "Observe the visible rescue signal without relying on colour alone.",
+        primaryMode: "colour",
+        alternativeIds: ["beacon-bot-m1-signal-telemetry"],
+      },
+      {
+        id: "beacon-bot-m1-signal-motion",
+        description: "Observe the bounded signal sequence and receiver state changes.",
+        primaryMode: "motion",
+        alternativeIds: ["beacon-bot-m1-signal-telemetry"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "beacon-bot-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same simulator.",
+      },
+      {
+        id: "beacon-bot-m1-signal-telemetry",
+        modes: ["text", "shape", "symbol", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read the signal name, step count, elapsed milliseconds and receiver state without colour or animation.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "beacon-bot-m1-assessment",
+        goalIds: [
+          "beacon-bot-m1-starts",
+          "beacon-bot-m1-signal-sequence",
+          "beacon-bot-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "beacon-bot-m1-explanation",
+        goalIds: ["beacon-bot-m1-signal-sequence"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "beacon-bot-m1-remix",
+        prompt: "Invent an original rescue-signal name and describe a text or shape cue that makes it understandable without colour.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "beacon-bot-m1-simulated-badge",
+        badgeId: "beacon-bot-mission-complete",
+        goalIds: [
+          "beacon-bot-m1-starts",
+          "beacon-bot-m1-signal-sequence",
+          "beacon-bot-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "beacon-bot-function-visible-signal",
+        signature: "setVisibleSignal(colour)",
+        summary: "Chooses the named visible signal used by the next bounded step.",
+        parameters: [
+          {
+            name: "colour",
+            type: "string",
+            description: "Use red, amber or green.",
+          },
+        ],
+        effect: "Updates the simulator's labelled light and equivalent shape cue without accessing a physical LED.",
+        example: "setVisibleSignal(\"green\");",
+      },
+      {
+        id: "beacon-bot-function-wait",
+        signature: "waitMs(duration)",
+        summary: "Adds one safe wait to the simulated signal timeline.",
+        parameters: [
+          {
+            name: "duration",
+            type: "whole number",
+            description: "A bounded number of milliseconds from 100 to 1000.",
+          },
+        ],
+        effect: "Advances simulated elapsed time; it never blocks the website or controls hardware.",
+        example: "waitMs(250);",
+      },
+      {
+        id: "beacon-bot-function-repeat",
+        signature: "repeatSignal(count)",
+        summary: "Repeats the current visible signal a safe number of times.",
+        parameters: [
+          {
+            name: "count",
+            type: "whole number",
+            description: "A bounded repeat count from 1 to 4.",
+          },
+        ],
+        effect: "Adds a fixed number of labelled signal steps to the private simulator timeline.",
+        example: "repeatSignal(3);",
+      },
+      {
+        id: "beacon-bot-function-ir-receiver",
+        signature: "readIrReceiver()",
+        summary: "Reads the simulator's fictional infrared receiver state.",
+        parameters: [],
+        effect: "Returns detected or clear from simulator state only; it cannot access a real sensor.",
+        example: "const receiverState = readIrReceiver();",
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "beacon-bot-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "beacon-bot-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "beacon-bot-m1-adult-hardware-guide",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "beacon-bot-m1-protected-resilience",
+        statement: "The simulator rejects unsupported signals, excessive waits or repeats and any hardware, network or storage request.",
+        visibility: "protected",
+        criterionIds: ["beacon-bot-edge-one", "beacon-bot-edge-two"],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to predict the labelled signal timeline before suggesting one bounded change.",
+      "Use the function reference and visible telemetry; never provide wiring or physical power advice to a learner.",
+      "Physical export stays unavailable until an adult acknowledges the exact manifest and every component has verified bench-test evidence.",
+    ],
+  },
+  hardware: {
+    requirementsVersion: "1.0.0",
+    hardwareIncluded: false,
+    completePathItemIds: [
+      "pico-2-w",
+      "breadboard",
+      "usb-data-cable",
+      "jumper-wires",
+      "led-pack",
+      "led-resistors",
+      "ir-pair",
+    ],
+    incrementalItemIds: ["led-pack", "led-resistors", "ir-pair"],
+    components: [
+      {
+        itemId: "pico-2-w",
+        quantity: 1,
+        acquisitionScope: "complete-path",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "breadboard",
+        quantity: 1,
+        acquisitionScope: "complete-path",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "usb-data-cable",
+        quantity: 1,
+        acquisitionScope: "complete-path",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "jumper-wires",
+        quantity: 12,
+        acquisitionScope: "complete-path",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "led-pack",
+        quantity: 3,
+        acquisitionScope: "incremental",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "led-resistors",
+        quantity: 3,
+        acquisitionScope: "incremental",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "ir-pair",
+        quantity: 1,
+        acquisitionScope: "incremental",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+    ],
+    safeguards: {
+      adultAssemblyRequired: true,
+      adultAcknowledgementRequiredForExport: true,
+      websiteMayControlHardware: false,
+      simulatorCompletionAvailable: true,
+      simulatedBadgeId: "beacon-bot-mission-complete",
+      physicalBadgeId: "beacon-bot-physical-builder",
+      physicalBadgeRequiresAdultSignoff: true,
+      adultAssemblySteps: [
+        "Confirm every exact component identity against the requirements manifest.",
+        "Assemble and inspect the disconnected breadboard circuit before learner use.",
+        "Run known-good recovery firmware and complete the adult bench-test record.",
+      ],
+      powerRequirements: [
+        "Use Pico USB power only for the published Beacon Bot reference circuit.",
+        "Disconnect USB power before changing any wiring.",
+      ],
+      cableRequirements: [
+        "One known data-capable USB cable compatible with the Pico 2 W.",
+        "Insulated male-to-male breadboard jumper wires matching the manifest quantity.",
+      ],
+      softwarePrerequisites: [
+        "Supported Pico SDK toolchain on Raspberry Pi OS or a documented desktop environment.",
+        "Known-good Beacon Bot recovery firmware prepared by an adult.",
+      ],
+      warnings: [
+        "Hardware is not included with the module.",
+        "No listed component currently claims compatibility or physical-completion eligibility.",
+        "The simulator and simulated badge remain available without physical equipment.",
+      ],
+      unrelatedHardwareNotRequired: [
+        "Camera Module 3",
+        "motor driver or motors",
+        "servo",
+      ],
+    },
   },
 };
 
