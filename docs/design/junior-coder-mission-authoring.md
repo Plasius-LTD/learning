@@ -4,7 +4,8 @@
 
 Implementation design for `Plasius-LTD/learning#3`,
 `Plasius-LTD/learning#18`, `Plasius-LTD/learning#20`,
-`Plasius-LTD/learning#22`, and `Plasius-LTD/learning#24`, under Stories
+`Plasius-LTD/learning#22`, `Plasius-LTD/learning#24`, and
+`Plasius-LTD/learning#26`, under Stories
 `Plasius-LTD/plasius-ltd-site#1714`, Feature
 `Plasius-LTD/plasius-ltd-site#1704`, and
 `Plasius-LTD/plasius-ltd-site#1715`, Feature
@@ -156,6 +157,14 @@ controls, an explicit play-button interaction, keyboard targeting and equivalent
 wave telemetry for reduced-motion learners. Numeric pass targets, expected
 source fragments and projectile edge checks remain in the facilitator
 projection.
+
+Rescue Crew Commander mission one adds a typed visual-programming and group
+behaviour bundle. It teaches helper jobs, routes, priorities and state through
+reorderable blocks with a synchronized JavaScript view. Labelled Move up/Move
+down controls provide the same outcome without dragging, while a text-and-symbol
+crew status view replaces motion. Protected assignment order, expected block
+sequences, duplicate-assignment checks and action limits remain in the
+facilitator projection.
 
 No bundle is a prerequisite for another sellable module. Each is an
 independently versioned authoring authority and a tested reference for its own

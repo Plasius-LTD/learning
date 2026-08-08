@@ -1205,6 +1205,238 @@ export const PADDLE_PULSE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
 };
 
 /**
+ * Original first mission for Rescue Crew Commander. The learner arranges a
+ * typed visual program and can inspect its synchronized JavaScript projection,
+ * while protected route and action-limit checks stay facilitator-only.
+ */
+export const RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.rescue-crew-commander",
+  moduleVersion: "1.1.0",
+  missionId: "rescue-crew-commander-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Meet the helper, job, route and priority blocks and read what each block does in the synchronized JavaScript view.",
+        artifactIds: ["rescue-crew-commander-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict which helper will act first and which safe route it will follow.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Arrange the visual blocks to give each helper one safe rescue job.",
+        artifactIds: ["rescue-crew-commander-m1-program"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to watch the crew follow the typed visual program.",
+        artifactIds: ["rescue-crew-commander-m1-program"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic crew checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted block with the first goal that did not pass and inspect the matching JavaScript line.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Move or replace one job, route or priority block, then run the mission again.",
+        artifactIds: ["rescue-crew-commander-m1-program"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how job order and priority changed the crew state and rescue result.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge when the score and private-simulator safety check pass.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "rescue-crew-commander-m1-find-priority",
+        prompt: "Point to the block that decides which helper acts first.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "rescue-crew-commander-m1-program",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "rescue-crew-commander-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "rescue-crew-commander-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "rescue-crew-commander-m1-starts",
+        statement: "The typed visual program is structurally valid and starts.",
+        visibility: "visible",
+        criterionIds: ["rescue-crew-commander-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "rescue-crew-commander-m1-safe-jobs",
+        statement: "Every helper receives one suitable job and the highest-priority rescue starts first.",
+        visibility: "visible",
+        criterionIds: [
+          "rescue-crew-commander-goal-one",
+          "rescue-crew-commander-goal-two",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "rescue-crew-commander-m1-private-runtime",
+        statement: "The crew stays inside the private simulator and follows only host-provided actions.",
+        visibility: "visible",
+        criterionIds: ["rescue-crew-commander-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "rescue-crew-commander-m1-reorder-blocks",
+        description: "Change the order of typed job, route and priority blocks.",
+        primaryMode: "drag",
+        alternativeIds: ["rescue-crew-commander-m1-button-reorder"],
+      },
+      {
+        id: "rescue-crew-commander-m1-run-control",
+        description: "Start the private rescue-crew simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["rescue-crew-commander-m1-keyboard-run"],
+      },
+      {
+        id: "rescue-crew-commander-m1-crew-motion",
+        description: "Observe helpers change state and follow their assigned routes.",
+        primaryMode: "motion",
+        alternativeIds: ["rescue-crew-commander-m1-status-view"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "rescue-crew-commander-m1-button-reorder",
+        modes: ["keyboard", "pointer"],
+        equivalentOutcome: true,
+        description: "Use labelled Move up and Move down buttons instead of dragging a visual block.",
+      },
+      {
+        id: "rescue-crew-commander-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same preview.",
+      },
+      {
+        id: "rescue-crew-commander-m1-status-view",
+        modes: ["text", "symbol", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read each helper's job, route, priority and state from the status list without animation or colour dependence.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "rescue-crew-commander-m1-assessment",
+        goalIds: [
+          "rescue-crew-commander-m1-starts",
+          "rescue-crew-commander-m1-safe-jobs",
+          "rescue-crew-commander-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "rescue-crew-commander-m1-explanation",
+        goalIds: ["rescue-crew-commander-m1-safe-jobs"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "rescue-crew-commander-m1-remix",
+        prompt: "Invent an original helper role and explain which safe route and priority it should receive.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "rescue-crew-commander-m1-badge",
+        badgeId: "rescue-crew-commander-mission-complete",
+        goalIds: [
+          "rescue-crew-commander-m1-starts",
+          "rescue-crew-commander-m1-safe-jobs",
+          "rescue-crew-commander-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "rescue-crew-commander-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "rescue-crew-commander-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "rescue-crew-commander-m1-protected-resilience",
+        statement: "The interpreter rejects unknown blocks, duplicate assignments and programs over the action limit.",
+        visibility: "protected",
+        criterionIds: [
+          "rescue-crew-commander-edge-one",
+          "rescue-crew-commander-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner which helper should act first before suggesting a block change.",
+      "Use the block reference, status list and visible goal; never reveal the protected assignment order or expected block sequence.",
+    ],
+  },
+};
+
+/**
  * Original first mission for Meteor Shield. Learners tune documented targeting,
  * energy and timing controls without receiving protected resource targets or
  * projectile answers.

@@ -5,6 +5,7 @@ import {
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
+  RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
   SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
@@ -33,6 +34,10 @@ const meteorShield = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "meteor-shield",
 )!;
 
+const rescueCrewCommander = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "rescue-crew-commander",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -44,6 +49,64 @@ function issueCodes(bundle: MissionAuthoringBundleV1): string[] {
 }
 
 describe("Junior Coder mission authoring", () => {
+  it("publishes an accessible Rescue Crew Commander visual-programming mission", () => {
+    const bundle = RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle.moduleId).toBe("junior-coder.rescue-crew-commander");
+    expect(bundle.moduleVersion).toBe("1.1.0");
+    expect(bundle.missionId).toBe("rescue-crew-commander-mission-1");
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.stages.find((stage) => stage.kind === "run")?.instruction)
+      .toContain("Run action button");
+    expect(bundle.learner.interactions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "rescue-crew-commander-m1-reorder-blocks",
+          primaryMode: "drag",
+          alternativeIds: ["rescue-crew-commander-m1-button-reorder"],
+        }),
+        expect.objectContaining({
+          id: "rescue-crew-commander-m1-run-control",
+          primaryMode: "pointer",
+          alternativeIds: ["rescue-crew-commander-m1-keyboard-run"],
+        }),
+        expect.objectContaining({
+          id: "rescue-crew-commander-m1-crew-motion",
+          primaryMode: "motion",
+          alternativeIds: ["rescue-crew-commander-m1-status-view"],
+        }),
+      ]),
+    );
+    expect(
+      bundle.learner.accessibilityAlternatives.find(
+        (alternative) =>
+          alternative.id === "rescue-crew-commander-m1-button-reorder",
+      ),
+    ).toEqual(
+      expect.objectContaining({
+        modes: expect.arrayContaining(["keyboard", "pointer"]),
+        equivalentOutcome: true,
+      }),
+    );
+    expect(
+      bundle.learner.artifacts.every(
+        (artifact) =>
+          artifact.audience === "learner" && !artifact.solutionBearing,
+      ),
+    ).toBe(true);
+    expect(
+      bundle.facilitator.artifacts.every(
+        (artifact) => artifact.audience === "facilitator",
+      ),
+    ).toBe(true);
+    expect(validateMissionAuthoringBundle(bundle, rescueCrewCommander)).toEqual([]);
+    expect(() =>
+      assertValidMissionAuthoringBundle(bundle, rescueCrewCommander),
+    ).not.toThrow();
+  });
+
   it("publishes an accessible Meteor Shield targeting-and-resources mission", () => {
     const bundle = METEOR_SHIELD_MISSION_ONE_AUTHORING_V1;
 

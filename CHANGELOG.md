@@ -6,6 +6,10 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Rescue Crew Commander mission-one learner/facilitator
+    authoring bundle with typed visual job, route and priority blocks, a
+    synchronized JavaScript view, non-drag ordering controls, reduced-motion
+    status output and evidence-bound rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +19,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept protected crew assignments, expected block sequences and interpreter
+    edge checks in the facilitator projection while completion remains
+    deterministic, AI-independent and personal-data-free.
 
 ## [0.2.5] - 2026-08-08
 
