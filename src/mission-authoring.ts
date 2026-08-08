@@ -1205,6 +1205,232 @@ export const PADDLE_PULSE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
 };
 
 /**
+ * Original first mission for Pixel Trail Challenge. Learners use documented,
+ * bounded Python host functions without receiving protected coordinates,
+ * expected source fragments or list/collision edge answers.
+ */
+export const PIXEL_TRAIL_CHALLENGE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.pixel-trail-challenge",
+  moduleVersion: "1.1.0",
+  missionId: "pixel-trail-challenge-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read what set_direction(), set_trail_limit() and place_energy_orb() do in the private Python preview.",
+        artifactIds: ["pixel-trail-challenge-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict the next grid square and how the trail list will change after one move.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the three documented Python calls so the pixel follows a safe trail toward the energy orb.",
+        artifactIds: ["pixel-trail-challenge-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private grid preview.",
+        artifactIds: ["pixel-trail-challenge-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic trail checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted Python line with the first goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one direction, trail or orb setting, run again and inspect the position and list-length telemetry.",
+        artifactIds: ["pixel-trail-challenge-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how the direction changed the position and why the trail list kept only recent squares.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge when the score and private-runtime safety check pass.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "pixel-trail-challenge-m1-find-direction",
+        prompt: "Point to the Python call that chooses the pixel's next direction.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "pixel-trail-challenge-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "pixel-trail-challenge-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "pixel-trail-challenge-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "pixel-trail-challenge-m1-starts",
+        statement: "The Python settings are valid and the private grid preview starts.",
+        visibility: "visible",
+        criterionIds: ["pixel-trail-challenge-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "pixel-trail-challenge-m1-safe-trail",
+        statement: "The pixel moves in the chosen direction, keeps a bounded trail list and reaches the energy orb.",
+        visibility: "visible",
+        criterionIds: [
+          "pixel-trail-challenge-goal-one",
+          "pixel-trail-challenge-goal-two",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "pixel-trail-challenge-m1-private-runtime",
+        statement: "The program stays inside the private Python worker and host-provided grid API.",
+        visibility: "visible",
+        criterionIds: ["pixel-trail-challenge-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "pixel-trail-challenge-m1-run-control",
+        description: "Start the private Python grid simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["pixel-trail-challenge-m1-keyboard-run"],
+      },
+      {
+        id: "pixel-trail-challenge-m1-direction-control",
+        description: "Change the active movement direction with labelled arrow controls or arrow keys.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "pixel-trail-challenge-m1-trail-motion",
+        description: "Observe the pixel, recent trail squares and energy orb on the grid.",
+        primaryMode: "motion",
+        alternativeIds: ["pixel-trail-challenge-m1-telemetry"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "pixel-trail-challenge-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same preview.",
+      },
+      {
+        id: "pixel-trail-challenge-m1-telemetry",
+        modes: ["text", "shape", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read row, column, direction, trail length and orb status without animation or colour dependence.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "pixel-trail-challenge-m1-assessment",
+        goalIds: [
+          "pixel-trail-challenge-m1-starts",
+          "pixel-trail-challenge-m1-safe-trail",
+          "pixel-trail-challenge-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "pixel-trail-challenge-m1-explanation",
+        goalIds: ["pixel-trail-challenge-m1-safe-trail"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "pixel-trail-challenge-m1-remix",
+        prompt: "Invent an original energy-orb symbol and describe a new safe grid rule for collecting it.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "pixel-trail-challenge-m1-badge",
+        badgeId: "pixel-trail-challenge-mission-complete",
+        goalIds: [
+          "pixel-trail-challenge-m1-starts",
+          "pixel-trail-challenge-m1-safe-trail",
+          "pixel-trail-challenge-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "pixel-trail-challenge-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "pixel-trail-challenge-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "pixel-trail-challenge-m1-protected-resilience",
+        statement: "The worker rejects invalid directions, clamps trail capacity and terminates bounded grid simulations before list or collision abuse.",
+        visibility: "protected",
+        criterionIds: [
+          "pixel-trail-challenge-edge-one",
+          "pixel-trail-challenge-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to predict the next row and column before suggesting a Python edit.",
+      "Use the function reference and visible telemetry; never reveal protected coordinates, numeric targets or expected source fragments.",
+    ],
+  },
+};
+
+/**
  * Original first mission for Rescue Crew Commander. The learner arranges a
  * typed visual program and can inspect its synchronized JavaScript projection,
  * while protected route and action-limit checks stay facilitator-only.

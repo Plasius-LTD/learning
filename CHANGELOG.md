@@ -6,6 +6,10 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Pixel Trail Challenge mission-one learner/facilitator
+    authoring bundle with documented Python direction, trail-list and energy-orb
+    controls, keyboard input, reduced-motion telemetry and evidence-bound
+    rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +19,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept Pixel Trail Challenge coordinates, expected Python fragments and
+    list/collision edge checks in the facilitator projection while completion
+    remains deterministic, AI-independent and personal-data-free.
 
 ## [0.2.6] - 2026-08-08
 

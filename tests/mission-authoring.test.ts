@@ -5,6 +5,7 @@ import {
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
+  PIXEL_TRAIL_CHALLENGE_MISSION_ONE_AUTHORING_V1,
   RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
@@ -38,6 +39,10 @@ const rescueCrewCommander = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "rescue-crew-commander",
 )!;
 
+const pixelTrailChallenge = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "pixel-trail-challenge",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -49,6 +54,63 @@ function issueCodes(bundle: MissionAuthoringBundleV1): string[] {
 }
 
 describe("Junior Coder mission authoring", () => {
+  it("publishes an accessible Pixel Trail Challenge Python mission", () => {
+    const bundle = PIXEL_TRAIL_CHALLENGE_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle.moduleId).toBe("junior-coder.pixel-trail-challenge");
+    expect(bundle.moduleVersion).toBe("1.1.0");
+    expect(bundle.missionId).toBe("pixel-trail-challenge-mission-1");
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.stages.find((stage) => stage.kind === "run")?.instruction)
+      .toContain("Run action button");
+    expect(bundle.learner.interactions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "pixel-trail-challenge-m1-run-control",
+          primaryMode: "pointer",
+          alternativeIds: ["pixel-trail-challenge-m1-keyboard-run"],
+        }),
+        expect.objectContaining({
+          id: "pixel-trail-challenge-m1-direction-control",
+          primaryMode: "keyboard",
+        }),
+        expect.objectContaining({
+          id: "pixel-trail-challenge-m1-trail-motion",
+          primaryMode: "motion",
+          alternativeIds: ["pixel-trail-challenge-m1-telemetry"],
+        }),
+      ]),
+    );
+    expect(
+      bundle.learner.accessibilityAlternatives.find(
+        (alternative) =>
+          alternative.id === "pixel-trail-challenge-m1-telemetry",
+      ),
+    ).toEqual(
+      expect.objectContaining({
+        modes: expect.arrayContaining(["text", "reduced-motion"]),
+        equivalentOutcome: true,
+      }),
+    );
+    expect(
+      bundle.learner.artifacts.every(
+        (artifact) =>
+          artifact.audience === "learner" && !artifact.solutionBearing,
+      ),
+    ).toBe(true);
+    expect(
+      bundle.facilitator.artifacts.every(
+        (artifact) => artifact.audience === "facilitator",
+      ),
+    ).toBe(true);
+    expect(validateMissionAuthoringBundle(bundle, pixelTrailChallenge)).toEqual([]);
+    expect(() =>
+      assertValidMissionAuthoringBundle(bundle, pixelTrailChallenge),
+    ).not.toThrow();
+  });
+
   it("publishes an accessible Rescue Crew Commander visual-programming mission", () => {
     const bundle = RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1;
 
