@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.6] - 2026-08-08
+
+- **Added**
+  - (placeholder)
   - Added the versioned Rescue Crew Commander mission-one learner/facilitator
     authoring bundle with typed visual job, route and priority blocks, a
     synchronized JavaScript view, non-drag ordering controls, reduced-motion
@@ -191,3 +205,4 @@ All notable changes to this project are documented in this file.
 [0.2.3]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.3
 [0.2.4]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.4
 [0.2.5]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.5
+[0.2.6]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.6
