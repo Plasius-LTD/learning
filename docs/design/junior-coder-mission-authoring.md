@@ -5,7 +5,7 @@
 Implementation design for `Plasius-LTD/learning#3`,
 `Plasius-LTD/learning#18`, `Plasius-LTD/learning#20`,
 `Plasius-LTD/learning#22`, `Plasius-LTD/learning#24`, and
-`Plasius-LTD/learning#26`, under Stories
+`Plasius-LTD/learning#26`, and `Plasius-LTD/learning#28`, under Stories
 `Plasius-LTD/plasius-ltd-site#1714`, Feature
 `Plasius-LTD/plasius-ltd-site#1704`, and
 `Plasius-LTD/plasius-ltd-site#1715`, Feature
@@ -165,6 +165,13 @@ down controls provide the same outcome without dragging, while a text-and-symbol
 crew status view replaces motion. Protected assignment order, expected block
 sequences, duplicate-assignment checks and action limits remain in the
 facilitator projection.
+
+Pixel Trail Challenge mission one adds the first Python list-and-grid game
+bundle. It teaches documented `set_direction()`, `set_trail_limit()` and
+`place_energy_orb()` calls, keyboard direction controls and equivalent position,
+trail-length and orb-status telemetry for reduced-motion learners. Protected
+coordinates, numeric targets, expected source fragments and bounded list or
+collision checks remain in the facilitator projection.
 
 No bundle is a prerequisite for another sellable module. Each is an
 independently versioned authoring authority and a tested reference for its own
