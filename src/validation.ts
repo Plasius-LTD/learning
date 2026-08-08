@@ -223,6 +223,7 @@ export {
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
   SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
+  STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
   validateMissionAuthoringBundle,
 } from "./mission-authoring.js";

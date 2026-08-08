@@ -70,6 +70,7 @@ import {
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
   SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
+  STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
 } from "@plasius/learning";
 
@@ -94,6 +95,9 @@ const rescueCrewCommander = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const pixelTrailChallenge = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "pixel-trail-challenge",
 );
+const starDefenderSquadron = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "star-defender-squadron",
+);
 
 if (
   !roadHopper ||
@@ -102,7 +106,8 @@ if (
   !paddlePulse ||
   !meteorShield ||
   !rescueCrewCommander ||
-  !pixelTrailChallenge
+  !pixelTrailChallenge ||
+  !starDefenderSquadron
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -134,6 +139,10 @@ assertValidMissionAuthoringBundle(
 assertValidMissionAuthoringBundle(
   PIXEL_TRAIL_CHALLENGE_MISSION_ONE_AUTHORING_V1,
   pixelTrailChallenge,
+);
+assertValidMissionAuthoringBundle(
+  STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
+  starDefenderSquadron,
 );
 ```
 
