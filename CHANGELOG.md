@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.7] - 2026-08-08
+
+- **Added**
+  - (placeholder)
   - Added the versioned Pixel Trail Challenge mission-one learner/facilitator
     authoring bundle with documented Python direction, trail-list and energy-orb
     controls, keyboard input, reduced-motion telemetry and evidence-bound
@@ -213,3 +227,4 @@ All notable changes to this project are documented in this file.
 [0.2.4]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.4
 [0.2.5]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.5
 [0.2.6]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.6
+[0.2.7]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.7
