@@ -6,6 +6,10 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Meteor Shield mission-one learner/facilitator authoring
+    bundle with documented targeting, shield-energy and launch-timing concepts,
+    keyboard-equivalent controls, reduced-motion telemetry and evidence-bound
+    rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +19,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept Meteor Shield numeric targets, expected source fragments and projectile
+    edge checks in the facilitator projection while completion remains
+    deterministic, AI-independent and personal-data-free.
 
 ## [0.2.4] - 2026-08-08
 

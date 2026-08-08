@@ -1204,6 +1204,232 @@ export const PADDLE_PULSE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   },
 };
 
+/**
+ * Original first mission for Meteor Shield. Learners tune documented targeting,
+ * energy and timing controls without receiving protected resource targets or
+ * projectile answers.
+ */
+export const METEOR_SHIELD_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.meteor-shield",
+  moduleVersion: "1.1.0",
+  missionId: "meteor-shield-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read how target column, shield energy and launch delay change a rescue defence.",
+        artifactIds: ["meteor-shield-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict which rescue base the shield will protect first.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the three documented settings in the starter JavaScript.",
+        artifactIds: ["meteor-shield-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private meteor-wave preview.",
+        artifactIds: ["meteor-shield-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic defence checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted setting with the first goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one setting, run again and observe the energy and target telemetry.",
+        artifactIds: ["meteor-shield-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how targeting and launch timing affected the remaining shield energy.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge when the score and safety check pass.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "meteor-shield-m1-find-energy",
+        prompt: "Point to the setting that limits how many shields can launch.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "meteor-shield-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "meteor-shield-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "meteor-shield-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "meteor-shield-m1-starts",
+        statement: "The JavaScript settings are valid and the private preview starts.",
+        visibility: "visible",
+        criterionIds: ["meteor-shield-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "meteor-shield-m1-resource-defence",
+        statement: "A shield launches toward the selected meteor while keeping enough energy for the next wave.",
+        visibility: "visible",
+        criterionIds: [
+          "meteor-shield-goal-one",
+          "meteor-shield-goal-two",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "meteor-shield-m1-private-runtime",
+        statement: "The game stays inside the private educational preview boundary.",
+        visibility: "visible",
+        criterionIds: ["meteor-shield-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "meteor-shield-m1-run-control",
+        description: "Start the private meteor-wave simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["meteor-shield-m1-keyboard-run"],
+      },
+      {
+        id: "meteor-shield-m1-target-control",
+        description: "Move the targeting reticle between rescue columns and launch a shield.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "meteor-shield-m1-wave-motion",
+        description: "Observe meteors and shield pulses crossing the rescue zone.",
+        primaryMode: "motion",
+        alternativeIds: ["meteor-shield-m1-telemetry"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "meteor-shield-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same preview.",
+      },
+      {
+        id: "meteor-shield-m1-telemetry",
+        modes: ["text", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Use target column, wave, distance and energy text instead of projectile animation.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "meteor-shield-m1-assessment",
+        goalIds: [
+          "meteor-shield-m1-starts",
+          "meteor-shield-m1-resource-defence",
+          "meteor-shield-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "meteor-shield-m1-explanation",
+        goalIds: ["meteor-shield-m1-resource-defence"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "meteor-shield-m1-remix",
+        prompt: "Invent an original rescue-base signal and describe the safe game event that activates it.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "meteor-shield-m1-badge",
+        badgeId: "meteor-shield-mission-complete",
+        goalIds: [
+          "meteor-shield-m1-starts",
+          "meteor-shield-m1-resource-defence",
+          "meteor-shield-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "meteor-shield-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "meteor-shield-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "meteor-shield-m1-protected-resilience",
+        statement: "The runtime clamps unsafe resources and terminates bounded projectile simulations.",
+        visibility: "protected",
+        criterionIds: [
+          "meteor-shield-edge-one",
+          "meteor-shield-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner which setting controls a limited resource before suggesting a code edit.",
+      "Use visible telemetry and the function reference; never reveal protected numeric targets or expected source fragments.",
+    ],
+  },
+};
+
 /** Original first-mission exemplar; no protected content appears in learner data. */
 export const ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
