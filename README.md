@@ -65,6 +65,7 @@ import {
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
+  RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
   SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
@@ -86,8 +87,18 @@ const paddlePulse = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const meteorShield = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "meteor-shield",
 );
+const rescueCrewCommander = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "rescue-crew-commander",
+);
 
-if (!roadHopper || !robotMaze || !skywing || !paddlePulse || !meteorShield) {
+if (
+  !roadHopper ||
+  !robotMaze ||
+  !skywing ||
+  !paddlePulse ||
+  !meteorShield ||
+  !rescueCrewCommander
+) {
   throw new Error("Junior Coder module is missing");
 }
 
@@ -110,6 +121,10 @@ assertValidMissionAuthoringBundle(
 assertValidMissionAuthoringBundle(
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
   meteorShield,
+);
+assertValidMissionAuthoringBundle(
+  RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
+  rescueCrewCommander,
 );
 ```
 
