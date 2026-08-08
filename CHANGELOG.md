@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.4] - 2026-08-08
+
+- **Added**
+  - (placeholder)
   - Added the versioned Paddle Pulse mission-one learner/facilitator authoring
     bundle with documented paddle, ball-speed and bounce-angle concepts,
     keyboard-equivalent controls, reduced-motion telemetry and evidence-bound
@@ -147,3 +161,4 @@ All notable changes to this project are documented in this file.
 [0.2.1]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.1
 [0.2.2]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.2
 [0.2.3]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.3
+[0.2.4]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.4
