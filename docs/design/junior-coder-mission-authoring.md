@@ -143,6 +143,12 @@ visible flight, gate and private-runtime goals without exposing the protected
 numeric target values, expected source fragments or resilience checks. The
 facilitator projection owns those solution-bearing details.
 
+Paddle Pulse mission one adds an original collision-and-angle game bundle. It
+teaches documented paddle-width, ball-speed and bounce-angle controls, an
+explicit play-button interaction, keyboard paddle movement and equivalent text
+telemetry for reduced-motion learners. Numeric pass targets, expected source
+fragments and collision edge checks remain in the facilitator projection.
+
 No bundle is a prerequisite for another sellable module. Each is an
 independently versioned authoring authority and a tested reference for its own
 module adapter.

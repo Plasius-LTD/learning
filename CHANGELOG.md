@@ -6,6 +6,10 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Paddle Pulse mission-one learner/facilitator authoring
+    bundle with documented paddle, ball-speed and bounce-angle concepts,
+    keyboard-equivalent controls, reduced-motion telemetry and evidence-bound
+    rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +19,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept Paddle Pulse numeric targets, expected source fragments and collision
+    edge checks in the facilitator projection while completion remains
+    deterministic, AI-independent and personal-data-free.
 
 ## [0.2.3] - 2026-08-01
 
