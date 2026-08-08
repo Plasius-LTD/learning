@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.8] - 2026-08-08
+
+- **Added**
+  - (placeholder)
   - Added the versioned Star Defender Squadron mission-one learner/facilitator
     authoring bundle with documented JavaScript entity, wave-pattern, shield
     health and rescue-projectile concepts, an action-icon run control,
@@ -236,3 +250,4 @@ All notable changes to this project are documented in this file.
 [0.2.5]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.5
 [0.2.6]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.6
 [0.2.7]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.7
+[0.2.8]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.8
