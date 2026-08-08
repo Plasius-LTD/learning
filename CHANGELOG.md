@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.9] - 2026-08-08
+
+- **Added**
+  - (placeholder)
   - Added the versioned Beacon Bot mission-one learner/facilitator bundle,
     documented bounded C++-style simulator functions, complete and incremental
     hardware disclosure, simulator evidence and separate physical safeguards.
@@ -257,3 +271,4 @@ All notable changes to this project are documented in this file.
 [0.2.6]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.6
 [0.2.7]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.7
 [0.2.8]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.8
+[0.2.9]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.9

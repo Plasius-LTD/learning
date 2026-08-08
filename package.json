@@ -1,6 +1,6 @@
 {
   "name": "@plasius/learning",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Versioned learning module, assessment, entitlement, and reward contracts for the Plasius ecosystem",
   "type": "module",
   "sideEffects": false,
