@@ -63,6 +63,7 @@ the exact catalog module that owns its rubric, mission and badges.
 ```ts
 import {
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
+  METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
@@ -82,8 +83,11 @@ const skywing = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const paddlePulse = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "paddle-pulse",
 );
+const meteorShield = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "meteor-shield",
+);
 
-if (!roadHopper || !robotMaze || !skywing || !paddlePulse) {
+if (!roadHopper || !robotMaze || !skywing || !paddlePulse || !meteorShield) {
   throw new Error("Junior Coder module is missing");
 }
 
@@ -102,6 +106,10 @@ assertValidMissionAuthoringBundle(
 assertValidMissionAuthoringBundle(
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
   paddlePulse,
+);
+assertValidMissionAuthoringBundle(
+  METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
+  meteorShield,
 );
 ```
 

@@ -3,7 +3,8 @@
 ## Status
 
 Implementation design for `Plasius-LTD/learning#3`,
-`Plasius-LTD/learning#18`, and `Plasius-LTD/learning#20`, under Stories
+`Plasius-LTD/learning#18`, `Plasius-LTD/learning#20`,
+`Plasius-LTD/learning#22`, and `Plasius-LTD/learning#24`, under Stories
 `Plasius-LTD/plasius-ltd-site#1714`, Feature
 `Plasius-LTD/plasius-ltd-site#1704`, and
 `Plasius-LTD/plasius-ltd-site#1715`, Feature
@@ -148,6 +149,13 @@ teaches documented paddle-width, ball-speed and bounce-angle controls, an
 explicit play-button interaction, keyboard paddle movement and equivalent text
 telemetry for reduced-motion learners. Numeric pass targets, expected source
 fragments and collision edge checks remain in the facilitator projection.
+
+Meteor Shield mission one adds an original targeting-and-limited-resources game
+bundle. It teaches documented target-column, shield-energy and launch-delay
+controls, an explicit play-button interaction, keyboard targeting and equivalent
+wave telemetry for reduced-motion learners. Numeric pass targets, expected
+source fragments and projectile edge checks remain in the facilitator
+projection.
 
 No bundle is a prerequisite for another sellable module. Each is an
 independently versioned authoring authority and a tested reference for its own
