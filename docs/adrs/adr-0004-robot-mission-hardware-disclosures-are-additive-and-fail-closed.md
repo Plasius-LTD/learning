@@ -25,6 +25,11 @@ Physical export requires adult acknowledgement, the website may never control
 hardware, and the physical badge must retain adult-signoff evidence. Simulator
 completion and its badge remain available independently.
 
+Camera-equipped modules additionally keep every frame and calibration image on
+the family-owned Raspberry Pi. Their browser projections may contain bounded
+authored labels and simulator telemetry only: no frame, camera stream, serial
+port, network bridge or motor authority crosses into the site or an agent.
+
 ## Consequences
 
 - Published catalog paths and module records remain unchanged.
@@ -37,7 +42,7 @@ completion and its badge remain available independently.
 
 ## Rollout
 
-Beacon Bot consumers must compose the catalog capability with
+Robotics consumers must compose the catalog capability with
 `learning.junior-coder.workspace.enabled` and the default-off
 `learning.junior-coder.robotics.enabled` flag. Ignoring the new bundle or
 disabling the robotics flag is the rollback path.

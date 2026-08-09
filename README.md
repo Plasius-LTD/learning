@@ -69,6 +69,7 @@ import {
   OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1,
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
   PIXEL_TRAIL_CHALLENGE_MISSION_ONE_AUTHORING_V1,
+  RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1,
   RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
@@ -114,6 +115,9 @@ const danceRover = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const obstacleExplorer = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "obstacle-explorer",
 );
+const rainbowRescueRover = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "rainbow-rescue-rover",
+);
 
 if (
   !roadHopper ||
@@ -127,7 +131,8 @@ if (
   !beaconBot ||
   !servoCreature ||
   !danceRover ||
-  !obstacleExplorer
+  !obstacleExplorer ||
+  !rainbowRescueRover
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -180,6 +185,10 @@ assertValidMissionAuthoringBundle(
   OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1,
   obstacleExplorer,
 );
+assertValidMissionAuthoringBundle(
+  RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1,
+  rainbowRescueRover,
+);
 ```
 
 ## Contract rules
@@ -217,6 +226,11 @@ assertValidMissionAuthoringBundle(
 - Obstacle Explorer documents bounded simulated IR readings, Boolean route
   decisions, recovery attempts, watchdog timing and fail-safe stop while every
   rover and sensor remains pending adult calibration and lifted-wheel testing.
+- Rainbow Rescue Rover documents simulated colour, target-zone, serial-command,
+  heartbeat and fail-safe-stop planning while Camera Module 3 frames stay on
+  the family Raspberry Pi. The website receives no frames, opens no camera or
+  serial port, never activates motors, and every physical component remains
+  pending adult bench verification.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),

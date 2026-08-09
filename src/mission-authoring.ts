@@ -3346,6 +3346,365 @@ export const OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV
   },
 };
 
+export const RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.rainbow-rescue-rover",
+  moduleVersion: "1.1.0",
+  missionId: "rainbow-rescue-rover-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read what detectColour(), locateTarget(), planSerialCommand(), armHeartbeat() and failSafeStop() do in the private Rainbow Rescue Rover simulator.",
+        artifactIds: ["rainbow-rescue-rover-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict the simulated colour, target zone, bounded command, heartbeat time and final stopped state before the rescue plan runs.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the five documented integration calls to recognise one simulated target and plan one safe serial command with a heartbeat and fail-safe stop.",
+        artifactIds: ["rainbow-rescue-rover-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private Rainbow Rescue Rover integration simulator.",
+        artifactIds: ["rainbow-rescue-rover-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic colour, location, command, heartbeat and stop checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted integration-plan line with the first rescue goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one bounded colour, target zone, command, heartbeat or stop call, then rerun and inspect the text telemetry.",
+        artifactIds: ["rainbow-rescue-rover-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how family-local colour evidence became a bounded command plan and why the heartbeat and fail-safe stop protect every uncertain state.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the simulated badge when the score and mandatory privacy and safety checks pass; physical completion remains adult-only.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "rainbow-rescue-rover-m1-find-privacy",
+        prompt: "Find the rule that keeps Camera Module 3 frames on the family Raspberry Pi and explain why only bounded command labels may leave it.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "rainbow-rescue-rover-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "rainbow-rescue-rover-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "rainbow-rescue-rover-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "rainbow-rescue-rover-m1-starts",
+        statement: "The documented integration-plan settings are valid and the private simulator starts.",
+        visibility: "visible",
+        criterionIds: ["rainbow-rescue-rover-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "rainbow-rescue-rover-m1-target-command",
+        statement: "The rover plan recognises a green simulated target in the centre and selects one bounded forward command.",
+        visibility: "visible",
+        criterionIds: ["rainbow-rescue-rover-goal-one", "rainbow-rescue-rover-goal-two"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "rainbow-rescue-rover-m1-private-runtime",
+        statement: "The plan arms a heartbeat, ends fail-safe stopped and never accesses a camera, serial port, motor, network or browser storage.",
+        visibility: "visible",
+        criterionIds: ["rainbow-rescue-rover-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "rainbow-rescue-rover-m1-run-control",
+        description: "Start the private Rainbow Rescue Rover integration simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["rainbow-rescue-rover-m1-keyboard-run"],
+      },
+      {
+        id: "rainbow-rescue-rover-m1-code-control",
+        description: "Edit the documented colour, target, command, heartbeat and stop calls.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "rainbow-rescue-rover-m1-target-preview",
+        description: "Observe the simulated colour target, command route and stopped state.",
+        primaryMode: "colour",
+        alternativeIds: ["rainbow-rescue-rover-m1-telemetry"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "rainbow-rescue-rover-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same simulator.",
+      },
+      {
+        id: "rainbow-rescue-rover-m1-telemetry",
+        modes: ["text", "shape", "symbol", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read the colour name, target zone, command, heartbeat milliseconds and stopped state without camera access, animation or colour alone.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "rainbow-rescue-rover-m1-assessment",
+        goalIds: [
+          "rainbow-rescue-rover-m1-starts",
+          "rainbow-rescue-rover-m1-target-command",
+          "rainbow-rescue-rover-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "rainbow-rescue-rover-m1-explanation",
+        goalIds: ["rainbow-rescue-rover-m1-target-command"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "rainbow-rescue-rover-m1-remix",
+        prompt: "Invent an original colour rescue rule and add a text, shape or symbol cue that explains the command without camera frames, motion or colour alone.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "rainbow-rescue-rover-m1-simulated-badge",
+        badgeId: "rainbow-rescue-rover-mission-complete",
+        goalIds: [
+          "rainbow-rescue-rover-m1-starts",
+          "rainbow-rescue-rover-m1-target-command",
+          "rainbow-rescue-rover-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "rainbow-rescue-rover-function-detect",
+        signature: "detectColour(colour)",
+        summary: "Selects one labelled colour result in the private simulator.",
+        parameters: [
+          {
+            name: "colour",
+            type: "string",
+            description: "Use red, green, blue or yellow.",
+          },
+        ],
+        effect: "Returns one simulator colour label and confidence state; it never opens a camera or receives a frame.",
+        example: "detectColour(\"green\");",
+      },
+      {
+        id: "rainbow-rescue-rover-function-locate",
+        signature: "locateTarget(zone)",
+        summary: "Places the simulated target in one labelled horizontal zone.",
+        parameters: [
+          {
+            name: "zone",
+            type: "string",
+            description: "Use left, centre or right.",
+          },
+        ],
+        effect: "Updates text, shape and coordinate cues in the simulator without analysing or storing an image.",
+        example: "locateTarget(\"centre\");",
+      },
+      {
+        id: "rainbow-rescue-rover-function-command",
+        signature: "planSerialCommand(command)",
+        summary: "Plans one bounded command label for the simulated rover link.",
+        parameters: [
+          {
+            name: "command",
+            type: "string",
+            description: "Use forward, turn-left, turn-right or stop.",
+          },
+        ],
+        effect: "Records a simulator-only command label; it never opens a serial port or activates motors.",
+        example: "planSerialCommand(\"forward\");",
+      },
+      {
+        id: "rainbow-rescue-rover-function-heartbeat",
+        signature: "armHeartbeat(duration)",
+        summary: "Arms a bounded simulated command heartbeat.",
+        parameters: [
+          {
+            name: "duration",
+            type: "whole number",
+            description: "A bounded heartbeat from 250 to 1000 milliseconds.",
+          },
+        ],
+        effect: "Records heartbeat telemetry so an uncertain simulator link becomes stopped; it cannot maintain physical movement.",
+        example: "armHeartbeat(500);",
+      },
+      {
+        id: "rainbow-rescue-rover-function-stop",
+        signature: "failSafeStop()",
+        summary: "Ends the integration simulation in a fail-safe stopped state.",
+        parameters: [],
+        effect: "Marks the private simulator stopped after the bounded command plan; it cannot activate, stop or otherwise control physical hardware.",
+        example: "failSafeStop();",
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "rainbow-rescue-rover-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "rainbow-rescue-rover-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "rainbow-rescue-rover-m1-adult-hardware-guide",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "rainbow-rescue-rover-m1-protected-resilience",
+        statement: "The simulator rejects unsupported colours, zones, serial commands, invalid heartbeats, missing stop calls and any camera, serial or physical-hardware request.",
+        visibility: "protected",
+        criterionIds: ["rainbow-rescue-rover-edge-one", "rainbow-rescue-rover-edge-two"],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to predict the labelled target, bounded command and final stopped state before suggesting one change.",
+      "Use only authored function guidance and simulator telemetry; never request camera frames or give learner wiring, power or motor-control advice.",
+      "Physical export stays unavailable until an adult acknowledges the exact manifest and every camera, computer, serial, rover and power component has bench-test evidence.",
+    ],
+  },
+  hardware: {
+    requirementsVersion: "1.0.0",
+    hardwareIncluded: false,
+    completePathItemIds: [
+      "pico-2-w",
+      "breadboard",
+      "usb-data-cable",
+      "jumper-wires",
+      "verified-explorer",
+      "pi-zero-2-w",
+      "camera-3",
+      "pi-storage-power",
+    ],
+    incrementalItemIds: [
+      "verified-explorer",
+      "pi-zero-2-w",
+      "camera-3",
+      "pi-storage-power",
+    ],
+    components: [
+      { itemId: "pico-2-w", quantity: 1, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "breadboard", quantity: 1, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "usb-data-cable", quantity: 1, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "jumper-wires", quantity: 12, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "verified-explorer", quantity: 1, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "pi-zero-2-w", quantity: 1, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "camera-3", quantity: 1, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "pi-storage-power", quantity: 1, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+    ],
+    safeguards: {
+      adultAssemblyRequired: true,
+      adultAcknowledgementRequiredForExport: true,
+      websiteMayControlHardware: false,
+      simulatorCompletionAvailable: true,
+      simulatedBadgeId: "rainbow-rescue-rover-mission-complete",
+      physicalBadgeId: "rainbow-rescue-rover-physical-builder",
+      physicalBadgeRequiresAdultSignoff: true,
+      adultAssemblySteps: [
+        "Confirm the exact bench-signed rover, Pi Zero 2 W, Camera Module 3 and correct Zero-series camera ribbon identities against the manifest.",
+        "With all power disconnected, fit and inspect the camera ribbon, storage, Pi power, Pico data link and isolated rover assemblies using the adult guide.",
+        "Complete local colour calibration, bounded serial-command, heartbeat, link-loss and fail-safe-stop tests with the wheels lifted clear of the surface.",
+      ],
+      powerRequirements: [
+        "Use a separate regulated Raspberry Pi power supply for the Pi Zero 2 W and Camera Module 3.",
+        "Use the verified switched protected motor supply for the rover; never power motors, the Pi Zero 2 W or Camera Module 3 from a Pico GPIO pin.",
+        "Keep every power switch accessible and disconnect every source before changing the camera ribbon, storage, wiring, sensors, wheels or chassis parts.",
+      ],
+      cableRequirements: [
+        "One known data-capable USB cable compatible with the Pico 2 W and Pi Zero 2 W serial plan.",
+        "The correct Zero-series Camera Module 3 ribbon and adult-verified insulated rover and power connectors.",
+      ],
+      softwarePrerequisites: [
+        "Current Raspberry Pi OS with supported rpicam and Picamera2 software on the family-owned Pi Zero 2 W.",
+        "Supported Pico SDK toolchain and known-good recovery firmware with adult-owned heartbeat, link-loss and emergency-stop behaviour.",
+        "A family-local colour-calibration utility that never uploads, publishes or transmits Camera Module 3 frames.",
+      ],
+      warnings: [
+        "Hardware is not included with the module.",
+        "No listed camera, computer, rover, serial or power configuration currently claims compatibility or physical-completion eligibility.",
+        "Camera frames remain on the family Raspberry Pi and must never be submitted to Plasius, an agent service or a published project.",
+        "The website never activates motors, opens a camera or serial port, and an uncertain or missing heartbeat must stop the physical rover.",
+        "Moving wheels, pinch points, stalled motors, camera ribbon damage and unsuitable supplies can cause unsafe movement, heat or damage; adult assembly, calibration and testing are mandatory.",
+        "The simulator and simulated badge remain available without physical equipment.",
+      ],
+      unrelatedHardwareNotRequired: [
+        "cloud camera, object-recognition or face-recognition services",
+        "microphone, speaker, location or biometric sensors",
+        "public hosting, analytics, advertising or external network access",
+      ],
+    },
+  },
+};
+
 /**
  * Original first mission for Rescue Crew Commander. The learner arranges a
  * typed visual program and can inspect its synchronized JavaScript projection,
