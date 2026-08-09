@@ -5,7 +5,9 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - Added versioned immutable snapshot, deterministic scan-evidence,
+    Guardian-approval, unlisted publication lifecycle and allow-listed safe
+    render contracts for the three Junior Coder web projects.
 
 - **Changed**
   - (placeholder)
@@ -14,7 +16,9 @@ All notable changes to this project are documented in this file.
   - (placeholder)
 
 - **Security**
-  - (placeholder)
+  - Public render models contain no learner JavaScript, account metadata,
+    free-form personal details, external URLs, uploads, transmitting forms,
+    trackers or advertising, and approval must bind the exact snapshot digest.
 
 ## [0.2.19] - 2026-08-09
 

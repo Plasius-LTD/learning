@@ -54,6 +54,30 @@ const result = calculateAssessment(rubric, [
 console.log(result.score, result.completed);
 ```
 
+## Validate a Guardian-approved static project
+
+The publishing contracts cover only immutable evidence and safe render models.
+HTTP, persistence, identity checks, scanning implementations and hosting remain
+consumer responsibilities. A public renderer must consume the allow-listed
+`renderModel`; it must never execute learner source.
+
+```ts
+import {
+  assertValidStaticProjectGuardianApproval,
+  assertValidStaticProjectPublication,
+  assertValidStaticProjectSnapshot,
+} from "@plasius/learning";
+
+assertValidStaticProjectSnapshot(snapshot);
+assertValidStaticProjectGuardianApproval(approval);
+assertValidStaticProjectPublication(publication);
+```
+
+The version-one contract supports the three launch web projects, requires a
+score of at least 80 plus mandatory safety evidence, records all eight scanner
+checks, binds adult approval to the exact snapshot digest, and requires an
+unlisted HTTPS URL with a random slug and explicit expiry.
+
 ## Validate mission authoring
 
 Mission authoring is additive to the immutable catalog. A bundle contains
