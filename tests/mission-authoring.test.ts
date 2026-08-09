@@ -18,6 +18,7 @@ import {
   STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
   VIBE_BUG_DETECTIVE_MISSION_ONE_AUTHORING_V1,
   VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1,
+  VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
   type MissionAuthoringBundleV1,
   validateMissionAuthoringBundle,
@@ -83,6 +84,10 @@ const vibeBugDetective = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "vibe-bug-detective",
 )!;
 
+const vibeIdeaStudio = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "vibe-idea-studio",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -135,7 +140,63 @@ function vibeBugDetectiveIssueCodes(bundle: MissionAuthoringBundleV1): string[] 
   );
 }
 
+function vibeIdeaStudioIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
+  return validateMissionAuthoringBundle(bundle, vibeIdeaStudio).map(
+    (entry) => entry.code,
+  );
+}
+
 describe("Junior Coder mission authoring", () => {
+  it("publishes a goal-led and learner-approved Vibe Idea Studio mission", () => {
+    const bundle = VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle.moduleId).toBe("junior-coder.vibe-idea-studio");
+    expect(bundle.moduleVersion).toBe("1.1.0");
+    expect(bundle.missionId).toBe("vibe-idea-studio-mission-1");
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.stages.find((stage) => stage.kind === "predict")?.instruction)
+      .toContain("acceptance test");
+    expect(bundle.learner.stages.find((stage) => stage.kind === "learn")?.instruction)
+      .toContain("choosePrototype()");
+    expect(bundle.learner.functionReference).toHaveLength(3);
+    expect(bundle.learner.boundedSuggestion).toEqual(
+      expect.objectContaining({
+        source: "authored-fallback",
+        aiOptional: false,
+        learnerApprovalRequired: true,
+        permittedArtifactId: "vibe-idea-studio-m1-code",
+        alternatives: ["accept", "reject"],
+        originalSnippet: expect.stringContaining("setStarCount(2)"),
+        replacementSnippet: expect.stringContaining("setStarCount(3)"),
+      }),
+    );
+    expect(bundle.learner.interactions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: "vibe-idea-studio-m1-idea-cards" }),
+        expect.objectContaining({ id: "vibe-idea-studio-m1-accept-control" }),
+        expect.objectContaining({ id: "vibe-idea-studio-m1-reject-control" }),
+      ]),
+    );
+    expect(bundle.learner.goals.every((goal) => !goal.aiRequired)).toBe(true);
+    expect(vibeIdeaStudio.hardware.mode).toBe("none");
+    expect(vibeIdeaStudioIssueCodes(bundle)).toEqual([]);
+    expect(() => assertValidMissionAuthoringBundle(bundle, vibeIdeaStudio))
+      .not.toThrow();
+  });
+
+  it("rejects an unsafe or unbounded Vibe Idea Studio suggestion", () => {
+    const bundle = structuredClone(VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1);
+    bundle.learner.boundedSuggestion!.permittedArtifactId = "different-template";
+    bundle.learner.boundedSuggestion!.aiOptional = true as false;
+    bundle.learner.boundedSuggestion!.alternatives = ["reject"] as unknown as ["accept", "reject"];
+
+    expect(vibeIdeaStudioIssueCodes(bundle)).toContain(
+      "invalid-bounded-suggestion",
+    );
+  });
+
   it("publishes an evidence-led and learner-approved Vibe Bug Detective mission", () => {
     const bundle = VIBE_BUG_DETECTIVE_MISSION_ONE_AUTHORING_V1;
 

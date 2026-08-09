@@ -34,6 +34,11 @@ starter. Its learner projection contains observed-versus-expected evidence and
 one exact repair diff, while protected regression values and facilitator
 solutions remain in the facilitator projection.
 
+Vibe Idea Studio uses the same boundary for goal-led prototyping. Learner-safe
+idea, audience and acceptance-test cards bind one exact diff to a supplied
+template, while facilitator solutions and protected boundary tests remain in
+the separate facilitator projection.
+
 The package remains infrastructure-neutral. It does not execute code, call an AI
 provider, persist attempts, authorize accounts or activate a workspace.
 

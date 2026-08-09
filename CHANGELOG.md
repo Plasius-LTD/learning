@@ -6,6 +6,9 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the Vibe Idea Studio mission-one learner/facilitator bundle,
+    three documented prototype functions, bounded idea and acceptance-test
+    choices, and one authored star-count diff against a permitted artifact.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +18,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept idea selection, diff review and prototype completion private and
+    deterministic; open prompts, personal data, arbitrary files, automatic
+    edits and provider-dependent scoring remain outside the contract.
 
 ## [0.2.15] - 2026-08-09
 
