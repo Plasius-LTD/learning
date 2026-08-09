@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.16] - 2026-08-09
+
+- **Added**
+  - (placeholder)
   - Added the Vibe Idea Studio mission-one learner/facilitator bundle,
     three documented prototype functions, bounded idea and acceptance-test
     choices, and one authored star-count diff against a permitted artifact.
@@ -412,3 +426,4 @@ All notable changes to this project are documented in this file.
 [0.2.13]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.13
 [0.2.14]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.14
 [0.2.15]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.15
+[0.2.16]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.16
