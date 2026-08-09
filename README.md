@@ -63,6 +63,7 @@ the exact catalog module that owns its rubric, mission and badges.
 ```ts
 import {
   BEACON_BOT_MISSION_ONE_AUTHORING_V1,
+  DANCE_ROVER_MISSION_ONE_AUTHORING_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
@@ -106,6 +107,9 @@ const beaconBot = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const servoCreature = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "servo-creature",
 );
+const danceRover = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "dance-rover",
+);
 
 if (
   !roadHopper ||
@@ -117,7 +121,8 @@ if (
   !pixelTrailChallenge ||
   !starDefenderSquadron ||
   !beaconBot ||
-  !servoCreature
+  !servoCreature ||
+  !danceRover
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -162,6 +167,10 @@ assertValidMissionAuthoringBundle(
   SERVO_CREATURE_MISSION_ONE_AUTHORING_V1,
   servoCreature,
 );
+assertValidMissionAuthoringBundle(
+  DANCE_ROVER_MISSION_ONE_AUTHORING_V1,
+  danceRover,
+);
 ```
 
 ## Contract rules
@@ -193,6 +202,9 @@ assertValidMissionAuthoringBundle(
 - Servo Creature documents its safe 30–150 degree simulator range while every
   physical servo, regulated supply and common-ground arrangement remains
   pending adult bench verification and unavailable to learner code.
+- Dance Rover documents bounded direction, 0–60 percent simulated speed,
+  timing, repeat and emergency-stop calls while every driver, motor, chassis
+  and switched power arrangement remains pending adult lifted-wheel testing.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),
@@ -201,7 +213,8 @@ See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [ADR 0002](docs/adrs/adr-0002-immutable-module-repricing-and-admin-test-source.md),
 [ADR 0003](docs/adrs/adr-0003-mission-authoring-manifests-are-additive-and-separated.md),
 [ADR 0004](docs/adrs/adr-0004-robot-mission-hardware-disclosures-are-additive-and-fail-closed.md),
-and [TDR 0006](docs/tdrs/tdr-0006-servo-creature-safe-movement-and-power-authoring.md).
+[TDR 0006](docs/tdrs/tdr-0006-servo-creature-safe-movement-and-power-authoring.md),
+and [TDR 0007](docs/tdrs/tdr-0007-dance-rover-fail-safe-movement-and-power-authoring.md).
 
 ## Development
 

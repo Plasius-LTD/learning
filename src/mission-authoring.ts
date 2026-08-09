@@ -2615,6 +2615,377 @@ export const SERVO_CREATURE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 =
 };
 
 /**
+ * First Dance Rover robotics mission. Learners choreograph a bounded rover
+ * sequence in the private simulator. Motor power, firmware export and physical
+ * movement remain unavailable until the exact reference build is bench tested.
+ */
+export const DANCE_ROVER_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.dance-rover",
+  moduleVersion: "1.1.0",
+  missionId: "dance-rover-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read what driveRover(), turnRover(), waitMs(), repeatDance() and emergencyStop() do in the private Dance Rover simulator.",
+        artifactIds: ["dance-rover-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict the rover's labelled direction, speed, turn, repeat count and final stopped state before the dance runs.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the five documented C++-style calls to create one bounded rover dance with an emergency stop.",
+        artifactIds: ["dance-rover-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private Dance Rover simulator.",
+        artifactIds: ["dance-rover-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic direction, speed, sequence and stop checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted C++-style line with the first dance goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one bounded direction, speed, wait, repeat or stop call, then rerun and inspect the text telemetry.",
+        artifactIds: ["dance-rover-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how reusable movement calls created the choreography and why every safe dance ends stopped.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the simulated badge when the score and fail-safe stop pass; physical completion remains adult-only.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "dance-rover-m1-find-stop",
+        prompt: "Find the emergencyStop() call and explain why it must finish every physical movement sequence.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "dance-rover-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "dance-rover-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "dance-rover-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "dance-rover-m1-starts",
+        statement: "The documented C++-style settings are valid and the private simulator starts.",
+        visibility: "visible",
+        criterionIds: ["dance-rover-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "dance-rover-m1-choreography",
+        statement: "The rover completes a bounded direction, speed, turn and repeat sequence before stopping.",
+        visibility: "visible",
+        criterionIds: ["dance-rover-goal-one", "dance-rover-goal-two"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "dance-rover-m1-private-runtime",
+        statement: "The program stays inside the private simulator and never accesses physical motors, the network or browser storage.",
+        visibility: "visible",
+        criterionIds: ["dance-rover-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "dance-rover-m1-run-control",
+        description: "Start the private Dance Rover choreography simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["dance-rover-m1-keyboard-run"],
+      },
+      {
+        id: "dance-rover-m1-code-control",
+        description: "Edit the documented direction, speed, wait, repeat and stop calls.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "dance-rover-m1-motion-preview",
+        description: "Observe the bounded rover route and stopped state.",
+        primaryMode: "motion",
+        alternativeIds: ["dance-rover-m1-telemetry"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "dance-rover-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same simulator.",
+      },
+      {
+        id: "dance-rover-m1-telemetry",
+        modes: ["text", "shape", "symbol", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read direction, speed, turn, repeat count, elapsed milliseconds and stopped state without animation.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "dance-rover-m1-assessment",
+        goalIds: [
+          "dance-rover-m1-starts",
+          "dance-rover-m1-choreography",
+          "dance-rover-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "dance-rover-m1-explanation",
+        goalIds: ["dance-rover-m1-choreography"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "dance-rover-m1-remix",
+        prompt: "Invent an original rover dance and add a text or symbol route cue that makes it understandable without motion.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "dance-rover-m1-simulated-badge",
+        badgeId: "dance-rover-mission-complete",
+        goalIds: [
+          "dance-rover-m1-starts",
+          "dance-rover-m1-choreography",
+          "dance-rover-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "dance-rover-function-drive",
+        signature: "driveRover(direction, speed)",
+        summary: "Adds one straight movement to the private simulator route.",
+        parameters: [
+          {
+            name: "direction",
+            type: "string",
+            description: "Use forward or backward.",
+          },
+          {
+            name: "speed",
+            type: "whole number",
+            description: "A bounded simulated speed from 0 to 60 percent.",
+          },
+        ],
+        effect: "Updates the simulator's labelled route without generating motor PWM or accessing a physical driver.",
+        example: "driveRover(\"forward\", 40);",
+      },
+      {
+        id: "dance-rover-function-turn",
+        signature: "turnRover(direction, speed)",
+        summary: "Adds one left or right turn to the private simulator route.",
+        parameters: [
+          {
+            name: "direction",
+            type: "string",
+            description: "Use left or right.",
+          },
+          {
+            name: "speed",
+            type: "whole number",
+            description: "A bounded simulated turn speed from 0 to 60 percent.",
+          },
+        ],
+        effect: "Updates labelled simulator direction without energising motors or a driver.",
+        example: "turnRover(\"left\", 30);",
+      },
+      {
+        id: "dance-rover-function-wait",
+        signature: "waitMs(duration)",
+        summary: "Adds one bounded wait to the simulated dance timeline.",
+        parameters: [
+          {
+            name: "duration",
+            type: "whole number",
+            description: "A bounded number of milliseconds from 100 to 1000.",
+          },
+        ],
+        effect: "Advances simulated elapsed time; it never blocks the website or holds physical motors under load.",
+        example: "waitMs(300);",
+      },
+      {
+        id: "dance-rover-function-repeat",
+        signature: "repeatDance(count)",
+        summary: "Repeats the current simulated dance a safe number of times.",
+        parameters: [
+          {
+            name: "count",
+            type: "whole number",
+            description: "A bounded repeat count from 1 to 4.",
+          },
+        ],
+        effect: "Adds a fixed number of labelled route sequences to the private simulator.",
+        example: "repeatDance(3);",
+      },
+      {
+        id: "dance-rover-function-stop",
+        signature: "emergencyStop()",
+        summary: "Ends the simulated dance in a fail-safe stopped state.",
+        parameters: [],
+        effect: "Marks both motors stopped in the simulator; it cannot activate, stop or otherwise control physical hardware.",
+        example: "emergencyStop();",
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "dance-rover-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "dance-rover-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "dance-rover-m1-adult-hardware-guide",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "dance-rover-m1-protected-resilience",
+        statement: "The simulator rejects unsupported directions, excessive speeds, waits, repeats, missing stop calls and physical-hardware requests.",
+        visibility: "protected",
+        criterionIds: ["dance-rover-edge-one", "dance-rover-edge-two"],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to predict the labelled route and final stopped state before suggesting one bounded change.",
+      "Use the function reference and visible telemetry; never provide motor wiring, power or movement advice to a learner.",
+      "Physical export stays unavailable until an adult acknowledges the exact manifest and every driver, motor and power component has verified bench-test evidence.",
+    ],
+  },
+  hardware: {
+    requirementsVersion: "1.0.0",
+    hardwareIncluded: false,
+    completePathItemIds: [
+      "pico-2-w",
+      "breadboard",
+      "usb-data-cable",
+      "jumper-wires",
+      "dual-motor-driver",
+      "geared-motors",
+      "rover-chassis",
+      "motor-power",
+    ],
+    incrementalItemIds: [
+      "dual-motor-driver",
+      "geared-motors",
+      "rover-chassis",
+      "motor-power",
+    ],
+    components: [
+      { itemId: "pico-2-w", quantity: 1, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "breadboard", quantity: 1, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "usb-data-cable", quantity: 1, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "jumper-wires", quantity: 12, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "dual-motor-driver", quantity: 1, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "geared-motors", quantity: 2, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "rover-chassis", quantity: 1, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "motor-power", quantity: 1, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+    ],
+    safeguards: {
+      adultAssemblyRequired: true,
+      adultAcknowledgementRequiredForExport: true,
+      websiteMayControlHardware: false,
+      simulatorCompletionAvailable: true,
+      simulatedBadgeId: "dance-rover-mission-complete",
+      physicalBadgeId: "dance-rover-physical-builder",
+      physicalBadgeRequiresAdultSignoff: true,
+      adultAssemblySteps: [
+        "Confirm the exact driver, motors, chassis and switched power identities against the requirements manifest.",
+        "Assemble and inspect all wiring with motor power disconnected and secure every moving or pinch-point part.",
+        "Complete the first direction and emergency-stop bench test with the wheels lifted clear of the surface.",
+      ],
+      powerRequirements: [
+        "Use a switched protected motor supply within the verified driver and motor ratings; never power motors from a Pico GPIO pin.",
+        "Connect one common signal ground between the verified motor supply, driver and Pico only as shown in the adult guide.",
+        "Keep the power switch accessible and disconnect every source before changing wiring, wheels or chassis parts.",
+      ],
+      cableRequirements: [
+        "One known data-capable USB cable compatible with the Pico 2 W.",
+        "Insulated jumper leads and verified motor, driver and power connectors documented by the adult guide.",
+      ],
+      softwarePrerequisites: [
+        "Supported Pico SDK toolchain on Raspberry Pi OS or a documented desktop environment.",
+        "Known-good Dance Rover recovery firmware with adult-owned watchdog and emergency-stop behaviour.",
+      ],
+      warnings: [
+        "Hardware is not included with the module.",
+        "No listed driver, motor, chassis or power arrangement currently claims compatibility or physical-completion eligibility.",
+        "Moving wheels, pinch points, stalled motors and unsuitable supplies can cause injury or heat; adult assembly and testing are mandatory.",
+        "The simulator and simulated badge remain available without physical equipment.",
+      ],
+      unrelatedHardwareNotRequired: [
+        "Camera Module 3 or Raspberry Pi Zero 2 W",
+        "obstacle or colour sensors",
+        "servo, LED or infrared beacon parts",
+      ],
+    },
+  },
+};
+
+/**
  * Original first mission for Rescue Crew Commander. The learner arranges a
  * typed visual program and can inspect its synchronized JavaScript projection,
  * while protected route and action-limit checks stay facilitator-only.

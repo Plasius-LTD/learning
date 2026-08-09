@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   BEACON_BOT_MISSION_ONE_AUTHORING_V1,
+  DANCE_ROVER_MISSION_ONE_AUTHORING_V1,
   JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
@@ -58,6 +59,10 @@ const servoCreature = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "servo-creature",
 )!;
 
+const danceRover = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "dance-rover",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -76,6 +81,12 @@ function beaconIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
 
 function servoCreatureIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
   return validateMissionAuthoringBundle(bundle, servoCreature).map(
+    (entry) => entry.code,
+  );
+}
+
+function danceRoverIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
+  return validateMissionAuthoringBundle(bundle, danceRover).map(
     (entry) => entry.code,
   );
 }
@@ -338,6 +349,143 @@ describe("Junior Coder mission authoring", () => {
     bundle.hardware!.safeguards.physicalBadgeId = "missing-physical-badge";
 
     expect(servoCreatureIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "invalid-function-reference",
+        "invalid-hardware-reward",
+      ]),
+    );
+  });
+
+  it("publishes a complete Dance Rover simulator and hardware-disclosure mission", () => {
+    const bundle = DANCE_ROVER_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle.moduleId).toBe("junior-coder.dance-rover");
+    expect(bundle.moduleVersion).toBe("1.1.0");
+    expect(bundle.missionId).toBe("dance-rover-mission-1");
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.stages.find((stage) => stage.kind === "learn")?.instruction)
+      .toContain("driveRover()");
+    expect(bundle.learner.stages.find((stage) => stage.kind === "learn")?.instruction)
+      .toContain("emergencyStop()");
+    expect(bundle.learner.stages.find((stage) => stage.kind === "run")?.instruction)
+      .toContain("Run action button");
+    expect(bundle.learner.functionReference).toHaveLength(5);
+    expect(bundle.learner.functionReference).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          signature: "driveRover(direction, speed)",
+          parameters: [
+            expect.objectContaining({ name: "direction" }),
+            expect.objectContaining({ name: "speed", description: expect.stringContaining("0 to 60") }),
+          ],
+          effect: expect.stringContaining("simulator"),
+          example: expect.stringContaining("driveRover"),
+        }),
+        expect.objectContaining({
+          signature: "emergencyStop()",
+          parameters: [],
+          effect: expect.stringContaining("simulator"),
+          example: expect.stringContaining("emergencyStop"),
+        }),
+      ]),
+    );
+    expect(bundle.hardware).toEqual(
+      expect.objectContaining({
+        requirementsVersion: "1.0.0",
+        hardwareIncluded: false,
+        completePathItemIds: [
+          "pico-2-w",
+          "breadboard",
+          "usb-data-cable",
+          "jumper-wires",
+          "dual-motor-driver",
+          "geared-motors",
+          "rover-chassis",
+          "motor-power",
+        ],
+        incrementalItemIds: [
+          "dual-motor-driver",
+          "geared-motors",
+          "rover-chassis",
+          "motor-power",
+        ],
+      }),
+    );
+    expect(bundle.hardware?.components).toHaveLength(danceRover.hardware.items.length);
+    expect(bundle.hardware?.components.every(
+      (component) => component.verificationStatus === "pending-bench-test"
+        && component.compatibilityClaimed === false
+        && component.physicalCompletionEligible === false,
+    )).toBe(true);
+    expect(bundle.hardware?.safeguards).toEqual(
+      expect.objectContaining({
+        adultAssemblyRequired: true,
+        adultAcknowledgementRequiredForExport: true,
+        websiteMayControlHardware: false,
+        simulatorCompletionAvailable: true,
+        simulatedBadgeId: "dance-rover-mission-complete",
+        physicalBadgeId: "dance-rover-physical-builder",
+        physicalBadgeRequiresAdultSignoff: true,
+        adultAssemblySteps: expect.arrayContaining([
+          expect.stringContaining("wheels lifted"),
+          expect.stringContaining("emergency-stop"),
+        ]),
+        powerRequirements: expect.arrayContaining([
+          expect.stringContaining("switched protected motor supply"),
+          expect.stringContaining("common signal ground"),
+        ]),
+        unrelatedHardwareNotRequired: expect.arrayContaining([
+          "Camera Module 3 or Raspberry Pi Zero 2 W",
+          "obstacle or colour sensors",
+          "servo, LED or infrared beacon parts",
+        ]),
+      }),
+    );
+    expect(validateMissionAuthoringBundle(bundle, danceRover)).toEqual([]);
+    expect(() => assertValidMissionAuthoringBundle(bundle, danceRover)).not.toThrow();
+  });
+
+  it("rejects Dance Rover compatibility and physical completion claims for an unverified driver", () => {
+    const bundle = structuredClone(DANCE_ROVER_MISSION_ONE_AUTHORING_V1);
+    const component = bundle.hardware!.components.find(
+      (entry) => entry.itemId === "dual-motor-driver",
+    )!;
+    component.compatibilityClaimed = true;
+    component.physicalCompletionEligible = true;
+
+    expect(danceRoverIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "hardware-verification-claim",
+        "unsafe-physical-export",
+      ]),
+    );
+  });
+
+  it("rejects Dance Rover hardware drift and unsafe physical-control safeguards", () => {
+    const bundle = structuredClone(DANCE_ROVER_MISSION_ONE_AUTHORING_V1);
+    bundle.hardware!.completePathItemIds.pop();
+    bundle.hardware!.incrementalItemIds.push("unknown-item");
+    bundle.hardware!.components[0]!.quantity = 99;
+    bundle.hardware!.safeguards.websiteMayControlHardware = true as false;
+    bundle.hardware!.safeguards.adultAssemblySteps = [];
+
+    expect(danceRoverIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "hardware-item-mismatch",
+        "unsafe-physical-export",
+      ]),
+    );
+  });
+
+  it("rejects incomplete Dance Rover function documentation and badge drift", () => {
+    const bundle = structuredClone(DANCE_ROVER_MISSION_ONE_AUTHORING_V1);
+    bundle.learner.functionReference![0]!.effect = "";
+    bundle.hardware!.safeguards.simulatedBadgeId = "dance-rover-physical-builder";
+    bundle.hardware!.safeguards.physicalBadgeId = "missing-physical-badge";
+
+    expect(danceRoverIssueCodes(bundle)).toEqual(
       expect.arrayContaining([
         "invalid-function-reference",
         "invalid-hardware-reward",
