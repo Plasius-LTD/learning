@@ -7,7 +7,7 @@ Implementation design for `Plasius-LTD/learning#3`,
 `Plasius-LTD/learning#22`, `Plasius-LTD/learning#24`,
 `Plasius-LTD/learning#26`, `Plasius-LTD/learning#28`, and
 `Plasius-LTD/learning#32`, `Plasius-LTD/learning#34`, and
-`Plasius-LTD/learning#49`, under Stories
+`Plasius-LTD/learning#49`, and `Plasius-LTD/learning#50`, under Stories
 `Plasius-LTD/plasius-ltd-site#1714`, Feature
 `Plasius-LTD/plasius-ltd-site#1704`, and
 `Plasius-LTD/plasius-ltd-site#1715`, Feature

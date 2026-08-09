@@ -74,6 +74,7 @@ import {
   RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1,
   RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
+  ROBOT_MISSION_CONTROL_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
   SERVO_CREATURE_MISSION_ONE_AUTHORING_V1,
   SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
@@ -138,6 +139,9 @@ const adventureMissionPlanner = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find
 const creatureCareDashboard = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "creature-care-dashboard",
 );
+const robotMissionControl = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "robot-mission-control",
+);
 
 if (
   !roadHopper ||
@@ -157,7 +161,8 @@ if (
   !vibeBugDetective ||
   !vibeIdeaStudio ||
   !adventureMissionPlanner ||
-  !creatureCareDashboard
+  !creatureCareDashboard ||
+  !robotMissionControl
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -234,6 +239,10 @@ assertValidMissionAuthoringBundle(
   CREATURE_CARE_DASHBOARD_MISSION_ONE_AUTHORING_V1,
   creatureCareDashboard,
 );
+assertValidMissionAuthoringBundle(
+  ROBOT_MISSION_CONTROL_MISSION_ONE_AUTHORING_V1,
+  robotMissionControl,
+);
 ```
 
 ## Contract rules
@@ -294,6 +303,10 @@ assertValidMissionAuthoringBundle(
   displays, responsive layouts and equivalent reduced-motion feedback. The
   learner controls the exact accessibility diff; no network, real schedule,
   background task or personal information enters the preview.
+- Robot Mission Control documents commands, a fail-safe state machine, explicit
+  confirmation, bounded telemetry and responsive chart/text views. The learner
+  controls the exact confirmation diff; Web Serial, physical hardware and
+  automatic approval remain outside the simulator.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),
@@ -310,6 +323,7 @@ See also [TDR 0011](docs/tdrs/tdr-0011-vibe-bug-detective-evidence-led-repair.md
 See also [TDR 0012](docs/tdrs/tdr-0012-vibe-idea-studio-bounded-goal-prototyping.md).
 See also [TDR 0013](docs/tdrs/tdr-0013-adventure-mission-planner-private-persistence.md).
 See also [TDR 0014](docs/tdrs/tdr-0014-creature-care-dashboard-bounded-timers-and-motion.md).
+See also [TDR 0015](docs/tdrs/tdr-0015-robot-mission-control-fail-safe-simulation.md).
 
 ## Development
 

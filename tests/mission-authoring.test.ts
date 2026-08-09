@@ -13,6 +13,7 @@ import {
   PIXEL_TRAIL_CHALLENGE_MISSION_ONE_AUTHORING_V1,
   RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1,
   RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
+  ROBOT_MISSION_CONTROL_MISSION_ONE_AUTHORING_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
   SERVO_CREATURE_MISSION_ONE_AUTHORING_V1,
@@ -98,6 +99,10 @@ const creatureCareDashboard = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "creature-care-dashboard",
 )!;
 
+const robotMissionControl = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "robot-mission-control",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -168,7 +173,49 @@ function creatureCareDashboardIssueCodes(bundle: MissionAuthoringBundleV1): stri
   );
 }
 
+function robotMissionControlIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
+  return validateMissionAuthoringBundle(bundle, robotMissionControl).map(
+    (entry) => entry.code,
+  );
+}
+
 describe("Junior Coder mission authoring", () => {
+  it("publishes a safe and independently completable Robot Mission Control simulation", () => {
+    const bundle = ROBOT_MISSION_CONTROL_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle).toMatchObject({
+      moduleId: "junior-coder.robot-mission-control",
+      moduleVersion: "1.1.0",
+      missionId: "robot-mission-control-mission-1",
+    });
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.functionReference?.map((entry) => entry.signature)).toEqual([
+      "planCommand(command)",
+      "setSafetyConfirmation(enabled)",
+      "setTelemetryRate(samplesPerSecond)",
+      "setChartMode(mode)",
+      "simulateSerial(enabled)",
+    ]);
+    expect(bundle.learner.boundedSuggestion).toMatchObject({
+      originalSnippet: "setSafetyConfirmation(false);",
+      replacementSnippet: "setSafetyConfirmation(true);",
+      aiOptional: false,
+      learnerApprovalRequired: true,
+      alternatives: ["accept", "reject"],
+    });
+    expect(bundle.learner.goals.map((goal) => goal.statement).join(" ")).toMatch(
+      /command|state machine|confirmation|chart|responsive|serial simulation|STOP/iu,
+    );
+    expect(bundle.learner.artifacts.every((artifact) => !artifact.solutionBearing)).toBe(true);
+    expect(bundle.facilitator.artifacts.every((artifact) => artifact.solutionBearing)).toBe(true);
+    expect(robotMissionControl.hardware.mode).toBe("none");
+    expect(robotMissionControlIssueCodes(bundle)).toEqual([]);
+    expect(() => assertValidMissionAuthoringBundle(bundle, robotMissionControl))
+      .not.toThrow();
+  });
+
   it("publishes an accessible and independently completable Creature Care Dashboard mission", () => {
     const bundle = CREATURE_CARE_DASHBOARD_MISSION_ONE_AUTHORING_V1;
 

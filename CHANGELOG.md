@@ -6,6 +6,9 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the Robot Mission Control mission-one learner/facilitator bundle,
+    five documented command, confirmation, telemetry, chart and serial-simulator
+    functions, and one learner-approved safety-confirmation diff.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +18,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept command transitions fail-safe in STOP without explicit confirmation;
+    Web Serial, physical hardware control, network access, personal data and
+    automatic approval remain outside the bounded simulator.
 
 ## [0.2.18] - 2026-08-09
 
