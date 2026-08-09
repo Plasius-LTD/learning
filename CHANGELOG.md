@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.11] - 2026-08-09
+
+- **Added**
+  - (placeholder)
   - Added the versioned Dance Rover mission-one learner/facilitator bundle,
     five documented bounded C++-style simulator functions, complete and
     incremental rover hardware disclosure, equivalent reduced-motion telemetry
@@ -303,3 +317,4 @@ All notable changes to this project are documented in this file.
 [0.2.8]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.8
 [0.2.9]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.9
 [0.2.10]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.10
+[0.2.11]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.11
