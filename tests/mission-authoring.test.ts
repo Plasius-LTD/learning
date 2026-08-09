@@ -6,6 +6,7 @@ import {
   JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
+  OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1,
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
   PIXEL_TRAIL_CHALLENGE_MISSION_ONE_AUTHORING_V1,
   RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
@@ -63,6 +64,10 @@ const danceRover = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "dance-rover",
 )!;
 
+const obstacleExplorer = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "obstacle-explorer",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -87,6 +92,12 @@ function servoCreatureIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
 
 function danceRoverIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
   return validateMissionAuthoringBundle(bundle, danceRover).map(
+    (entry) => entry.code,
+  );
+}
+
+function obstacleExplorerIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
+  return validateMissionAuthoringBundle(bundle, obstacleExplorer).map(
     (entry) => entry.code,
   );
 }
@@ -486,6 +497,133 @@ describe("Junior Coder mission authoring", () => {
     bundle.hardware!.safeguards.physicalBadgeId = "missing-physical-badge";
 
     expect(danceRoverIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "invalid-function-reference",
+        "invalid-hardware-reward",
+      ]),
+    );
+  });
+
+  it("publishes a complete Obstacle Explorer simulator and hardware-disclosure mission", () => {
+    const bundle = OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle.moduleId).toBe("junior-coder.obstacle-explorer");
+    expect(bundle.moduleVersion).toBe("1.1.0");
+    expect(bundle.missionId).toBe("obstacle-explorer-mission-1");
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.stages.find((stage) => stage.kind === "learn")?.instruction)
+      .toContain("readObstacle()");
+    expect(bundle.learner.stages.find((stage) => stage.kind === "learn")?.instruction)
+      .toContain("failSafeStop()");
+    expect(bundle.learner.stages.find((stage) => stage.kind === "run")?.instruction)
+      .toContain("Run action button");
+    expect(bundle.learner.functionReference).toHaveLength(5);
+    expect(bundle.learner.functionReference).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          signature: "readObstacle(side)",
+          parameters: [expect.objectContaining({ name: "side" })],
+          effect: expect.stringContaining("simulator"),
+          example: expect.stringContaining("readObstacle"),
+        }),
+        expect.objectContaining({
+          signature: "failSafeStop()",
+          parameters: [],
+          effect: expect.stringContaining("simulator"),
+          example: expect.stringContaining("failSafeStop"),
+        }),
+      ]),
+    );
+    expect(bundle.hardware).toEqual(
+      expect.objectContaining({
+        requirementsVersion: "1.0.0",
+        hardwareIncluded: false,
+        completePathItemIds: [
+          "pico-2-w",
+          "breadboard",
+          "usb-data-cable",
+          "jumper-wires",
+          "verified-rover",
+          "obstacle-sensors",
+        ],
+        incrementalItemIds: ["verified-rover", "obstacle-sensors"],
+      }),
+    );
+    expect(bundle.hardware?.components).toHaveLength(obstacleExplorer.hardware.items.length);
+    expect(bundle.hardware?.components.every(
+      (component) => component.verificationStatus === "pending-bench-test"
+        && component.compatibilityClaimed === false
+        && component.physicalCompletionEligible === false,
+    )).toBe(true);
+    expect(bundle.hardware?.safeguards).toEqual(
+      expect.objectContaining({
+        adultAssemblyRequired: true,
+        adultAcknowledgementRequiredForExport: true,
+        websiteMayControlHardware: false,
+        simulatorCompletionAvailable: true,
+        simulatedBadgeId: "obstacle-explorer-mission-complete",
+        physicalBadgeId: "obstacle-explorer-physical-builder",
+        physicalBadgeRequiresAdultSignoff: true,
+        adultAssemblySteps: expect.arrayContaining([
+          expect.stringContaining("wheels lifted"),
+          expect.stringContaining("sensor calibration"),
+        ]),
+        powerRequirements: expect.arrayContaining([
+          expect.stringContaining("switched protected motor supply"),
+          expect.stringContaining("common signal ground"),
+        ]),
+        unrelatedHardwareNotRequired: expect.arrayContaining([
+          "Camera Module 3 or Raspberry Pi Zero 2 W",
+          "colour targets or camera ribbon",
+          "servo, LED or infrared beacon parts",
+        ]),
+      }),
+    );
+    expect(validateMissionAuthoringBundle(bundle, obstacleExplorer)).toEqual([]);
+    expect(() => assertValidMissionAuthoringBundle(bundle, obstacleExplorer)).not.toThrow();
+  });
+
+  it("rejects Obstacle Explorer compatibility and physical completion claims for an unverified sensor", () => {
+    const bundle = structuredClone(OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1);
+    const component = bundle.hardware!.components.find(
+      (entry) => entry.itemId === "obstacle-sensors",
+    )!;
+    component.compatibilityClaimed = true;
+    component.physicalCompletionEligible = true;
+
+    expect(obstacleExplorerIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "hardware-verification-claim",
+        "unsafe-physical-export",
+      ]),
+    );
+  });
+
+  it("rejects Obstacle Explorer hardware drift and unsafe physical-control safeguards", () => {
+    const bundle = structuredClone(OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1);
+    bundle.hardware!.completePathItemIds.pop();
+    bundle.hardware!.incrementalItemIds.push("unknown-item");
+    bundle.hardware!.components[0]!.quantity = 99;
+    bundle.hardware!.safeguards.websiteMayControlHardware = true as false;
+    bundle.hardware!.safeguards.adultAssemblySteps = [];
+
+    expect(obstacleExplorerIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "hardware-item-mismatch",
+        "unsafe-physical-export",
+      ]),
+    );
+  });
+
+  it("rejects incomplete Obstacle Explorer function documentation and badge drift", () => {
+    const bundle = structuredClone(OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1);
+    bundle.learner.functionReference![0]!.effect = "";
+    bundle.hardware!.safeguards.simulatedBadgeId = "obstacle-explorer-physical-builder";
+    bundle.hardware!.safeguards.physicalBadgeId = "missing-physical-badge";
+
+    expect(obstacleExplorerIssueCodes(bundle)).toEqual(
       expect.arrayContaining([
         "invalid-function-reference",
         "invalid-hardware-reward",

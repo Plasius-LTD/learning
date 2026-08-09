@@ -2986,6 +2986,367 @@ export const DANCE_ROVER_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
 };
 
 /**
+ * First Obstacle Explorer robotics mission. Learners use bounded simulated IR
+ * readings, Boolean decisions, recovery state and a watchdog to plan a safe
+ * route. Sensor input, firmware export and physical movement remain unavailable
+ * until the exact reference build is calibrated and bench tested by an adult.
+ */
+export const OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.obstacle-explorer",
+  moduleVersion: "1.1.0",
+  missionId: "obstacle-explorer-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read what readObstacle(), chooseSafeRoute(), setRecoveryAttempts(), armWatchdog() and failSafeStop() do in the private Obstacle Explorer simulator.",
+        artifactIds: ["obstacle-explorer-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict the simulated obstacle reading, safe route, recovery count, watchdog time and final stopped state before the explorer runs.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the five documented C++-style calls to make one bounded obstacle decision with a watchdog and fail-safe stop.",
+        artifactIds: ["obstacle-explorer-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private Obstacle Explorer simulator.",
+        artifactIds: ["obstacle-explorer-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic sensor, route, recovery, watchdog and stop checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted C++-style line with the first explorer goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one bounded sensor side, route, recovery count, watchdog or stop call, then rerun and inspect the text telemetry.",
+        artifactIds: ["obstacle-explorer-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how a Boolean obstacle reading selected a route and why the watchdog and fail-safe stop protect every explorer state.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the simulated badge when the score and mandatory safety checks pass; physical completion remains adult-only.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "obstacle-explorer-m1-find-stop",
+        prompt: "Find failSafeStop() and explain why the explorer must stop when a sensor or watchdog result is uncertain.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "obstacle-explorer-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "obstacle-explorer-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "obstacle-explorer-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "obstacle-explorer-m1-starts",
+        statement: "The documented C++-style settings are valid and the private simulator starts.",
+        visibility: "visible",
+        criterionIds: ["obstacle-explorer-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "obstacle-explorer-m1-navigation",
+        statement: "The explorer reads one simulated obstacle and chooses a bounded route with three recovery attempts.",
+        visibility: "visible",
+        criterionIds: ["obstacle-explorer-goal-one", "obstacle-explorer-goal-two"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "obstacle-explorer-m1-private-runtime",
+        statement: "The program arms a watchdog, ends fail-safe stopped and never accesses sensors, motors, the network or browser storage.",
+        visibility: "visible",
+        criterionIds: ["obstacle-explorer-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "obstacle-explorer-m1-run-control",
+        description: "Start the private Obstacle Explorer navigation simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["obstacle-explorer-m1-keyboard-run"],
+      },
+      {
+        id: "obstacle-explorer-m1-code-control",
+        description: "Edit the documented sensor, route, recovery, watchdog and stop calls.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "obstacle-explorer-m1-route-preview",
+        description: "Observe the bounded obstacle decision, route and stopped state.",
+        primaryMode: "motion",
+        alternativeIds: ["obstacle-explorer-m1-telemetry"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "obstacle-explorer-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same simulator.",
+      },
+      {
+        id: "obstacle-explorer-m1-telemetry",
+        modes: ["text", "shape", "symbol", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read sensor side, blocked state, route, recovery count, watchdog milliseconds and stopped state without animation or colour alone.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "obstacle-explorer-m1-assessment",
+        goalIds: [
+          "obstacle-explorer-m1-starts",
+          "obstacle-explorer-m1-navigation",
+          "obstacle-explorer-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "obstacle-explorer-m1-explanation",
+        goalIds: ["obstacle-explorer-m1-navigation"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "obstacle-explorer-m1-remix",
+        prompt: "Invent an original maze response and add a text or symbol cue that explains the Boolean decision without motion or colour alone.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "obstacle-explorer-m1-simulated-badge",
+        badgeId: "obstacle-explorer-mission-complete",
+        goalIds: [
+          "obstacle-explorer-m1-starts",
+          "obstacle-explorer-m1-navigation",
+          "obstacle-explorer-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "obstacle-explorer-function-read",
+        signature: "readObstacle(side)",
+        summary: "Reads one labelled obstacle state from the private simulator.",
+        parameters: [
+          {
+            name: "side",
+            type: "string",
+            description: "Use front, left or right.",
+          },
+        ],
+        effect: "Returns a simulator Boolean blocked or clear reading and never accesses an IR sensor or GPIO pin.",
+        example: "readObstacle(\"front\");",
+      },
+      {
+        id: "obstacle-explorer-function-route",
+        signature: "chooseSafeRoute(blockedAction, clearAction)",
+        summary: "Chooses one bounded route for blocked and clear simulated states.",
+        parameters: [
+          {
+            name: "blockedAction",
+            type: "string",
+            description: "Use turn-left, turn-right, back-up or stop.",
+          },
+          {
+            name: "clearAction",
+            type: "string",
+            description: "Use forward or stop.",
+          },
+        ],
+        effect: "Updates labelled simulator navigation state without energising motors or a driver.",
+        example: "chooseSafeRoute(\"turn-left\", \"forward\");",
+      },
+      {
+        id: "obstacle-explorer-function-recovery",
+        signature: "setRecoveryAttempts(count)",
+        summary: "Sets a bounded number of simulated recovery attempts.",
+        parameters: [
+          {
+            name: "count",
+            type: "whole number",
+            description: "A bounded recovery count from 1 to 3.",
+          },
+        ],
+        effect: "Limits the private simulator recovery state so an uncertain route cannot loop forever.",
+        example: "setRecoveryAttempts(3);",
+      },
+      {
+        id: "obstacle-explorer-function-watchdog",
+        signature: "armWatchdog(duration)",
+        summary: "Arms a bounded simulated watchdog timer.",
+        parameters: [
+          {
+            name: "duration",
+            type: "whole number",
+            description: "A bounded timeout from 250 to 1000 milliseconds.",
+          },
+        ],
+        effect: "Records simulator timeout telemetry and cannot hold or control physical movement.",
+        example: "armWatchdog(500);",
+      },
+      {
+        id: "obstacle-explorer-function-stop",
+        signature: "failSafeStop()",
+        summary: "Ends the navigation simulation in a fail-safe stopped state.",
+        parameters: [],
+        effect: "Marks the private simulator stopped on completion or uncertainty; it cannot activate, stop or otherwise control physical hardware.",
+        example: "failSafeStop();",
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "obstacle-explorer-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "obstacle-explorer-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "obstacle-explorer-m1-adult-hardware-guide",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "obstacle-explorer-m1-protected-resilience",
+        statement: "The simulator rejects unsupported sensor sides, unsafe routes, excessive recovery attempts, invalid watchdogs, missing stop calls and physical-hardware requests.",
+        visibility: "protected",
+        criterionIds: ["obstacle-explorer-edge-one", "obstacle-explorer-edge-two"],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to predict the Boolean blocked state, labelled route and final stopped state before suggesting one bounded change.",
+      "Use the function reference and visible telemetry; never provide sensor wiring, motor power or movement advice to a learner.",
+      "Physical export stays unavailable until an adult acknowledges the exact manifest and every rover and sensor component has calibration and bench-test evidence.",
+    ],
+  },
+  hardware: {
+    requirementsVersion: "1.0.0",
+    hardwareIncluded: false,
+    completePathItemIds: [
+      "pico-2-w",
+      "breadboard",
+      "usb-data-cable",
+      "jumper-wires",
+      "verified-rover",
+      "obstacle-sensors",
+    ],
+    incrementalItemIds: [
+      "verified-rover",
+      "obstacle-sensors",
+    ],
+    components: [
+      { itemId: "pico-2-w", quantity: 1, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "breadboard", quantity: 1, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "usb-data-cable", quantity: 1, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "jumper-wires", quantity: 12, acquisitionScope: "complete-path", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "verified-rover", quantity: 1, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+      { itemId: "obstacle-sensors", quantity: 2, acquisitionScope: "incremental", verificationStatus: "pending-bench-test", compatibilityClaimed: false, physicalCompletionEligible: false },
+    ],
+    safeguards: {
+      adultAssemblyRequired: true,
+      adultAcknowledgementRequiredForExport: true,
+      websiteMayControlHardware: false,
+      simulatorCompletionAvailable: true,
+      simulatedBadgeId: "obstacle-explorer-mission-complete",
+      physicalBadgeId: "obstacle-explorer-physical-builder",
+      physicalBadgeRequiresAdultSignoff: true,
+      adultAssemblySteps: [
+        "Confirm the exact bench-signed rover and IR sensor identities against the requirements manifest.",
+        "Assemble and inspect all disconnected sensor wiring, then complete the adult sensor calibration record for clear and blocked surfaces.",
+        "Complete direction, obstacle recovery, watchdog and fail-safe-stop tests with the wheels lifted clear of the surface.",
+      ],
+      powerRequirements: [
+        "Use the verified switched protected motor supply and sensor voltage; never power motors or unsuitable sensors from a Pico GPIO pin.",
+        "Connect one common signal ground between the verified sensor, motor supply, driver and Pico only as shown in the adult guide.",
+        "Keep the power switch accessible and disconnect every source before changing wiring, sensors, wheels or chassis parts.",
+      ],
+      cableRequirements: [
+        "One known data-capable USB cable compatible with the Pico 2 W.",
+        "Insulated jumper leads and verified sensor, motor, driver and power connectors documented by the adult guide.",
+      ],
+      softwarePrerequisites: [
+        "Supported Pico SDK toolchain on Raspberry Pi OS or a documented desktop environment.",
+        "Known-good Obstacle Explorer recovery firmware with adult-owned watchdog, sensor-failure and emergency-stop behaviour.",
+      ],
+      warnings: [
+        "Hardware is not included with the module.",
+        "No listed rover or sensor currently claims compatibility or physical-completion eligibility for this module.",
+        "Moving wheels, pinch points, stalled motors, reflective sensor errors and unsuitable supplies can cause unsafe movement or heat; adult assembly, calibration and testing are mandatory.",
+        "The simulator and simulated badge remain available without physical equipment.",
+      ],
+      unrelatedHardwareNotRequired: [
+        "Camera Module 3 or Raspberry Pi Zero 2 W",
+        "colour targets or camera ribbon",
+        "servo, LED or infrared beacon parts",
+      ],
+    },
+  },
+};
+
+/**
  * Original first mission for Rescue Crew Commander. The learner arranges a
  * typed visual program and can inspect its synchronized JavaScript projection,
  * while protected route and action-limit checks stay facilitator-only.
