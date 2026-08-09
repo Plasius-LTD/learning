@@ -6,6 +6,10 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Dance Rover mission-one learner/facilitator bundle,
+    five documented bounded C++-style simulator functions, complete and
+    incremental rover hardware disclosure, equivalent reduced-motion telemetry
+    and distinct simulated and physical evidence rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +19,10 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept direction, 0–60 percent speed, timing, repeat and emergency-stop
+    behaviour inside the private simulator; every driver, motor, chassis and
+    switched power arrangement remains unverified, compatibility-unclaimed and
+    physically ineligible until adult lifted-wheel bench evidence exists.
 
 ## [0.2.10] - 2026-08-09
 
