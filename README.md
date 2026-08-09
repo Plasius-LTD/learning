@@ -76,6 +76,7 @@ import {
   SERVO_CREATURE_MISSION_ONE_AUTHORING_V1,
   SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
   STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
+  VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
 } from "@plasius/learning";
 
@@ -118,6 +119,9 @@ const obstacleExplorer = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const rainbowRescueRover = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "rainbow-rescue-rover",
 );
+const vibeGameRemixLab = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "vibe-game-remix-lab",
+);
 
 if (
   !roadHopper ||
@@ -132,7 +136,8 @@ if (
   !servoCreature ||
   !danceRover ||
   !obstacleExplorer ||
-  !rainbowRescueRover
+  !rainbowRescueRover ||
+  !vibeGameRemixLab
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -189,6 +194,10 @@ assertValidMissionAuthoringBundle(
   RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1,
   rainbowRescueRover,
 );
+assertValidMissionAuthoringBundle(
+  VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1,
+  vibeGameRemixLab,
+);
 ```
 
 ## Contract rules
@@ -231,6 +240,10 @@ assertValidMissionAuthoringBundle(
   the family Raspberry Pi. The website receives no frames, opens no camera or
   serial port, never activates motors, and every physical component remains
   pending adult bench verification.
+- Vibe Game Remix Lab exposes one authored, evidence-bound diff against one
+  permitted learner artifact. The learner predicts, reviews and explicitly
+  accepts or rejects it; rejection preserves source, deterministic completion
+  never needs AI, and open chat or automatic edits are outside the contract.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),
@@ -242,6 +255,7 @@ See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [TDR 0006](docs/tdrs/tdr-0006-servo-creature-safe-movement-and-power-authoring.md),
 [TDR 0007](docs/tdrs/tdr-0007-dance-rover-fail-safe-movement-and-power-authoring.md),
 and [TDR 0008](docs/tdrs/tdr-0008-obstacle-explorer-sensing-watchdog-and-fail-safe-authoring.md).
+See also [TDR 0010](docs/tdrs/tdr-0010-vibe-game-remix-bounded-suggestion-authoring.md).
 
 ## Development
 

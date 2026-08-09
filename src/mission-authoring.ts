@@ -553,6 +553,35 @@ export function validateMissionAuthoringBundle(
     }
   }
 
+  if (learner.boundedSuggestion) {
+    const suggestion = learner.boundedSuggestion;
+    const invalidBoundedSuggestion =
+      suggestion.id.trim().length === 0
+      || suggestion.source !== "authored-fallback"
+      || suggestion.intent.trim().length === 0
+      || suggestion.constraints.length === 0
+      || suggestion.constraints.some((constraint) => constraint.trim().length === 0)
+      || !learnerArtifactIds.has(suggestion.permittedArtifactId)
+      || suggestion.originalSnippet.trim().length === 0
+      || suggestion.replacementSnippet.trim().length === 0
+      || suggestion.originalSnippet === suggestion.replacementSnippet
+      || suggestion.explanationPrompt.trim().length === 0
+      || suggestion.aiOptional !== false
+      || suggestion.learnerApprovalRequired !== true
+      || suggestion.alternatives.length !== 2
+      || suggestion.alternatives[0] !== "accept"
+      || suggestion.alternatives[1] !== "reject";
+    if (invalidBoundedSuggestion) {
+      issues.push(
+        authoringIssue(
+          "invalid-bounded-suggestion",
+          "A bounded suggestion requires one learner artifact, authored constraints, a visible diff and explicit accept/reject approval.",
+          "learner.boundedSuggestion",
+        ),
+      );
+    }
+  }
+
   const hardware = bundle.hardware;
   if (hardware) {
     if (
@@ -4159,6 +4188,282 @@ export const METEOR_SHIELD_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = 
     prompts: [
       "Ask the learner which setting controls a limited resource before suggesting a code edit.",
       "Use visible telemetry and the function reference; never reveal protected numeric targets or expected source fragments.",
+    ],
+  },
+};
+
+/** Bounded first Vibe mission; no open prompt or provider is required. */
+export const VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.vibe-game-remix-lab",
+  moduleVersion: "1.1.0",
+  missionId: "vibe-game-remix-lab-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read how setRescueSpeed(), setGateSpacing() and setGoalCount() change the supplied mini-game.",
+        artifactIds: ["vibe-game-remix-lab-m1-guide"],
+      },
+      {
+        kind: "predict",
+        instruction: "Choose one bounded intent card and predict what its one-line diff will change before viewing it.",
+        artifactIds: ["vibe-game-remix-lab-m1-intent-cards"],
+      },
+      {
+        kind: "build",
+        instruction: "Open the supplied mini-game and keep changes inside its documented settings file.",
+        artifactIds: ["vibe-game-remix-lab-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private JavaScript preview.",
+        artifactIds: ["vibe-game-remix-lab-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run deterministic checks before requesting or applying any suggestion.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the single authored diff with your prediction and the failed goal evidence.",
+        artifactIds: ["vibe-game-remix-lab-m1-code"],
+      },
+      {
+        kind: "fix",
+        instruction: "Accept or reject the proposed change yourself, then rerun the preview and assessment.",
+        artifactIds: ["vibe-game-remix-lab-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain why you accepted or rejected the change and what the new evidence shows.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge after the deterministic score reaches 80 and every safety check passes.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "vibe-game-remix-lab-m1-find-setting",
+        prompt: "Point to the documented function that changes how many rescue goals appear.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "vibe-game-remix-lab-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "vibe-game-remix-lab-m1-guide",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "vibe-game-remix-lab-m1-intent-cards",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "vibe-game-remix-lab-m1-starts",
+        statement: "The supplied JavaScript mini-game remains structurally valid and starts.",
+        visibility: "visible",
+        criterionIds: ["vibe-game-remix-lab-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "vibe-game-remix-lab-m1-bounded-remix",
+        statement: "The approved one-file change matches the chosen intent and every published behaviour goal.",
+        visibility: "visible",
+        criterionIds: [
+          "vibe-game-remix-lab-goal-one",
+          "vibe-game-remix-lab-goal-two",
+          "vibe-game-remix-lab-goal-three",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "vibe-game-remix-lab-m1-private-runtime",
+        statement: "The remix stays inside the private sandbox with no network, personal data or automatic code changes.",
+        visibility: "visible",
+        criterionIds: ["vibe-game-remix-lab-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "vibe-game-remix-lab-m1-run-control",
+        description: "Start the supplied mini-game preview.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-game-remix-lab-m1-keyboard-run"],
+      },
+      {
+        id: "vibe-game-remix-lab-m1-diff-review",
+        description: "Read the removed and added source line before choosing what to do.",
+        primaryMode: "text",
+        alternativeIds: [],
+      },
+      {
+        id: "vibe-game-remix-lab-m1-accept-control",
+        description: "Approve the exact immutable suggestion snapshot.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-game-remix-lab-m1-keyboard-review"],
+      },
+      {
+        id: "vibe-game-remix-lab-m1-reject-control",
+        description: "Reject the suggestion and preserve the current source.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-game-remix-lab-m1-keyboard-review"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "vibe-game-remix-lab-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same preview.",
+      },
+      {
+        id: "vibe-game-remix-lab-m1-keyboard-review",
+        modes: ["keyboard", "text", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read the labelled removed and added lines, then focus Accept or Reject and press Enter or Space.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "vibe-game-remix-lab-m1-assessment",
+        goalIds: [
+          "vibe-game-remix-lab-m1-starts",
+          "vibe-game-remix-lab-m1-bounded-remix",
+          "vibe-game-remix-lab-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "vibe-game-remix-lab-m1-explanation",
+        goalIds: ["vibe-game-remix-lab-m1-bounded-remix"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "vibe-game-remix-lab-m1-inventor",
+        prompt: "Write a new bounded remix intent card with one permitted setting, one constraint and one success test.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "vibe-game-remix-lab-m1-badge",
+        badgeId: "vibe-game-remix-lab-mission-complete",
+        goalIds: [
+          "vibe-game-remix-lab-m1-starts",
+          "vibe-game-remix-lab-m1-bounded-remix",
+          "vibe-game-remix-lab-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "vibe-game-remix-lab-function-speed",
+        signature: "setRescueSpeed(speed)",
+        summary: "Sets the supplied rescue robot's bounded movement speed.",
+        parameters: [{ name: "speed", type: "whole number", description: "A safe speed from 1 to 5." }],
+        effect: "Changes only the private mini-game simulation speed.",
+        example: "setRescueSpeed(3);",
+      },
+      {
+        id: "vibe-game-remix-lab-function-spacing",
+        signature: "setGateSpacing(spacing)",
+        summary: "Sets the gap between original rescue gates.",
+        parameters: [{ name: "spacing", type: "whole number", description: "A bounded spacing from 2 to 6." }],
+        effect: "Changes only the generated gate layout in the private preview.",
+        example: "setGateSpacing(4);",
+      },
+      {
+        id: "vibe-game-remix-lab-function-goals",
+        signature: "setGoalCount(count)",
+        summary: "Chooses how many fictional rescue goals the round contains.",
+        parameters: [{ name: "count", type: "whole number", description: "A bounded goal count from 1 to 4." }],
+        effect: "Changes the labelled rescue-goal count without network or account access.",
+        example: "setGoalCount(3);",
+      },
+    ],
+    boundedSuggestion: {
+      id: "vibe-game-remix-lab-m1-authored-goal-diff",
+      source: "authored-fallback",
+      intent: "Make the round contain one more rescue goal.",
+      constraints: [
+        "Change exactly one documented setting.",
+        "Keep the goal count inside the published range.",
+        "Do not add network, storage, DOM or account access.",
+      ],
+      permittedArtifactId: "vibe-game-remix-lab-m1-code",
+      originalSnippet: "setGoalCount(2);",
+      replacementSnippet: "setGoalCount(3);",
+      explanationPrompt: "Did the new goal count match your prediction, and which assessment evidence proves it?",
+      aiOptional: false,
+      learnerApprovalRequired: true,
+      alternatives: ["accept", "reject"],
+    },
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "vibe-game-remix-lab-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "vibe-game-remix-lab-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "vibe-game-remix-lab-m1-safety-notes",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "vibe-game-remix-lab-m1-protected-resilience",
+        statement: "The sandbox rejects prompt injection, answer dumping, disallowed files, network access and changes outside the approved diff.",
+        visibility: "protected",
+        criterionIds: ["vibe-game-remix-lab-edge-one", "vibe-game-remix-lab-edge-two"],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask for the learner's prediction before revealing the authored diff.",
+      "Do not invite free-form chat; keep intent, evidence and suggestions bound to the current project, rubric and permitted artifact.",
+      "A rejection must leave source unchanged, and AI/provider failure must never block deterministic completion.",
     ],
   },
 };

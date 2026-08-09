@@ -229,6 +229,7 @@ export {
   SERVO_CREATURE_MISSION_ONE_AUTHORING_V1,
   SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
   STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
+  VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
   validateMissionAuthoringBundle,
 } from "./mission-authoring.js";
