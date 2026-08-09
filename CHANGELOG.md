@@ -6,6 +6,10 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Obstacle Explorer mission-one learner/facilitator
+    bundle, five documented bounded C++-style simulator functions, complete and
+    incremental sensor-rover hardware disclosure, equivalent reduced-motion
+    telemetry and distinct simulated and physical evidence rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +19,10 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept Boolean sensing, route decisions, recovery attempts, watchdog timing
+    and fail-safe stopping inside the private simulator; every rover and sensor
+    remains unverified, compatibility-unclaimed and physically ineligible
+    until adult calibration and lifted-wheel bench evidence exists.
 
 ## [0.2.11] - 2026-08-09
 
