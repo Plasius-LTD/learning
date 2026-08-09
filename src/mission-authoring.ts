@@ -4468,6 +4468,282 @@ export const VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundl
   },
 };
 
+/** Evidence-led Vibe repair mission; no open prompt or provider is required. */
+export const VIBE_BUG_DETECTIVE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.vibe-bug-detective",
+  moduleVersion: "1.1.0",
+  missionId: "vibe-bug-detective-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read how setRobotDirection(), setRobotSteps() and placeRescueBeacon() control the supplied mini-game.",
+        artifactIds: ["vibe-bug-detective-m1-guide"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict why the robot moves away from the beacon before viewing the one-line repair.",
+        artifactIds: ["vibe-bug-detective-m1-evidence-card"],
+      },
+      {
+        kind: "build",
+        instruction: "Open the intentionally broken mini-game without changing files outside its documented settings artifact.",
+        artifactIds: ["vibe-bug-detective-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to reproduce the bug in the private JavaScript preview.",
+        artifactIds: ["vibe-bug-detective-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run deterministic checks to collect failure evidence before reviewing any suggested fix.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare observed leftward movement with the expected right-side beacon goal and the single authored diff.",
+        artifactIds: ["vibe-bug-detective-m1-code"],
+      },
+      {
+        kind: "fix",
+        instruction: "Accept or reject the exact direction repair yourself, then rerun every regression check.",
+        artifactIds: ["vibe-bug-detective-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain which evidence identified the bug and why the minimal change fixed it without changing other behaviour.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge after the deterministic score reaches 80 and every safety check passes.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "vibe-bug-detective-m1-read-evidence",
+        prompt: "Point to the observed direction and the beacon position before choosing a repair.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "vibe-bug-detective-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "vibe-bug-detective-m1-guide",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "vibe-bug-detective-m1-evidence-card",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "vibe-bug-detective-m1-starts",
+        statement: "The intentionally broken JavaScript mini-game remains structurally valid and starts.",
+        visibility: "visible",
+        criterionIds: ["vibe-bug-detective-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "vibe-bug-detective-m1-repair",
+        statement: "The robot travels three steps toward the right-side rescue beacon after one minimal direction repair.",
+        visibility: "visible",
+        criterionIds: [
+          "vibe-bug-detective-goal-one",
+          "vibe-bug-detective-goal-two",
+          "vibe-bug-detective-goal-three",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "vibe-bug-detective-m1-regression-safety",
+        statement: "The repair preserves the bounded step and beacon settings inside the private sandbox.",
+        visibility: "visible",
+        criterionIds: ["vibe-bug-detective-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "vibe-bug-detective-m1-run-control",
+        description: "Reproduce the supplied mini-game bug in the private preview.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-bug-detective-m1-keyboard-run"],
+      },
+      {
+        id: "vibe-bug-detective-m1-diff-review",
+        description: "Read the labelled removed and added direction lines beside the assessment evidence.",
+        primaryMode: "text",
+        alternativeIds: [],
+      },
+      {
+        id: "vibe-bug-detective-m1-accept-control",
+        description: "Approve the exact immutable repair snapshot.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-bug-detective-m1-keyboard-review"],
+      },
+      {
+        id: "vibe-bug-detective-m1-reject-control",
+        description: "Reject the repair and preserve the current broken source.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-bug-detective-m1-keyboard-review"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "vibe-bug-detective-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to reproduce the same bug.",
+      },
+      {
+        id: "vibe-bug-detective-m1-keyboard-review",
+        modes: ["keyboard", "text", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read the text evidence and labelled diff, then focus Accept or Reject and press Enter or Space.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "vibe-bug-detective-m1-assessment",
+        goalIds: [
+          "vibe-bug-detective-m1-starts",
+          "vibe-bug-detective-m1-repair",
+          "vibe-bug-detective-m1-regression-safety",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "vibe-bug-detective-m1-explanation",
+        goalIds: ["vibe-bug-detective-m1-repair"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "vibe-bug-detective-m1-regression-inventor",
+        prompt: "Invent one extra regression test that proves the robot still stops at the rescue beacon.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "vibe-bug-detective-m1-badge",
+        badgeId: "vibe-bug-detective-mission-complete",
+        goalIds: [
+          "vibe-bug-detective-m1-starts",
+          "vibe-bug-detective-m1-repair",
+          "vibe-bug-detective-m1-regression-safety",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "vibe-bug-detective-function-direction",
+        signature: "setRobotDirection(direction)",
+        summary: "Chooses the horizontal direction used by the supplied rescue robot.",
+        parameters: [{ name: "direction", type: "text", description: "Use left or right." }],
+        effect: "Changes only the labelled movement direction in the private mini-game.",
+        example: "setRobotDirection(\"right\");",
+      },
+      {
+        id: "vibe-bug-detective-function-steps",
+        signature: "setRobotSteps(count)",
+        summary: "Chooses how many bounded grid steps the robot attempts.",
+        parameters: [{ name: "count", type: "whole number", description: "A bounded count from 1 to 4." }],
+        effect: "Changes the private preview path length without controlling physical hardware.",
+        example: "setRobotSteps(3);",
+      },
+      {
+        id: "vibe-bug-detective-function-beacon",
+        signature: "placeRescueBeacon(position)",
+        summary: "Places the fictional rescue beacon on one labelled side.",
+        parameters: [{ name: "position", type: "text", description: "Use left or right." }],
+        effect: "Changes only the fictional beacon position in the private preview.",
+        example: "placeRescueBeacon(\"right\");",
+      },
+    ],
+    boundedSuggestion: {
+      id: "vibe-bug-detective-m1-authored-direction-repair",
+      source: "authored-fallback",
+      intent: "Make the robot move toward the right-side rescue beacon.",
+      constraints: [
+        "Change exactly one documented direction setting.",
+        "Preserve the step count and beacon position.",
+        "Do not add network, storage, DOM, account or physical hardware access.",
+      ],
+      permittedArtifactId: "vibe-bug-detective-m1-code",
+      originalSnippet: "setRobotDirection(\"left\");",
+      replacementSnippet: "setRobotDirection(\"right\");",
+      explanationPrompt: "Which observed-versus-expected evidence identified the direction bug, and which regression result proves the repair?",
+      aiOptional: false,
+      learnerApprovalRequired: true,
+      alternatives: ["accept", "reject"],
+    },
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "vibe-bug-detective-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "vibe-bug-detective-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "vibe-bug-detective-m1-safety-notes",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "vibe-bug-detective-m1-protected-regressions",
+        statement: "The repaired sandbox rejects extra statements, disallowed values, prompt injection, answer dumping, network access and changes outside the approved diff.",
+        visibility: "protected",
+        criterionIds: ["vibe-bug-detective-edge-one", "vibe-bug-detective-edge-two"],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to describe observed and expected directions before revealing the authored repair.",
+      "Keep every diagnostic choice tied to the current failing goal and permitted artifact; never invite free-form chat.",
+      "A rejection must preserve the broken source, and AI/provider failure must never block deterministic repair or regression checks.",
+    ],
+  },
+};
+
 /** Original first-mission exemplar; no protected content appears in learner data. */
 export const ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
