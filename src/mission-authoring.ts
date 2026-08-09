@@ -4744,6 +4744,294 @@ export const VIBE_BUG_DETECTIVE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundle
   },
 };
 
+/** Goal-led Vibe prototype mission; all idea choices and changes are bounded. */
+export const VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.vibe-idea-studio",
+  moduleVersion: "1.1.0",
+  missionId: "vibe-idea-studio-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read how choosePrototype(), setStarCount() and setSuccessMessage() shape the bounded rescue-card template.",
+        artifactIds: ["vibe-idea-studio-m1-guide"],
+      },
+      {
+        kind: "predict",
+        instruction: "Choose one idea, audience and acceptance test card, then predict what the one-line prototype change will show.",
+        artifactIds: ["vibe-idea-studio-m1-idea-cards"],
+      },
+      {
+        kind: "build",
+        instruction: "Open the supplied template and keep every change inside its documented prototype settings artifact.",
+        artifactIds: ["vibe-idea-studio-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to preview the current rescue card in the private JavaScript simulator.",
+        artifactIds: ["vibe-idea-studio-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run deterministic checks against the selected goal and acceptance test before viewing a suggestion.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the exact one-line diff with your prediction, chosen goal and failed acceptance-test evidence.",
+        artifactIds: ["vibe-idea-studio-m1-code"],
+      },
+      {
+        kind: "fix",
+        instruction: "Accept or reject the immutable prototype change yourself, then rerun the preview and tests.",
+        artifactIds: ["vibe-idea-studio-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how the final evidence proves the prototype meets the selected idea, audience and success test.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound badge after the deterministic score reaches 80 and every safety check passes.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "vibe-idea-studio-m1-match-test",
+        prompt: "Match the three-star acceptance test to the documented setting that controls star count.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "vibe-idea-studio-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "vibe-idea-studio-m1-guide",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "vibe-idea-studio-m1-idea-cards",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "vibe-idea-studio-m1-starts",
+        statement: "The supplied JavaScript rescue-card template remains structurally valid and starts.",
+        visibility: "visible",
+        criterionIds: ["vibe-idea-studio-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "vibe-idea-studio-m1-prototype-goal",
+        statement: "The prototype is a space rescue card for a friendly robot crew with three stars and a visible success message.",
+        visibility: "visible",
+        criterionIds: [
+          "vibe-idea-studio-goal-one",
+          "vibe-idea-studio-goal-two",
+          "vibe-idea-studio-goal-three",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "vibe-idea-studio-m1-private-boundary",
+        statement: "The prototype stays inside the selected template, permitted artifact and private sandbox.",
+        visibility: "visible",
+        criterionIds: ["vibe-idea-studio-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "vibe-idea-studio-m1-idea-cards",
+        description: "Choose one bounded idea, audience and acceptance-test card.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-idea-studio-m1-keyboard-cards"],
+      },
+      {
+        id: "vibe-idea-studio-m1-run-control",
+        description: "Start the private rescue-card preview.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-idea-studio-m1-keyboard-run"],
+      },
+      {
+        id: "vibe-idea-studio-m1-diff-review",
+        description: "Read the labelled removed and added star-count lines before deciding.",
+        primaryMode: "text",
+        alternativeIds: [],
+      },
+      {
+        id: "vibe-idea-studio-m1-accept-control",
+        description: "Approve the exact immutable prototype change.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-idea-studio-m1-keyboard-review"],
+      },
+      {
+        id: "vibe-idea-studio-m1-reject-control",
+        description: "Reject the suggestion and preserve the current source.",
+        primaryMode: "pointer",
+        alternativeIds: ["vibe-idea-studio-m1-keyboard-review"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "vibe-idea-studio-m1-keyboard-cards",
+        modes: ["keyboard", "text"],
+        equivalentOutcome: true,
+        description: "Use labelled radio-card controls with arrow keys and Space to choose the same bounded goal.",
+      },
+      {
+        id: "vibe-idea-studio-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same preview.",
+      },
+      {
+        id: "vibe-idea-studio-m1-keyboard-review",
+        modes: ["keyboard", "text", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read the labelled diff and acceptance evidence, then focus Accept or Reject and press Enter or Space.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "vibe-idea-studio-m1-assessment",
+        goalIds: [
+          "vibe-idea-studio-m1-starts",
+          "vibe-idea-studio-m1-prototype-goal",
+          "vibe-idea-studio-m1-private-boundary",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "vibe-idea-studio-m1-explanation",
+        goalIds: ["vibe-idea-studio-m1-prototype-goal"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "vibe-idea-studio-m1-test-inventor",
+        prompt: "Write one new bounded audience card and one matching acceptance test without changing the template boundary.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "vibe-idea-studio-m1-badge",
+        badgeId: "vibe-idea-studio-mission-complete",
+        goalIds: [
+          "vibe-idea-studio-m1-starts",
+          "vibe-idea-studio-m1-prototype-goal",
+          "vibe-idea-studio-m1-private-boundary",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "vibe-idea-studio-function-prototype",
+        signature: "choosePrototype(kind)",
+        summary: "Chooses one supplied, age-appropriate interactive prototype template.",
+        parameters: [{ name: "kind", type: "text", description: "Use rescue-card, creature-card or mission-sign." }],
+        effect: "Changes only the labelled template in the private preview.",
+        example: "choosePrototype(\"rescue-card\");",
+      },
+      {
+        id: "vibe-idea-studio-function-stars",
+        signature: "setStarCount(count)",
+        summary: "Chooses how many decorative success stars appear on the card.",
+        parameters: [{ name: "count", type: "whole number", description: "A bounded count from 1 to 4." }],
+        effect: "Changes only the visible star count in the private preview.",
+        example: "setStarCount(3);",
+      },
+      {
+        id: "vibe-idea-studio-function-message",
+        signature: "setSuccessMessage(message)",
+        summary: "Chooses one supplied child-safe success message.",
+        parameters: [{ name: "message", type: "text", description: "Use Mission ready!, Great teamwork! or Rescue complete!" }],
+        effect: "Changes only the fictional card message and never sends or stores text.",
+        example: "setSuccessMessage(\"Mission ready!\");",
+      },
+    ],
+    boundedSuggestion: {
+      id: "vibe-idea-studio-m1-authored-star-diff",
+      source: "authored-fallback",
+      intent: "Meet the selected acceptance test by showing three stars.",
+      constraints: [
+        "Change exactly one documented star-count setting.",
+        "Preserve the selected prototype and supplied success message.",
+        "Do not add free-form content, network, storage, DOM, account or hardware access.",
+      ],
+      permittedArtifactId: "vibe-idea-studio-m1-code",
+      originalSnippet: "setStarCount(2);",
+      replacementSnippet: "setStarCount(3);",
+      explanationPrompt: "Did the accepted change satisfy the three-star acceptance test, and which evidence proves it?",
+      aiOptional: false,
+      learnerApprovalRequired: true,
+      alternatives: ["accept", "reject"],
+    },
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "vibe-idea-studio-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "vibe-idea-studio-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "vibe-idea-studio-m1-safety-notes",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "vibe-idea-studio-m1-protected-boundaries",
+        statement: "The sandbox rejects free-form prompts, personal data, disallowed messages, extra statements, network access and changes outside the approved diff.",
+        visibility: "protected",
+        criterionIds: ["vibe-idea-studio-edge-one", "vibe-idea-studio-edge-two"],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to name the idea, audience and acceptance test before revealing the authored diff.",
+      "Keep choices bound to supplied child-safe cards, the current rubric and permitted artifact; never invite free-form chat.",
+      "A rejection must preserve source, and AI/provider failure must never block deterministic prototype completion.",
+    ],
+  },
+};
+
 /** Original first-mission exemplar; no protected content appears in learner data. */
 export const ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   version: MISSION_AUTHORING_CONTRACT_VERSION_V1,

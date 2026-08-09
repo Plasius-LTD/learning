@@ -78,6 +78,7 @@ import {
   STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
   VIBE_BUG_DETECTIVE_MISSION_ONE_AUTHORING_V1,
   VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1,
+  VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
 } from "@plasius/learning";
 
@@ -126,6 +127,9 @@ const vibeGameRemixLab = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const vibeBugDetective = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "vibe-bug-detective",
 );
+const vibeIdeaStudio = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "vibe-idea-studio",
+);
 
 if (
   !roadHopper ||
@@ -142,7 +146,8 @@ if (
   !obstacleExplorer ||
   !rainbowRescueRover ||
   !vibeGameRemixLab ||
-  !vibeBugDetective
+  !vibeBugDetective ||
+  !vibeIdeaStudio
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -207,6 +212,10 @@ assertValidMissionAuthoringBundle(
   VIBE_BUG_DETECTIVE_MISSION_ONE_AUTHORING_V1,
   vibeBugDetective,
 );
+assertValidMissionAuthoringBundle(
+  VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1,
+  vibeIdeaStudio,
+);
 ```
 
 ## Contract rules
@@ -256,6 +265,9 @@ assertValidMissionAuthoringBundle(
 - Vibe Bug Detective starts from visible failing evidence, binds one authored
   repair to the current goal and permitted artifact, and requires learner
   prediction, explicit accept/reject and deterministic regression reruns.
+- Vibe Idea Studio binds supplied child-safe idea, audience and acceptance-test
+  cards to one permitted template. The learner predicts, reviews and controls
+  the exact prototype diff before deterministic tests decide completion.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),
@@ -269,6 +281,7 @@ See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 and [TDR 0008](docs/tdrs/tdr-0008-obstacle-explorer-sensing-watchdog-and-fail-safe-authoring.md).
 See also [TDR 0010](docs/tdrs/tdr-0010-vibe-game-remix-bounded-suggestion-authoring.md).
 See also [TDR 0011](docs/tdrs/tdr-0011-vibe-bug-detective-evidence-led-repair.md).
+See also [TDR 0012](docs/tdrs/tdr-0012-vibe-idea-studio-bounded-goal-prototyping.md).
 
 ## Development
 

@@ -231,6 +231,7 @@ export {
   STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
   VIBE_BUG_DETECTIVE_MISSION_ONE_AUTHORING_V1,
   VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1,
+  VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
   validateMissionAuthoringBundle,
 } from "./mission-authoring.js";
