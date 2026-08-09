@@ -5,6 +5,20 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.21] - 2026-08-09
+
+- **Added**
   - Added manifest-bound contextual-help identifiers, separate
     `GuardianVoiceConsentV1`, private-edge-only voice availability and upload
     metadata, bounded intents/results and canonical exact-cache spoken-help
@@ -515,3 +529,4 @@ All notable changes to this project are documented in this file.
 [0.2.18]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.18
 [0.2.19]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.19
 [0.2.20]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.20
+[0.2.21]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.21
