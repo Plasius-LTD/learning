@@ -5,7 +5,10 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - Added manifest-bound contextual-help identifiers, separate
+    `GuardianVoiceConsentV1`, private-edge-only voice availability and upload
+    metadata, bounded intents/results and canonical exact-cache spoken-help
+    descriptors.
 
 - **Changed**
   - (placeholder)
@@ -14,7 +17,9 @@ All notable changes to this project are documented in this file.
   - (placeholder)
 
 - **Security**
-  - (placeholder)
+  - Kept child microphone audio and transcripts request-memory-only, excluded
+    learner content and arbitrary speech text from canonical audio descriptors,
+    and retained deterministic score, reward, publishing and hardware authority.
 
 ## [0.2.20] - 2026-08-09
 
