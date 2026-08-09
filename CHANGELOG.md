@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.14] - 2026-08-09
+
+- **Added**
+  - (placeholder)
   - Added the Vibe Game Remix Lab mission-one learner/facilitator bundle,
     three documented mini-game functions and an additive bounded-suggestion
     contract for one permitted artifact with a visible authored diff.
@@ -370,3 +384,4 @@ All notable changes to this project are documented in this file.
 [0.2.11]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.11
 [0.2.12]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.12
 [0.2.13]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.13
+[0.2.14]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.14
