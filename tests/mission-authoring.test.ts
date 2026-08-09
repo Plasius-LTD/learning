@@ -9,6 +9,7 @@ import {
   OBSTACLE_EXPLORER_MISSION_ONE_AUTHORING_V1,
   PADDLE_PULSE_MISSION_ONE_AUTHORING_V1,
   PIXEL_TRAIL_CHALLENGE_MISSION_ONE_AUTHORING_V1,
+  RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1,
   RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
@@ -68,6 +69,10 @@ const obstacleExplorer = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "obstacle-explorer",
 )!;
 
+const rainbowRescueRover = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "rainbow-rescue-rover",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -98,6 +103,12 @@ function danceRoverIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
 
 function obstacleExplorerIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
   return validateMissionAuthoringBundle(bundle, obstacleExplorer).map(
+    (entry) => entry.code,
+  );
+}
+
+function rainbowRescueRoverIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
+  return validateMissionAuthoringBundle(bundle, rainbowRescueRover).map(
     (entry) => entry.code,
   );
 }
@@ -624,6 +635,139 @@ describe("Junior Coder mission authoring", () => {
     bundle.hardware!.safeguards.physicalBadgeId = "missing-physical-badge";
 
     expect(obstacleExplorerIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "invalid-function-reference",
+        "invalid-hardware-reward",
+      ]),
+    );
+  });
+
+  it("publishes a complete Rainbow Rescue Rover local-camera integration mission", () => {
+    const bundle = RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle.moduleId).toBe("junior-coder.rainbow-rescue-rover");
+    expect(bundle.moduleVersion).toBe("1.1.0");
+    expect(bundle.missionId).toBe("rainbow-rescue-rover-mission-1");
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.stages.find((stage) => stage.kind === "learn")?.instruction)
+      .toContain("detectColour()");
+    expect(bundle.learner.stages.find((stage) => stage.kind === "learn")?.instruction)
+      .toContain("failSafeStop()");
+    expect(bundle.learner.stages.find((stage) => stage.kind === "run")?.instruction)
+      .toContain("Run action button");
+    expect(bundle.learner.functionReference).toHaveLength(5);
+    expect(bundle.learner.functionReference).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          signature: "detectColour(colour)",
+          parameters: [expect.objectContaining({ name: "colour" })],
+          effect: expect.stringContaining("simulator"),
+          example: expect.stringContaining("detectColour"),
+        }),
+        expect.objectContaining({
+          signature: "failSafeStop()",
+          parameters: [],
+          effect: expect.stringContaining("simulator"),
+          example: expect.stringContaining("failSafeStop"),
+        }),
+      ]),
+    );
+    expect(bundle.hardware).toEqual(
+      expect.objectContaining({
+        requirementsVersion: "1.0.0",
+        hardwareIncluded: false,
+        completePathItemIds: [
+          "pico-2-w",
+          "breadboard",
+          "usb-data-cable",
+          "jumper-wires",
+          "verified-explorer",
+          "pi-zero-2-w",
+          "camera-3",
+          "pi-storage-power",
+        ],
+        incrementalItemIds: [
+          "verified-explorer",
+          "pi-zero-2-w",
+          "camera-3",
+          "pi-storage-power",
+        ],
+      }),
+    );
+    expect(bundle.hardware?.components).toHaveLength(rainbowRescueRover.hardware.items.length);
+    expect(bundle.hardware?.components.every(
+      (component) => component.verificationStatus === "pending-bench-test"
+        && component.compatibilityClaimed === false
+        && component.physicalCompletionEligible === false,
+    )).toBe(true);
+    expect(bundle.hardware?.safeguards).toEqual(
+      expect.objectContaining({
+        adultAssemblyRequired: true,
+        adultAcknowledgementRequiredForExport: true,
+        websiteMayControlHardware: false,
+        simulatorCompletionAvailable: true,
+        simulatedBadgeId: "rainbow-rescue-rover-mission-complete",
+        physicalBadgeId: "rainbow-rescue-rover-physical-builder",
+        physicalBadgeRequiresAdultSignoff: true,
+        adultAssemblySteps: expect.arrayContaining([
+          expect.stringContaining("camera ribbon"),
+          expect.stringContaining("wheels lifted"),
+        ]),
+        powerRequirements: expect.arrayContaining([
+          expect.stringContaining("separate regulated Raspberry Pi power supply"),
+          expect.stringContaining("switched protected motor supply"),
+        ]),
+        warnings: expect.arrayContaining([
+          expect.stringContaining("Camera frames remain on the family Raspberry Pi"),
+          expect.stringContaining("website never activates motors"),
+        ]),
+      }),
+    );
+    expect(validateMissionAuthoringBundle(bundle, rainbowRescueRover)).toEqual([]);
+    expect(() => assertValidMissionAuthoringBundle(bundle, rainbowRescueRover)).not.toThrow();
+  });
+
+  it("rejects Rainbow Rescue Rover compatibility and physical completion claims for an unverified camera", () => {
+    const bundle = structuredClone(RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1);
+    const component = bundle.hardware!.components.find(
+      (entry) => entry.itemId === "camera-3",
+    )!;
+    component.compatibilityClaimed = true;
+    component.physicalCompletionEligible = true;
+
+    expect(rainbowRescueRoverIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "hardware-verification-claim",
+        "unsafe-physical-export",
+      ]),
+    );
+  });
+
+  it("rejects Rainbow Rescue Rover manifest drift and website hardware control", () => {
+    const bundle = structuredClone(RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1);
+    bundle.hardware!.completePathItemIds.pop();
+    bundle.hardware!.incrementalItemIds.push("unknown-item");
+    bundle.hardware!.components[0]!.quantity = 99;
+    bundle.hardware!.safeguards.websiteMayControlHardware = true as false;
+    bundle.hardware!.safeguards.adultAssemblySteps = [];
+
+    expect(rainbowRescueRoverIssueCodes(bundle)).toEqual(
+      expect.arrayContaining([
+        "hardware-item-mismatch",
+        "unsafe-physical-export",
+      ]),
+    );
+  });
+
+  it("rejects incomplete Rainbow Rescue Rover function documentation and badge drift", () => {
+    const bundle = structuredClone(RAINBOW_RESCUE_ROVER_MISSION_ONE_AUTHORING_V1);
+    bundle.learner.functionReference![0]!.effect = "";
+    bundle.hardware!.safeguards.simulatedBadgeId = "rainbow-rescue-rover-physical-builder";
+    bundle.hardware!.safeguards.physicalBadgeId = "missing-physical-badge";
+
+    expect(rainbowRescueRoverIssueCodes(bundle)).toEqual(
       expect.arrayContaining([
         "invalid-function-reference",
         "invalid-hardware-reward",

@@ -6,6 +6,10 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Rainbow Rescue Rover mission-one learner/facilitator
+    bundle, five documented bounded integration-simulator functions, exact
+    eight-item complete and four-item incremental camera-rover disclosures,
+    non-colour telemetry and distinct simulated and physical evidence rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +19,10 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept Camera Module 3 frames on the family Raspberry Pi and colour, target,
+    serial-command, heartbeat and stop behaviour inside the private simulator;
+    the website cannot open a camera or serial port, activate motors, publish
+    frames or unlock physical export before verified adult bench evidence.
 
 ## [0.2.12] - 2026-08-09
 
