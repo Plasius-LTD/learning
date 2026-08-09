@@ -18,4 +18,6 @@ granting the PR access to the release-bearing runner.
 
 Both event paths share one anchored step list, retaining lint, typecheck,
 runtime dependency audit, build, unit coverage, retained LCOV and best-effort
-Codecov behavior. Main CI and CD remain the approved self-hosted release path.
+Codecov behavior. Main CI remains on the approved quarantined self-hosted path;
+final npm publication moved to hosted OIDC under
+[ADR-0006](../adrs/adr-0006-hosted-oidc-package-publication.md).

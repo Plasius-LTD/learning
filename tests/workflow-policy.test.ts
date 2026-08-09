@@ -39,13 +39,13 @@ describe("continuous integration workflow policy", () => {
 });
 
 describe("production release workflow policy", () => {
-  it("runs release preparation and publication on configurable trusted runners", () => {
-    expect(cdWorkflow).toContain(trustedProductionRunnerGroup);
-    expect(cdWorkflow).toContain(trustedProductionRunnerLabels);
+  it("keeps preparation trusted while publishing from the hosted OIDC runner", () => {
+    expect(cdWorkflow).toContain("runs-on: ubuntu-latest");
     expect(releasePrepareWorkflow).toContain(trustedProductionRunnerGroup);
     expect(releasePrepareWorkflow).toContain(trustedProductionRunnerLabels);
-    expect(cdWorkflow).not.toContain("runs-on: ubuntu-latest");
     expect(releasePrepareWorkflow).not.toContain("runs-on: ubuntu-latest");
+    expect(cdWorkflow).not.toContain("secrets.NPM_TOKEN");
+    expect(cdWorkflow).not.toContain("NODE_AUTH_TOKEN:");
   });
 
   it("keeps inherited release-preparation secrets outside environment shadowing", () => {
@@ -124,13 +124,11 @@ describe("production release workflow policy", () => {
     expect(releasePrepareWorkflow).not.toMatch(/\n\s+pull_request(?:_target)?:/u);
   });
 
-  it("retains release evidence and only requests npm provenance when supported", () => {
+  it("retains release evidence and always requests npm provenance on the hosted runner", () => {
     expect(cdWorkflow).toContain("name: release-coverage-lcov");
     expect(cdWorkflow).toContain("name: release-sbom");
-    expect(cdWorkflow).toContain('RUNNER_ENVIRONMENT: ${{ runner.environment }}');
-    expect(cdWorkflow).toContain('REPOSITORY_PRIVATE: ${{ github.event.repository.private }}');
     expect(cdWorkflow).toContain("npm publish ${FLAGS} --provenance");
-    expect(cdWorkflow).toContain("npm publish ${FLAGS} --registry");
+    expect(cdWorkflow).not.toMatch(/npm publish \$\{FLAGS\} --registry/mu);
   });
 
   it("does not request unsupported GitHub attestations for a private repository", () => {

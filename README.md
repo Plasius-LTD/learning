@@ -362,16 +362,23 @@ npm run pack:check
 
 Node.js 24 is required. Public pull-request code is validated on an isolated
 GitHub-hosted Linux runner with read-only workflow permissions. Main-branch CI
-and both release jobs explicitly select the approved
-`Public CI - Quarantined` self-hosted runner group. `CI_RUNNER_GROUP` /
-`CI_RUNNER_LABELS` and `CD_RUNNER_GROUP` / `CD_RUNNER_LABELS` are reserved for
-governed operator configuration. The organisation group remains restricted to
-allowlisted `main` workflows and selected repositories. Release coverage and
-the CycloneDX SBOM are retained even when an external coverage or provenance
-service is unavailable. Release tags and GitHub Releases use a current-repository
-GitHub App token with explicit Contents and Workflows write permissions; npm
-publication continues to use only the protected `NPM_TOKEN`. Both release jobs
-install a checksum-pinned GitHub CLI under `RUNNER_TEMP`, so runner images do
-not need a mutable system-wide `gh` installation. Publication checks out the
-verified current release-branch HEAD, including the workflow tooling used by a
-`bump=none` recovery.
+continues to use the governed `Public CI - Quarantined` runner group. Final npm
+publication runs only on a GitHub-hosted runner from the protected `production`
+environment so npm can validate its short-lived OIDC identity and record
+provenance; it has no long-lived npm write-token fallback. Release coverage and
+the CycloneDX SBOM are retained even when an external coverage service is
+unavailable. Release tags and GitHub Releases use a current-repository GitHub
+App token with explicit Contents and Workflows write permissions. Publication
+checks out the verified current release-branch HEAD, including the workflow
+tooling used by a `bump=none` recovery.
+<!-- BEGIN PLASIUS RELEASE INTEGRITY -->
+## Release integrity
+
+Production package publication runs only from `.github/workflows/cd.yml` on
+protected `main`. The job verifies that the prepared commit is still the
+current main commit and has an exact successful `ci.yml` push result before it
+mutates release state. npm publication runs on GitHub-hosted Node.js 24 with
+npm 11.5.1 or newer, uses the protected `production` environment and
+short-lived npm OIDC with provenance, and has no long-lived npm write-token
+fallback. Rollback disables CD; it never rewrites published package history.
+<!-- END PLASIUS RELEASE INTEGRITY -->

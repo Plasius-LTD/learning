@@ -8,6 +8,9 @@ All notable changes to this project are documented in this file.
   - (placeholder)
 
 - **Changed**
+  - Restored exact-main npm publication on a GitHub-hosted runner through
+    short-lived OIDC, with an enforced Node/npm runtime and no long-lived
+    write-token fallback.
   - (placeholder)
 
 - **Fixed**
