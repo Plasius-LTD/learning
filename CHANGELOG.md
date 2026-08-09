@@ -6,6 +6,9 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the Adventure Mission Planner mission-one learner/facilitator bundle,
+    five documented semantic planner functions and one learner-approved local
+    persistence diff for a private fictional planning preview.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +18,10 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept form validation, arrays, state and restart persistence inside a bounded
+    deterministic simulator; names, contact details, real locations, network
+    calls, transmitting forms, trackers and provider-dependent completion are
+    excluded from the learner contract.
 
 ## [0.2.16] - 2026-08-09
 
