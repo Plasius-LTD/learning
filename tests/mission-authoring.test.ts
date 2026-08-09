@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1,
   BEACON_BOT_MISSION_ONE_AUTHORING_V1,
+  CREATURE_CARE_DASHBOARD_MISSION_ONE_AUTHORING_V1,
   DANCE_ROVER_MISSION_ONE_AUTHORING_V1,
   JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
@@ -93,6 +94,10 @@ const adventureMissionPlanner = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find
   (module) => module.slug === "adventure-mission-planner",
 )!;
 
+const creatureCareDashboard = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "creature-care-dashboard",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -157,7 +162,49 @@ function adventureMissionPlannerIssueCodes(bundle: MissionAuthoringBundleV1): st
   );
 }
 
+function creatureCareDashboardIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
+  return validateMissionAuthoringBundle(bundle, creatureCareDashboard).map(
+    (entry) => entry.code,
+  );
+}
+
 describe("Junior Coder mission authoring", () => {
+  it("publishes an accessible and independently completable Creature Care Dashboard mission", () => {
+    const bundle = CREATURE_CARE_DASHBOARD_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle).toMatchObject({
+      moduleId: "junior-coder.creature-care-dashboard",
+      moduleVersion: "1.1.0",
+      missionId: "creature-care-dashboard-mission-1",
+    });
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.functionReference?.map((entry) => entry.signature)).toEqual([
+      "chooseCreature(creature)",
+      "setCareStatus(status)",
+      "setCareTimer(seconds)",
+      "setDashboardLayout(layout)",
+      "setReducedMotion(enabled)",
+    ]);
+    expect(bundle.learner.boundedSuggestion).toMatchObject({
+      originalSnippet: "setReducedMotion(false);",
+      replacementSnippet: "setReducedMotion(true);",
+      aiOptional: false,
+      learnerApprovalRequired: true,
+      alternatives: ["accept", "reject"],
+    });
+    expect(bundle.learner.goals.map((goal) => goal.statement).join(" ")).toMatch(
+      /component|event|timer|status|responsive|reduced motion/iu,
+    );
+    expect(bundle.learner.artifacts.every((artifact) => !artifact.solutionBearing)).toBe(true);
+    expect(bundle.facilitator.artifacts.every((artifact) => artifact.solutionBearing)).toBe(true);
+    expect(creatureCareDashboard.hardware.mode).toBe("none");
+    expect(creatureCareDashboardIssueCodes(bundle)).toEqual([]);
+    expect(() => assertValidMissionAuthoringBundle(bundle, creatureCareDashboard))
+      .not.toThrow();
+  });
+
   it("publishes an accessible and independently completable Adventure Mission Planner mission", () => {
     const bundle = ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1;
 

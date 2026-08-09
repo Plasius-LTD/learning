@@ -6,11 +6,14 @@ Implementation design for `Plasius-LTD/learning#3`,
 `Plasius-LTD/learning#18`, `Plasius-LTD/learning#20`,
 `Plasius-LTD/learning#22`, `Plasius-LTD/learning#24`,
 `Plasius-LTD/learning#26`, `Plasius-LTD/learning#28`, and
-`Plasius-LTD/learning#32`, and `Plasius-LTD/learning#34`, under Stories
+`Plasius-LTD/learning#32`, `Plasius-LTD/learning#34`, and
+`Plasius-LTD/learning#49`, under Stories
 `Plasius-LTD/plasius-ltd-site#1714`, Feature
 `Plasius-LTD/plasius-ltd-site#1704`, and
 `Plasius-LTD/plasius-ltd-site#1715`, Feature
-`Plasius-LTD/plasius-ltd-site#1705`, and Epic
+`Plasius-LTD/plasius-ltd-site#1705`, and Story
+`Plasius-LTD/plasius-ltd-site#1719`, Feature
+`Plasius-LTD/plasius-ltd-site#1707`, and Epic
 `Plasius-LTD/plasius-ltd-site#1701`.
 
 Beacon Bot and Servo Creature are delivered under Story
@@ -19,7 +22,8 @@ Beacon Bot and Servo Creature are delivered under Story
 
 The inherited rollout flags are `learning.junior-coder.workspace.enabled` and
 `learning.junior-coder.games.enabled`; robot missions additionally inherit
-`learning.junior-coder.robotics.enabled`.
+`learning.junior-coder.robotics.enabled`; web-app missions additionally inherit
+`learning.junior-coder.web-project-hosting.enabled`.
 Publishing these contracts does not activate learner access.
 
 ## Outcome

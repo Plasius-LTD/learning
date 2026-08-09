@@ -6,6 +6,9 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the Creature Care Dashboard mission-one learner/facilitator bundle,
+    five documented component and state functions, and one learner-approved
+    reduced-motion diff for a private fictional care preview.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +18,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept creature choices, status, events, timers and responsive layout inside
+    a bounded deterministic simulator; personal data, real schedules, network
+    access, background tasks and motion-only feedback remain excluded.
 
 ## [0.2.17] - 2026-08-09
 

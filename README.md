@@ -64,6 +64,7 @@ the exact catalog module that owns its rubric, mission and badges.
 import {
   ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1,
   BEACON_BOT_MISSION_ONE_AUTHORING_V1,
+  CREATURE_CARE_DASHBOARD_MISSION_ONE_AUTHORING_V1,
   DANCE_ROVER_MISSION_ONE_AUTHORING_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   METEOR_SHIELD_MISSION_ONE_AUTHORING_V1,
@@ -134,6 +135,9 @@ const vibeIdeaStudio = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const adventureMissionPlanner = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "adventure-mission-planner",
 );
+const creatureCareDashboard = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "creature-care-dashboard",
+);
 
 if (
   !roadHopper ||
@@ -152,7 +156,8 @@ if (
   !vibeGameRemixLab ||
   !vibeBugDetective ||
   !vibeIdeaStudio ||
-  !adventureMissionPlanner
+  !adventureMissionPlanner ||
+  !creatureCareDashboard
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -225,6 +230,10 @@ assertValidMissionAuthoringBundle(
   ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1,
   adventureMissionPlanner,
 );
+assertValidMissionAuthoringBundle(
+  CREATURE_CARE_DASHBOARD_MISSION_ONE_AUTHORING_V1,
+  creatureCareDashboard,
+);
 ```
 
 ## Contract rules
@@ -281,6 +290,10 @@ assertValidMissionAuthoringBundle(
   state, private simulated local save and an equivalent accessible summary.
   The learner reviews the exact persistence diff; no form transmits data and
   no network, real location or personal information enters the preview.
+- Creature Care Dashboard documents components, events, bounded timers, status
+  displays, responsive layouts and equivalent reduced-motion feedback. The
+  learner controls the exact accessibility diff; no network, real schedule,
+  background task or personal information enters the preview.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),
@@ -296,6 +309,7 @@ See also [TDR 0010](docs/tdrs/tdr-0010-vibe-game-remix-bounded-suggestion-author
 See also [TDR 0011](docs/tdrs/tdr-0011-vibe-bug-detective-evidence-led-repair.md).
 See also [TDR 0012](docs/tdrs/tdr-0012-vibe-idea-studio-bounded-goal-prototyping.md).
 See also [TDR 0013](docs/tdrs/tdr-0013-adventure-mission-planner-private-persistence.md).
+See also [TDR 0014](docs/tdrs/tdr-0014-creature-care-dashboard-bounded-timers-and-motion.md).
 
 ## Development
 
