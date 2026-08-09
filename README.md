@@ -70,6 +70,7 @@ import {
   RESCUE_CREW_COMMANDER_MISSION_ONE_AUTHORING_V1,
   ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1,
   ROBOT_MAZE_DASH_MISSION_ONE_AUTHORING_V1,
+  SERVO_CREATURE_MISSION_ONE_AUTHORING_V1,
   SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
   STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
@@ -102,6 +103,9 @@ const starDefenderSquadron = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const beaconBot = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "beacon-bot",
 );
+const servoCreature = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "servo-creature",
+);
 
 if (
   !roadHopper ||
@@ -112,7 +116,8 @@ if (
   !rescueCrewCommander ||
   !pixelTrailChallenge ||
   !starDefenderSquadron ||
-  !beaconBot
+  !beaconBot ||
+  !servoCreature
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -153,6 +158,10 @@ assertValidMissionAuthoringBundle(
   BEACON_BOT_MISSION_ONE_AUTHORING_V1,
   beaconBot,
 );
+assertValidMissionAuthoringBundle(
+  SERVO_CREATURE_MISSION_ONE_AUTHORING_V1,
+  servoCreature,
+);
 ```
 
 ## Contract rules
@@ -181,6 +190,9 @@ assertValidMissionAuthoringBundle(
 - Unverified components cannot claim compatibility or physical completion.
   Simulator completion remains separate; physical export and its distinct
   badge require adult acknowledgement and evidence.
+- Servo Creature documents its safe 30–150 degree simulator range while every
+  physical servo, regulated supply and common-ground arrangement remains
+  pending adult bench verification and unavailable to learner code.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),
@@ -188,7 +200,8 @@ See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [ADR 0001](docs/adrs/adr-0001-learning-domain-and-catalog-boundary.md), and
 [ADR 0002](docs/adrs/adr-0002-immutable-module-repricing-and-admin-test-source.md),
 [ADR 0003](docs/adrs/adr-0003-mission-authoring-manifests-are-additive-and-separated.md),
-and [ADR 0004](docs/adrs/adr-0004-robot-mission-hardware-disclosures-are-additive-and-fail-closed.md).
+[ADR 0004](docs/adrs/adr-0004-robot-mission-hardware-disclosures-are-additive-and-fail-closed.md),
+and [TDR 0006](docs/tdrs/tdr-0006-servo-creature-safe-movement-and-power-authoring.md).
 
 ## Development
 

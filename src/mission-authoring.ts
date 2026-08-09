@@ -2220,6 +2220,401 @@ export const BEACON_BOT_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
 };
 
 /**
+ * First Servo Creature robotics mission. The learner creates a bounded pose,
+ * mood and interaction sequence in the simulator. Physical servo power and
+ * movement remain unavailable until the exact reference build is bench tested.
+ */
+export const SERVO_CREATURE_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.servo-creature",
+  moduleVersion: "1.1.0",
+  missionId: "servo-creature-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read what setServoAngle(), waitMs(), repeatMovement(), setCreatureMood() and readTouchSensor() do in the private Servo Creature simulator.",
+        artifactIds: ["servo-creature-m1-art"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict the creature's labelled angle, mood, repeat count and simulated touch response before the sequence runs.",
+        artifactIds: [],
+      },
+      {
+        kind: "build",
+        instruction: "Adjust the five documented C++-style calls to create one bounded creature movement sequence.",
+        artifactIds: ["servo-creature-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the Run action button to start the private Servo Creature simulator.",
+        artifactIds: ["servo-creature-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run the visible and protected deterministic pose, mood and interaction checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the highlighted C++-style line with the first movement goal that did not pass.",
+        artifactIds: [],
+      },
+      {
+        kind: "fix",
+        instruction: "Change one angle, wait, repeat, mood or simulated touch call, then rerun and inspect the text telemetry.",
+        artifactIds: ["servo-creature-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how the bounded calls created a safe movement and how the simulated interaction changed the creature's response.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the simulated badge when the score and private-runtime safety check pass; physical completion remains adult-only.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "servo-creature-m1-find-angle-limit",
+        prompt: "Find the documented safe minimum and maximum angle before changing the creature's pose.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "servo-creature-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "servo-creature-m1-art",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "servo-creature-m1-printable",
+        kind: "printable",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "servo-creature-m1-starts",
+        statement: "The documented C++-style settings are valid and the private simulator starts.",
+        visibility: "visible",
+        criterionIds: ["servo-creature-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "servo-creature-m1-movement-sequence",
+        statement: "The creature completes a bounded angle, timing, mood and interaction sequence.",
+        visibility: "visible",
+        criterionIds: ["servo-creature-goal-one", "servo-creature-goal-two"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "servo-creature-m1-private-runtime",
+        statement: "The program stays inside the private simulator and never accesses physical hardware, the network or browser storage.",
+        visibility: "visible",
+        criterionIds: ["servo-creature-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "servo-creature-m1-run-control",
+        description: "Start the private Servo Creature movement simulation.",
+        primaryMode: "pointer",
+        alternativeIds: ["servo-creature-m1-keyboard-run"],
+      },
+      {
+        id: "servo-creature-m1-code-control",
+        description: "Edit the documented angle, timing, repeat, mood and interaction calls.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "servo-creature-m1-pose-motion",
+        description: "Observe the bounded creature pose and movement sequence.",
+        primaryMode: "motion",
+        alternativeIds: ["servo-creature-m1-telemetry"],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "servo-creature-m1-keyboard-run",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the play-icon Run button to start the same simulator.",
+      },
+      {
+        id: "servo-creature-m1-telemetry",
+        modes: ["text", "shape", "symbol", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Read the angle, mood, repeat count, elapsed milliseconds and touch state without animation.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "servo-creature-m1-assessment",
+        goalIds: [
+          "servo-creature-m1-starts",
+          "servo-creature-m1-movement-sequence",
+          "servo-creature-m1-private-runtime",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "servo-creature-m1-explanation",
+        goalIds: ["servo-creature-m1-movement-sequence"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "servo-creature-m1-remix",
+        prompt: "Invent an original creature mood and describe a text or symbol cue that makes its pose understandable without movement.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "servo-creature-m1-simulated-badge",
+        badgeId: "servo-creature-mission-complete",
+        goalIds: [
+          "servo-creature-m1-starts",
+          "servo-creature-m1-movement-sequence",
+          "servo-creature-m1-private-runtime",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "servo-creature-function-angle",
+        signature: "setServoAngle(degrees)",
+        summary: "Chooses one safe labelled creature pose in the private simulator.",
+        parameters: [
+          {
+            name: "degrees",
+            type: "whole number",
+            description: "A bounded angle from 30 to 150 degrees.",
+          },
+        ],
+        effect: "Updates the simulator's labelled angle and pose cue without generating PWM or accessing a physical servo.",
+        example: "setServoAngle(90);",
+      },
+      {
+        id: "servo-creature-function-wait",
+        signature: "waitMs(duration)",
+        summary: "Adds one safe wait to the simulated movement timeline.",
+        parameters: [
+          {
+            name: "duration",
+            type: "whole number",
+            description: "A bounded number of milliseconds from 100 to 1000.",
+          },
+        ],
+        effect: "Advances simulated elapsed time; it never blocks the website or holds a physical servo under load.",
+        example: "waitMs(300);",
+      },
+      {
+        id: "servo-creature-function-repeat",
+        signature: "repeatMovement(count)",
+        summary: "Repeats the current simulated pose a safe number of times.",
+        parameters: [
+          {
+            name: "count",
+            type: "whole number",
+            description: "A bounded repeat count from 1 to 4.",
+          },
+        ],
+        effect: "Adds a fixed number of labelled pose steps to the private simulator timeline.",
+        example: "repeatMovement(3);",
+      },
+      {
+        id: "servo-creature-function-mood",
+        signature: "setCreatureMood(mood)",
+        summary: "Chooses the creature's labelled expression for the simulated pose.",
+        parameters: [
+          {
+            name: "mood",
+            type: "string",
+            description: "Use calm, curious or happy.",
+          },
+        ],
+        effect: "Updates the simulator's text and symbol mood cue without moving physical parts.",
+        example: "setCreatureMood(\"curious\");",
+      },
+      {
+        id: "servo-creature-function-touch",
+        signature: "readTouchSensor()",
+        summary: "Reads the simulator's fictional touch state for one interaction response.",
+        parameters: [],
+        effect: "Returns touched or clear from simulator state only; it cannot access a physical sensor.",
+        example: "const touchState = readTouchSensor();",
+      },
+    ],
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "servo-creature-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "servo-creature-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "servo-creature-m1-adult-hardware-guide",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "servo-creature-m1-protected-resilience",
+        statement: "The simulator rejects unsupported moods, out-of-range angles, excessive waits or repeats and any physical-hardware request.",
+        visibility: "protected",
+        criterionIds: ["servo-creature-edge-one", "servo-creature-edge-two"],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to predict the labelled pose timeline before suggesting one bounded change.",
+      "Use the function reference and visible telemetry; never provide servo wiring, power or movement advice to a learner.",
+      "Physical export stays unavailable until an adult acknowledges the exact manifest and every servo power component has verified bench-test evidence.",
+    ],
+  },
+  hardware: {
+    requirementsVersion: "1.0.0",
+    hardwareIncluded: false,
+    completePathItemIds: [
+      "pico-2-w",
+      "breadboard",
+      "usb-data-cable",
+      "jumper-wires",
+      "micro-servo",
+      "servo-power",
+    ],
+    incrementalItemIds: ["micro-servo", "servo-power"],
+    components: [
+      {
+        itemId: "pico-2-w",
+        quantity: 1,
+        acquisitionScope: "complete-path",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "breadboard",
+        quantity: 1,
+        acquisitionScope: "complete-path",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "usb-data-cable",
+        quantity: 1,
+        acquisitionScope: "complete-path",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "jumper-wires",
+        quantity: 12,
+        acquisitionScope: "complete-path",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "micro-servo",
+        quantity: 1,
+        acquisitionScope: "incremental",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+      {
+        itemId: "servo-power",
+        quantity: 1,
+        acquisitionScope: "incremental",
+        verificationStatus: "pending-bench-test",
+        compatibilityClaimed: false,
+        physicalCompletionEligible: false,
+      },
+    ],
+    safeguards: {
+      adultAssemblyRequired: true,
+      adultAcknowledgementRequiredForExport: true,
+      websiteMayControlHardware: false,
+      simulatorCompletionAvailable: true,
+      simulatedBadgeId: "servo-creature-mission-complete",
+      physicalBadgeId: "servo-creature-physical-builder",
+      physicalBadgeRequiresAdultSignoff: true,
+      adultAssemblySteps: [
+        "Confirm the exact servo, external supply and connector identities against the requirements manifest.",
+        "Assemble and inspect the disconnected signal and common-ground wiring before learner use.",
+        "Secure the creature linkage, lift or restrain moving parts and complete the adult bench-test record.",
+      ],
+      powerRequirements: [
+        "Use an external regulated servo supply sized for the verified servo; do not power the servo from a Pico GPIO pin.",
+        "Connect one common signal ground between the verified servo supply and Pico only as shown in the adult guide.",
+        "Disconnect every power source before changing wiring or creature linkages.",
+      ],
+      cableRequirements: [
+        "One known data-capable USB cable compatible with the Pico 2 W.",
+        "Insulated jumper leads and a verified servo connector arrangement documented by the adult guide.",
+      ],
+      softwarePrerequisites: [
+        "Supported Pico SDK toolchain on Raspberry Pi OS or a documented desktop environment.",
+        "Known-good Servo Creature recovery firmware with adult-owned neutral-pose and stop behaviour.",
+      ],
+      warnings: [
+        "Hardware is not included with the module.",
+        "No listed servo or power arrangement currently claims compatibility or physical-completion eligibility.",
+        "Pinch points, stalled servos and unsuitable power supplies can cause heat or movement; adult assembly and testing are mandatory.",
+        "The simulator and simulated badge remain available without physical equipment.",
+      ],
+      unrelatedHardwareNotRequired: [
+        "Camera Module 3 or Raspberry Pi Zero 2 W",
+        "motor driver, motors or rover chassis",
+        "physical touch or IR sensor",
+        "LED or infrared beacon parts",
+      ],
+    },
+  },
+};
+
+/**
  * Original first mission for Rescue Crew Commander. The learner arranges a
  * typed visual program and can inspect its synchronized JavaScript projection,
  * while protected route and action-limit checks stay facilitator-only.

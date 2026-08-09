@@ -6,15 +6,16 @@ Implementation design for `Plasius-LTD/learning#3`,
 `Plasius-LTD/learning#18`, `Plasius-LTD/learning#20`,
 `Plasius-LTD/learning#22`, `Plasius-LTD/learning#24`,
 `Plasius-LTD/learning#26`, `Plasius-LTD/learning#28`, and
-`Plasius-LTD/learning#32`, under Stories
+`Plasius-LTD/learning#32`, and `Plasius-LTD/learning#34`, under Stories
 `Plasius-LTD/plasius-ltd-site#1714`, Feature
 `Plasius-LTD/plasius-ltd-site#1704`, and
 `Plasius-LTD/plasius-ltd-site#1715`, Feature
 `Plasius-LTD/plasius-ltd-site#1705`, and Epic
 `Plasius-LTD/plasius-ltd-site#1701`.
 
-Beacon Bot is delivered under Story `Plasius-LTD/plasius-ltd-site#1717` and
-Feature `Plasius-LTD/plasius-ltd-site#1706`.
+Beacon Bot and Servo Creature are delivered under Story
+`Plasius-LTD/plasius-ltd-site#1717` and Feature
+`Plasius-LTD/plasius-ltd-site#1706`.
 
 The inherited rollout flags are `learning.junior-coder.workspace.enabled` and
 `learning.junior-coder.games.enabled`; robot missions additionally inherit
@@ -197,6 +198,22 @@ hardware that is not required. All current component entries remain pending
 bench test, compatibility-unclaimed and physically ineligible. Physical export
 requires an adult acknowledgement, the website may never control hardware and
 the physical badge continues to require adult sign-off.
+
+Servo Creature mission one builds on the same fail-closed robotics authoring
+boundary without making Beacon Bot a paid prerequisite. It documents
+`setServoAngle()`, `waitMs()`, `repeatMovement()`, `setCreatureMood()` and
+`readTouchSensor()` with signatures, parameters, effects and examples. The
+learner route renders labelled angle, mood, repeat, elapsed-time and simulated
+touch telemetry, including a non-motion equivalent. The authored range is
+bounded to 30–150 degrees and exists only in the simulator contract.
+
+The additive Servo Creature hardware projection lists the reusable Pico core
+and its two incremental items: an exact micro servo and an external regulated
+servo supply. Each item remains pending bench test, compatibility-unclaimed and
+physically ineligible. Adult preparation must verify the external supply,
+common signal ground, neutral recovery firmware, secured linkage and pinch-point
+controls. The website may never generate PWM or activate an actuator, and the
+physical badge remains separate from deterministic simulator completion.
 
 No bundle is a prerequisite for another sellable module. Each is an
 independently versioned authoring authority and a tested reference for its own
