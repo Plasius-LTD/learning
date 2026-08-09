@@ -5032,6 +5032,289 @@ export const VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1
   },
 };
 
+/** Accessible fictional care dashboard with bounded component and timer state. */
+export const CREATURE_CARE_DASHBOARD_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.creature-care-dashboard",
+  moduleVersion: "1.1.0",
+  missionId: "creature-care-dashboard-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read how components, events, status displays, timers, responsive layout and reduced motion build an accessible fictional creature dashboard.",
+        artifactIds: ["creature-care-dashboard-m1-guide"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict which parts of the status card should update and which movement should stop when reduced motion is enabled.",
+        artifactIds: ["creature-care-dashboard-m1-status-cards"],
+      },
+      {
+        kind: "build",
+        instruction: "Change only the supplied creature, care status, timer, layout and reduced-motion settings.",
+        artifactIds: ["creature-care-dashboard-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the action-icon Run button to update the private dashboard preview and its equivalent text status.",
+        artifactIds: ["creature-care-dashboard-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run deterministic component, event, timer, status, responsive-layout and accessibility checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the observed dashboard state with the selected status card and highlighted reduced-motion setting.",
+        artifactIds: ["creature-care-dashboard-m1-code"],
+      },
+      {
+        kind: "fix",
+        instruction: "Review and accept or reject the exact reduced-motion change yourself, then rerun every check.",
+        artifactIds: ["creature-care-dashboard-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how events update component state, how the timer stays bounded and why reduced motion matters.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound care badge after the score reaches 80 and every privacy and accessibility check passes.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "creature-care-dashboard-m1-status-check",
+        prompt: "Find the creature card, care status, timer and text summary that must all describe the same private state.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "creature-care-dashboard-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "creature-care-dashboard-m1-guide",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "creature-care-dashboard-m1-status-cards",
+        kind: "sample-data",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "creature-care-dashboard-m1-starts",
+        statement: "The responsive creature-card component, labelled status display and bounded timer state are valid and start.",
+        visibility: "visible",
+        criterionIds: ["creature-care-dashboard-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "creature-care-dashboard-m1-behaviour",
+        statement: "A supplied event updates the fictional creature status and timer while the responsive dashboard keeps one consistent state.",
+        visibility: "visible",
+        criterionIds: [
+          "creature-care-dashboard-goal-one",
+          "creature-care-dashboard-goal-two",
+          "creature-care-dashboard-goal-three",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "creature-care-dashboard-m1-accessible-private",
+        statement: "The dashboard enables reduced motion, keeps an equivalent text status and uses no network, personal data or real schedule.",
+        visibility: "visible",
+        criterionIds: ["creature-care-dashboard-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "creature-care-dashboard-m1-editor",
+        description: "Edit the five documented dashboard calls using keyboard or pointer controls.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "creature-care-dashboard-m1-run",
+        description: "Activate the labelled action-icon Run control.",
+        primaryMode: "pointer",
+        alternativeIds: ["creature-care-dashboard-m1-keyboard-run"],
+      },
+      {
+        id: "creature-care-dashboard-m1-review",
+        description: "Review and accept or reject the exact labelled diff.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "creature-care-dashboard-m1-keyboard-run",
+        description: "Focus the Run action button and press Enter or Space to produce the same dashboard and text telemetry.",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "creature-care-dashboard-m1-assessment",
+        goalIds: [
+          "creature-care-dashboard-m1-starts",
+          "creature-care-dashboard-m1-behaviour",
+          "creature-care-dashboard-m1-accessible-private",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "creature-care-dashboard-m1-explanation",
+        goalIds: ["creature-care-dashboard-m1-accessible-private"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "creature-care-dashboard-m1-remix",
+        prompt: "Choose another supplied creature, status and responsive layout while preserving the timer and reduced-motion evidence.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "creature-care-dashboard-m1-badge",
+        badgeId: "creature-care-dashboard-mission-complete",
+        goalIds: [
+          "creature-care-dashboard-m1-starts",
+          "creature-care-dashboard-m1-behaviour",
+          "creature-care-dashboard-m1-accessible-private",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "creature-care-dashboard-function-creature",
+        signature: "chooseCreature(creature)",
+        summary: "Chooses one supplied fictional creature for the main component card.",
+        parameters: [{ name: "creature", type: "text", description: "Use Moon Moth, Cloud Cat or Pebble Dragon." }],
+        effect: "Updates the creature card heading, illustration label and equivalent text status.",
+        example: "chooseCreature(\"Moon Moth\");",
+      },
+      {
+        id: "creature-care-dashboard-function-status",
+        signature: "setCareStatus(status)",
+        summary: "Chooses one supplied care state for the fictional creature.",
+        parameters: [{ name: "status", type: "text", description: "Use Resting, Ready to play or Snack time." }],
+        effect: "Updates the visible component status and accessible live-status text.",
+        example: "setCareStatus(\"Ready to play\");",
+      },
+      {
+        id: "creature-care-dashboard-function-timer",
+        signature: "setCareTimer(seconds)",
+        summary: "Sets a short simulated care timer from a supplied safe value.",
+        parameters: [{ name: "seconds", type: "number", description: "Use 5, 10 or 15 simulated seconds." }],
+        effect: "Updates bounded timer state and text telemetry without scheduling background work.",
+        example: "setCareTimer(10);",
+      },
+      {
+        id: "creature-care-dashboard-function-layout",
+        signature: "setDashboardLayout(layout)",
+        summary: "Chooses one supplied responsive card arrangement.",
+        parameters: [{ name: "layout", type: "text", description: "Use single, cosy-grid or wide-grid." }],
+        effect: "Changes the simulated preview layout while keeping the same reading and keyboard order.",
+        example: "setDashboardLayout(\"cosy-grid\");",
+      },
+      {
+        id: "creature-care-dashboard-function-motion",
+        signature: "setReducedMotion(enabled)",
+        summary: "Turns the reduced-motion presentation on or off.",
+        parameters: [{ name: "enabled", type: "Boolean", description: "Use true to stop decorative movement." }],
+        effect: "Disables decorative preview animation while preserving status, timer and event feedback.",
+        example: "setReducedMotion(true);",
+      },
+    ],
+    boundedSuggestion: {
+      id: "creature-care-dashboard-m1-reduced-motion-diff",
+      source: "authored-fallback",
+      intent: "Keep the fictional care dashboard understandable without decorative movement.",
+      constraints: [
+        "Change exactly one documented reduced-motion setting.",
+        "Preserve the supplied creature, status, timer, responsive layout and text telemetry.",
+        "Do not add network, external scripts, trackers, personal data, real schedules or background tasks.",
+      ],
+      permittedArtifactId: "creature-care-dashboard-m1-code",
+      originalSnippet: "setReducedMotion(false);",
+      replacementSnippet: "setReducedMotion(true);",
+      explanationPrompt: "Which decorative movement stopped, and which event, timer and text evidence stayed available?",
+      aiOptional: false,
+      learnerApprovalRequired: true,
+      alternatives: ["accept", "reject"],
+    },
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "creature-care-dashboard-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "creature-care-dashboard-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "creature-care-dashboard-m1-safety-notes",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "creature-care-dashboard-m1-protected-boundary",
+        statement: "The dashboard rejects arbitrary text, personal data, real schedules, scripts, network calls, tracking, unbounded timers and inaccessible motion-only feedback.",
+        visibility: "protected",
+        criterionIds: [
+          "creature-care-dashboard-edge-one",
+          "creature-care-dashboard-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to identify the component state, event result, timer and text-equivalent evidence before discussing reduced motion.",
+      "Use only the supplied fictional creature and status cards; redirect names, real schedules and personal details to safe choices.",
+      "Reject must preserve source, and provider failure must never block the deterministic authored path.",
+    ],
+  },
+};
+
 /** Accessible fictional planner mission with a private bounded persistence simulator. */
 export const ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
