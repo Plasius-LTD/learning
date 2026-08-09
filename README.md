@@ -360,9 +360,9 @@ npm run build
 npm run pack:check
 ```
 
-Node.js 24 is required. Public pull-request code is validated on an isolated
-GitHub-hosted Linux runner with read-only workflow permissions. Main-branch CI
-continues to use the governed `Public CI - Quarantined` runner group. Final npm
+Node.js 24 is required. Public pull-request and main-branch code is validated
+on isolated GitHub-hosted Linux runners with read-only workflow permissions.
+Final npm
 publication runs only on a GitHub-hosted runner from the protected `production`
 environment so npm can validate its short-lived OIDC identity and record
 provenance; it has no long-lived npm write-token fallback. Release coverage and
@@ -377,7 +377,9 @@ tooling used by a `bump=none` recovery.
 Production package publication runs only from `.github/workflows/cd.yml` on
 protected `main`. The job verifies that the prepared commit is still the
 current main commit and has an exact successful `ci.yml` push result before it
-mutates release state. npm publication runs on GitHub-hosted Node.js 24 with
+mutates release state. Public package CI runs on GitHub-hosted capacity so it
+cannot execute on company-managed runners. npm publication runs on
+GitHub-hosted Node.js 24 with
 npm 11.5.1 or newer, uses the protected `production` environment and
 short-lived npm OIDC with provenance, and has no long-lived npm write-token
 fallback. Rollback disables CD; it never rewrites published package history.

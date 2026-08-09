@@ -6,8 +6,18 @@ const workflow = readFileSync(
   resolve(process.cwd(), ".github/workflows/cd.yml"),
   "utf8",
 );
+const ciWorkflow = readFileSync(
+  resolve(process.cwd(), ".github/workflows/ci.yml"),
+  "utf8",
+);
 
 describe("npm release trust boundary", () => {
+  it("runs pull-request and main CI on isolated GitHub-hosted capacity", () => {
+    expect(ciWorkflow.match(/runs-on: ubuntu-latest/gu)).toHaveLength(2);
+    expect(ciWorkflow).not.toContain("self-hosted");
+    expect(ciWorkflow).not.toContain("CI_RUNNER_GROUP");
+  });
+
   it("uses hosted OIDC publication without a long-lived npm write token", () => {
     expect(workflow).toContain("runs-on: ubuntu-latest");
     expect(workflow).toContain("environment: production");
@@ -34,4 +44,3 @@ describe("npm release trust boundary", () => {
     expect(workflow).toContain("--provenance");
   });
 });
-

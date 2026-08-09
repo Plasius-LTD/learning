@@ -11,6 +11,8 @@ All notable changes to this project are documented in this file.
   - Restored exact-main npm publication on a GitHub-hosted runner through
     short-lived OIDC, with an enforced Node/npm runtime and no long-lived
     write-token fallback.
+  - Moved main-branch package CI to GitHub-hosted capacity so release admission
+    no longer depends on a company-managed runner.
   - (placeholder)
 
 - **Fixed**
@@ -427,9 +429,8 @@ All notable changes to this project are documented in this file.
 
 - **Fixed**
   - (placeholder)
-  - Isolated public pull-request CI on GitHub-hosted Linux while keeping
-    release-bearing main CI explicitly on the governed
-    `Public CI - Quarantined` self-hosted runner group.
+  - Isolated public pull-request and main-branch CI on GitHub-hosted Linux so
+    repository code never executes against company-managed runner capacity.
 
 - **Security**
   - (placeholder)
