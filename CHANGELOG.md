@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.17] - 2026-08-09
+
+- **Added**
+  - (placeholder)
   - Added the Adventure Mission Planner mission-one learner/facilitator bundle,
     five documented semantic planner functions and one learner-approved local
     persistence diff for a private fictional planning preview.
@@ -434,3 +448,4 @@ All notable changes to this project are documented in this file.
 [0.2.14]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.14
 [0.2.15]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.15
 [0.2.16]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.16
+[0.2.17]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.17
