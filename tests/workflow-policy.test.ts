@@ -15,22 +15,16 @@ const trustedProductionRunnerGroup =
   "group: ${{ vars.CD_RUNNER_GROUP || 'Public CI - Quarantined' }}";
 const trustedProductionRunnerLabels =
   "labels: ${{ fromJSON(vars.CD_RUNNER_LABELS || '[\"self-hosted\",\"Linux\",\"X64\"]') }}";
-const trustedCiRunnerGroup =
-  "group: ${{ vars.CI_RUNNER_GROUP || 'Public CI - Quarantined' }}";
-const trustedCiRunnerLabels =
-  "labels: ${{ fromJSON(vars.CI_RUNNER_LABELS || '[\"self-hosted\",\"Linux\",\"X64\"]') }}";
-
 describe("continuous integration workflow policy", () => {
-  it("isolates public PR code and reserves quarantined runners for main CI", () => {
+  it("isolates public PR and main code on GitHub-hosted capacity", () => {
     expect(ciWorkflow).toMatch(
       /pull-request-build-test:\s*\n\s+if: github\.event_name == 'pull_request'\s*\n\s+runs-on: ubuntu-latest/u,
     );
     expect(ciWorkflow).toMatch(
-      /main-build-test:\s*\n\s+if: github\.event_name == 'push'\s*\n\s+runs-on:\s*\n/u,
+      /main-build-test:\s*\n\s+if: github\.event_name == 'push'\s*\n\s+runs-on: ubuntu-latest/u,
     );
-    expect(ciWorkflow).toContain(trustedCiRunnerGroup);
-    expect(ciWorkflow).toContain(trustedCiRunnerLabels);
-    expect(ciWorkflow).not.toContain("runs-on: [self-hosted, Linux, X64]");
+    expect(ciWorkflow).not.toContain("self-hosted");
+    expect(ciWorkflow).not.toContain("CI_RUNNER_GROUP");
     expect(ciWorkflow).toMatch(/pull_request:\s*\n\s+branches: \[main\]/u);
     expect(ciWorkflow).toMatch(/push:\s*\n\s+branches: \[main\]/u);
     expect(ciWorkflow).toContain("steps: &ci_steps");
