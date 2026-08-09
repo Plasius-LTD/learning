@@ -6,6 +6,9 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the Vibe Bug Detective mission-one learner/facilitator bundle,
+    three documented mini-game functions and one evidence-bound authored
+    repair diff for an intentionally broken direction setting.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +18,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept diagnostics, repair review and regression checks deterministic and
+    private; learners must explicitly accept or reject the exact diff, while
+    open chat, automatic edits and provider-dependent completion remain blocked.
 
 ## [0.2.14] - 2026-08-09
 

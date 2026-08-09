@@ -76,6 +76,7 @@ import {
   SERVO_CREATURE_MISSION_ONE_AUTHORING_V1,
   SKYWING_SPRINT_MISSION_ONE_AUTHORING_V1,
   STAR_DEFENDER_SQUADRON_MISSION_ONE_AUTHORING_V1,
+  VIBE_BUG_DETECTIVE_MISSION_ONE_AUTHORING_V1,
   VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1,
   assertValidMissionAuthoringBundle,
 } from "@plasius/learning";
@@ -122,6 +123,9 @@ const rainbowRescueRover = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const vibeGameRemixLab = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "vibe-game-remix-lab",
 );
+const vibeBugDetective = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "vibe-bug-detective",
+);
 
 if (
   !roadHopper ||
@@ -137,7 +141,8 @@ if (
   !danceRover ||
   !obstacleExplorer ||
   !rainbowRescueRover ||
-  !vibeGameRemixLab
+  !vibeGameRemixLab ||
+  !vibeBugDetective
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -198,6 +203,10 @@ assertValidMissionAuthoringBundle(
   VIBE_GAME_REMIX_LAB_MISSION_ONE_AUTHORING_V1,
   vibeGameRemixLab,
 );
+assertValidMissionAuthoringBundle(
+  VIBE_BUG_DETECTIVE_MISSION_ONE_AUTHORING_V1,
+  vibeBugDetective,
+);
 ```
 
 ## Contract rules
@@ -244,6 +253,9 @@ assertValidMissionAuthoringBundle(
   permitted learner artifact. The learner predicts, reviews and explicitly
   accepts or rejects it; rejection preserves source, deterministic completion
   never needs AI, and open chat or automatic edits are outside the contract.
+- Vibe Bug Detective starts from visible failing evidence, binds one authored
+  repair to the current goal and permitted artifact, and requires learner
+  prediction, explicit accept/reject and deterministic regression reruns.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),
@@ -256,6 +268,7 @@ See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [TDR 0007](docs/tdrs/tdr-0007-dance-rover-fail-safe-movement-and-power-authoring.md),
 and [TDR 0008](docs/tdrs/tdr-0008-obstacle-explorer-sensing-watchdog-and-fail-safe-authoring.md).
 See also [TDR 0010](docs/tdrs/tdr-0010-vibe-game-remix-bounded-suggestion-authoring.md).
+See also [TDR 0011](docs/tdrs/tdr-0011-vibe-bug-detective-evidence-led-repair.md).
 
 ## Development
 

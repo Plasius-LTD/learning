@@ -29,6 +29,11 @@ an authored before/after snippet, explicit constraints and mandatory learner
 accept/reject approval. Provider-backed suggestions remain an optional adapter
 concern and cannot be required for completion.
 
+Vibe Bug Detective reuses this separated contract for an intentionally broken
+starter. Its learner projection contains observed-versus-expected evidence and
+one exact repair diff, while protected regression values and facilitator
+solutions remain in the facilitator projection.
+
 The package remains infrastructure-neutral. It does not execute code, call an AI
 provider, persist attempts, authorize accounts or activate a workspace.
 
