@@ -6,6 +6,9 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the Vibe Game Remix Lab mission-one learner/facilitator bundle,
+    three documented mini-game functions and an additive bounded-suggestion
+    contract for one permitted artifact with a visible authored diff.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +18,9 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Required explicit learner accept/reject approval, deterministic non-AI
+    completion and rejection that preserves source; open chat, automatic edits,
+    network access and changes outside the approved artifact remain disallowed.
 
 ## [0.2.13] - 2026-08-09
 

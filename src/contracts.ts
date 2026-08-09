@@ -404,6 +404,25 @@ export interface MissionFunctionReferenceV1 {
   example: string;
 }
 
+/**
+ * One learner-safe change proposal. Vibe missions expose a diff for a single
+ * authored artifact and always leave the final accept/reject decision to the
+ * learner. Live AI is an optional adapter concern, never a completion input.
+ */
+export interface MissionBoundedSuggestionV1 {
+  id: string;
+  source: "authored-fallback";
+  intent: string;
+  constraints: string[];
+  permittedArtifactId: string;
+  originalSnippet: string;
+  replacementSnippet: string;
+  explanationPrompt: string;
+  aiOptional: false;
+  learnerApprovalRequired: true;
+  alternatives: ["accept", "reject"];
+}
+
 /** The only mission projection safe to return to a learner. */
 export interface LearnerMissionAuthoringV1 {
   estimatedMinutes: number;
@@ -417,6 +436,7 @@ export interface LearnerMissionAuthoringV1 {
   sideAdventures: MissionSideAdventureV1[];
   rewardBindings: MissionRewardBindingV1[];
   functionReference?: MissionFunctionReferenceV1[];
+  boundedSuggestion?: MissionBoundedSuggestionV1;
 }
 
 /** Protected authoring data must never be projected through learner APIs. */
@@ -524,7 +544,8 @@ export interface MissionAuthoringValidationIssueV1 {
     | "hardware-verification-claim"
     | "unsafe-physical-export"
     | "invalid-hardware-reward"
-    | "invalid-function-reference";
+    | "invalid-function-reference"
+    | "invalid-bounded-suggestion";
   message: string;
   path: string;
 }

@@ -23,6 +23,12 @@ prompts. A deterministic validator enforces audience separation, the canonical
 nine-stage journey, rubric and safety authority, accessibility equivalence,
 non-AI completion and evidence-bound rewards.
 
+For Vibe missions, the learner projection may additionally contain one
+`MissionBoundedSuggestionV1`. It identifies one permitted learner artifact,
+an authored before/after snippet, explicit constraints and mandatory learner
+accept/reject approval. Provider-backed suggestions remain an optional adapter
+concern and cannot be required for completion.
+
 The package remains infrastructure-neutral. It does not execute code, call an AI
 provider, persist attempts, authorize accounts or activate a workspace.
 
@@ -34,6 +40,8 @@ provider, persist attempts, authorize accounts or activate a workspace.
 - Additional module missions can be authored without changing the core catalog
   contract.
 - Consumers must deliberately select and project a matching authoring bundle.
+- Vibe consumers must show the exact diff and wait for learner approval; they
+  cannot reinterpret this contract as open chat or automatic source mutation.
 
 ## Rollout
 
