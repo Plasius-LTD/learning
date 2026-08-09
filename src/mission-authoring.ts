@@ -5315,6 +5315,289 @@ export const CREATURE_CARE_DASHBOARD_MISSION_ONE_AUTHORING_V1: MissionAuthoringB
   },
 };
 
+/** Safe responsive mission-control dashboard backed only by a serial simulator. */
+export const ROBOT_MISSION_CONTROL_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.robot-mission-control",
+  moduleVersion: "1.1.0",
+  missionId: "robot-mission-control-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read how commands, a fail-safe state machine, confirmations, telemetry charts and the five documented functions build a simulated mission-control panel.",
+        artifactIds: ["robot-mission-control-m1-guide"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict whether a planned command may leave STOP when the safety confirmation is disabled.",
+        artifactIds: ["robot-mission-control-m1-command-cards"],
+      },
+      {
+        kind: "build",
+        instruction: "Change only the supplied command, confirmation, telemetry rate, chart mode and serial-simulation settings.",
+        artifactIds: ["robot-mission-control-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the action-icon Run button to update the private simulated controls, chart and text telemetry.",
+        artifactIds: ["robot-mission-control-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run deterministic command, state-machine, safety-confirmation, telemetry and responsive-layout checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the observed STOP state with the planned command and highlighted safety-confirmation setting.",
+        artifactIds: ["robot-mission-control-m1-code"],
+      },
+      {
+        kind: "fix",
+        instruction: "Review and accept or reject the exact safety-confirmation change yourself, then rerun every check.",
+        artifactIds: ["robot-mission-control-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how confirmation changes the state machine and why the chart and text telemetry must agree.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound mission-control badge after the score reaches 80 and every mandatory STOP test passes.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "robot-mission-control-m1-stop-check",
+        prompt: "Find the planned command, current STOP state, confirmation and text telemetry before running the simulator.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "robot-mission-control-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "robot-mission-control-m1-guide",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "robot-mission-control-m1-command-cards",
+        kind: "sample-data",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "robot-mission-control-m1-starts",
+        statement: "The responsive control component, chart and text telemetry build with a valid simulated command state machine.",
+        visibility: "visible",
+        criterionIds: ["robot-mission-control-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "robot-mission-control-m1-behaviour",
+        statement: "A confirmed command moves the state machine from STOP and updates the chart and serial simulation with matching bounded telemetry.",
+        visibility: "visible",
+        criterionIds: [
+          "robot-mission-control-goal-one",
+          "robot-mission-control-goal-two",
+          "robot-mission-control-goal-three",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "robot-mission-control-m1-safe-private",
+        statement: "Without confirmation the simulator stays in STOP, exposes responsive text telemetry and never opens a real serial port or controls hardware.",
+        visibility: "visible",
+        criterionIds: ["robot-mission-control-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "robot-mission-control-m1-editor",
+        description: "Edit the five documented mission-control calls using keyboard or pointer controls.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+      {
+        id: "robot-mission-control-m1-run",
+        description: "Activate the labelled action-icon Run control.",
+        primaryMode: "pointer",
+        alternativeIds: ["robot-mission-control-m1-keyboard-run"],
+      },
+      {
+        id: "robot-mission-control-m1-review",
+        description: "Review and accept or reject the exact labelled safety diff.",
+        primaryMode: "keyboard",
+        alternativeIds: [],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "robot-mission-control-m1-keyboard-run",
+        description: "Focus the Run action button and press Enter or Space to produce the same controls, chart and text telemetry.",
+        modes: ["keyboard"],
+        equivalentOutcome: true,
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "robot-mission-control-m1-assessment",
+        goalIds: [
+          "robot-mission-control-m1-starts",
+          "robot-mission-control-m1-behaviour",
+          "robot-mission-control-m1-safe-private",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "robot-mission-control-m1-explanation",
+        goalIds: ["robot-mission-control-m1-safe-private"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "robot-mission-control-m1-remix",
+        prompt: "Choose another supplied command or chart mode and explain which confirmation and STOP evidence must remain.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "robot-mission-control-m1-badge",
+        badgeId: "robot-mission-control-mission-complete",
+        goalIds: [
+          "robot-mission-control-m1-starts",
+          "robot-mission-control-m1-behaviour",
+          "robot-mission-control-m1-safe-private",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "robot-mission-control-function-command",
+        signature: "planCommand(command)",
+        summary: "Plans one supplied command for the simulated robot state machine.",
+        parameters: [{ name: "command", type: "text", description: "Use scan, hold-position or return-to-base." }],
+        effect: "Updates the planned-command panel but cannot leave STOP without confirmation.",
+        example: "planCommand(\"scan\");",
+      },
+      {
+        id: "robot-mission-control-function-confirmation",
+        signature: "setSafetyConfirmation(enabled)",
+        summary: "Controls whether the planned simulated command has explicit safety confirmation.",
+        parameters: [{ name: "enabled", type: "Boolean", description: "Use true only after checking the planned command." }],
+        effect: "Allows the simulator state machine to leave STOP; it never approves or controls physical hardware.",
+        example: "setSafetyConfirmation(true);",
+      },
+      {
+        id: "robot-mission-control-function-rate",
+        signature: "setTelemetryRate(samplesPerSecond)",
+        summary: "Sets a bounded simulated telemetry sampling rate.",
+        parameters: [{ name: "samplesPerSecond", type: "number", description: "Use 1, 2 or 4 simulated samples per second." }],
+        effect: "Changes bounded chart and text sample spacing without starting background work.",
+        example: "setTelemetryRate(2);",
+      },
+      {
+        id: "robot-mission-control-function-chart",
+        signature: "setChartMode(mode)",
+        summary: "Chooses one supplied responsive telemetry presentation.",
+        parameters: [{ name: "mode", type: "text", description: "Use line, bars or text-only." }],
+        effect: "Changes the preview chart while preserving equivalent labelled text telemetry.",
+        example: "setChartMode(\"line\");",
+      },
+      {
+        id: "robot-mission-control-function-serial",
+        signature: "simulateSerial(enabled)",
+        summary: "Turns the bounded serial-message simulator on or off.",
+        parameters: [{ name: "enabled", type: "Boolean", description: "Use true to show simulated messages." }],
+        effect: "Produces labelled local simulator messages; it never opens Web Serial or a physical connection.",
+        example: "simulateSerial(true);",
+      },
+    ],
+    boundedSuggestion: {
+      id: "robot-mission-control-m1-confirmation-diff",
+      source: "authored-fallback",
+      intent: "Confirm the supplied simulated command before the state machine leaves STOP.",
+      constraints: [
+        "Change exactly one documented safety-confirmation setting.",
+        "Preserve the supplied command, telemetry rate, chart mode, serial simulation and text telemetry.",
+        "Do not add Web Serial, network, external scripts, hardware control, personal data or automatic approval.",
+      ],
+      permittedArtifactId: "robot-mission-control-m1-code",
+      originalSnippet: "setSafetyConfirmation(false);",
+      replacementSnippet: "setSafetyConfirmation(true);",
+      explanationPrompt: "Which state-machine transition became possible, and what keeps the exercise separate from physical hardware?",
+      aiOptional: false,
+      learnerApprovalRequired: true,
+      alternatives: ["accept", "reject"],
+    },
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "robot-mission-control-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "robot-mission-control-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "robot-mission-control-m1-safety-notes",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "robot-mission-control-m1-protected-boundary",
+        statement: "The dashboard rejects arbitrary commands, invalid rates, scripts, network access, Web Serial, hardware control, personal data and any unconfirmed transition away from STOP.",
+        visibility: "protected",
+        criterionIds: [
+          "robot-mission-control-edge-one",
+          "robot-mission-control-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to identify the planned command, current state, confirmation and equivalent text telemetry before suggesting a change.",
+      "Keep every command and message inside the simulator; the website never opens serial or controls hardware.",
+      "Reject must preserve source, and provider failure must never block deterministic completion.",
+    ],
+  },
+};
+
 /** Accessible fictional planner mission with a private bounded persistence simulator. */
 export const ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
