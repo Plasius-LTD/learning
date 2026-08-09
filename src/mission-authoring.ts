@@ -5032,7 +5032,292 @@ export const VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1
   },
 };
 
-/** Original first-mission exemplar; no protected content appears in learner data. */
+/** Accessible fictional planner mission with a private bounded persistence simulator. */
+export const ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
+  version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
+  moduleId: "junior-coder.adventure-mission-planner",
+  moduleVersion: "1.1.0",
+  missionId: "adventure-mission-planner-mission-1",
+  learner: {
+    estimatedMinutes: 20,
+    stages: [
+      {
+        kind: "learn",
+        instruction: "Read how semantic headings, labelled mission fields, arrays, state and the five documented functions build an accessible fictional planner.",
+        artifactIds: ["adventure-mission-planner-m1-guide"],
+      },
+      {
+        kind: "predict",
+        instruction: "Predict what will still be available after the private preview restarts when local save is disabled.",
+        artifactIds: ["adventure-mission-planner-m1-test-card"],
+      },
+      {
+        kind: "build",
+        instruction: "Change only the supplied planner settings and keep the fictional mission free of names, contact details and real locations.",
+        artifactIds: ["adventure-mission-planner-m1-code"],
+      },
+      {
+        kind: "run",
+        instruction: "Use the action-icon Run button to render the semantic private planner preview and its text equivalent.",
+        artifactIds: ["adventure-mission-planner-m1-code"],
+      },
+      {
+        kind: "assess",
+        instruction: "Run deterministic structure, validation, array, state, local-save and accessibility checks.",
+        artifactIds: [],
+      },
+      {
+        kind: "inspect",
+        instruction: "Compare the observed restart result with the selected persistence goal and highlighted setting.",
+        artifactIds: ["adventure-mission-planner-m1-code"],
+      },
+      {
+        kind: "fix",
+        instruction: "Review and accept or reject the exact local-save change yourself, then rerun every check.",
+        artifactIds: ["adventure-mission-planner-m1-code"],
+      },
+      {
+        kind: "explain",
+        instruction: "Explain how semantic labels, validation and private local save make the planner easier and safer to use.",
+        artifactIds: [],
+      },
+      {
+        kind: "reward",
+        instruction: "Collect the evidence-bound planner badge after the score reaches 80 and every privacy and accessibility check passes.",
+        artifactIds: [],
+      },
+    ],
+    readinessChecks: [
+      {
+        id: "adventure-mission-planner-m1-label-check",
+        prompt: "Find the visible heading, mission title, day and validation message that a screen reader must also announce.",
+        scored: false,
+      },
+    ],
+    artifacts: [
+      {
+        id: "adventure-mission-planner-m1-code",
+        kind: "starter-code",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "adventure-mission-planner-m1-guide",
+        kind: "starter-assets",
+        audience: "learner",
+        solutionBearing: false,
+      },
+      {
+        id: "adventure-mission-planner-m1-test-card",
+        kind: "sample-data",
+        audience: "learner",
+        solutionBearing: false,
+      },
+    ],
+    goals: [
+      {
+        id: "adventure-mission-planner-m1-starts",
+        statement: "The semantic planner structure, labelled validation message and fictional mission array are valid and start.",
+        visibility: "visible",
+        criterionIds: ["adventure-mission-planner-build"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "adventure-mission-planner-m1-behaviour",
+        statement: "The planner state contains the supplied fictional mission and its approved private local save survives a simulated restart.",
+        visibility: "visible",
+        criterionIds: [
+          "adventure-mission-planner-goal-one",
+          "adventure-mission-planner-goal-two",
+          "adventure-mission-planner-goal-three",
+        ],
+        completionRequired: true,
+        aiRequired: false,
+      },
+      {
+        id: "adventure-mission-planner-m1-accessible-private",
+        statement: "The planner keeps an accessible text summary and uses only private simulated local save with no network or personal data.",
+        visibility: "visible",
+        criterionIds: ["adventure-mission-planner-safety"],
+        completionRequired: true,
+        aiRequired: false,
+      },
+    ],
+    interactions: [
+      {
+        id: "adventure-mission-planner-m1-editor",
+        description: "Edit the documented planner settings.",
+        primaryMode: "text",
+        alternativeIds: [],
+      },
+      {
+        id: "adventure-mission-planner-m1-run",
+        description: "Run the private semantic planner preview.",
+        primaryMode: "pointer",
+        alternativeIds: ["adventure-mission-planner-m1-keyboard-run"],
+      },
+      {
+        id: "adventure-mission-planner-m1-review",
+        description: "Read the labelled removed and added local-save lines and choose Accept or Reject.",
+        primaryMode: "text",
+        alternativeIds: [],
+      },
+    ],
+    accessibilityAlternatives: [
+      {
+        id: "adventure-mission-planner-m1-keyboard-run",
+        modes: ["keyboard", "text", "reduced-motion"],
+        equivalentOutcome: true,
+        description: "Press Enter or Space on the action-icon button and use the same text planner summary without motion or drag.",
+      },
+    ],
+    evidenceRequirements: [
+      {
+        id: "adventure-mission-planner-m1-assessment",
+        goalIds: [
+          "adventure-mission-planner-m1-starts",
+          "adventure-mission-planner-m1-behaviour",
+          "adventure-mission-planner-m1-accessible-private",
+        ],
+        kind: "assessment-result",
+        retention: "entitlement",
+        containsPersonalData: false,
+      },
+      {
+        id: "adventure-mission-planner-m1-explanation",
+        goalIds: ["adventure-mission-planner-m1-accessible-private"],
+        kind: "learner-explanation",
+        retention: "attempt",
+        containsPersonalData: false,
+      },
+    ],
+    sideAdventures: [
+      {
+        id: "adventure-mission-planner-m1-remix",
+        prompt: "Add one supplied fictional mission and describe the validation and accessible summary it needs.",
+        completionRequired: false,
+      },
+    ],
+    rewardBindings: [
+      {
+        id: "adventure-mission-planner-m1-badge",
+        badgeId: "adventure-mission-planner-mission-complete",
+        goalIds: [
+          "adventure-mission-planner-m1-starts",
+          "adventure-mission-planner-m1-behaviour",
+          "adventure-mission-planner-m1-accessible-private",
+        ],
+        deterministic: true,
+        random: false,
+        tokenConvertible: false,
+      },
+    ],
+    functionReference: [
+      {
+        id: "adventure-mission-planner-function-heading",
+        signature: "setPlannerHeading(heading)",
+        summary: "Chooses one supplied fictional heading for the semantic planner.",
+        parameters: [{ name: "heading", type: "text", description: "Use Moonbase Missions, Forest Rescue Plans or Ocean Quest Board." }],
+        effect: "Updates the visible and screen-reader planner heading in the private preview.",
+        example: "setPlannerHeading(\"Moonbase Missions\");",
+      },
+      {
+        id: "adventure-mission-planner-function-mission",
+        signature: "addMission(title, day)",
+        summary: "Adds one supplied fictional mission to the in-memory mission array.",
+        parameters: [
+          { name: "title", type: "text", description: "Use a supplied fictional mission title." },
+          { name: "day", type: "text", description: "Use Saturday, Sunday or School holiday." },
+        ],
+        effect: "Adds one validated fictional item to private preview state without sending a form.",
+        example: "addMission(\"Find the moon crystal\", \"Saturday\");",
+      },
+      {
+        id: "adventure-mission-planner-function-validation",
+        signature: "showValidationMessage(message)",
+        summary: "Chooses one supplied child-readable form validation message.",
+        parameters: [{ name: "message", type: "text", description: "Use Choose a day, Add a mission title or Mission ready!" }],
+        effect: "Shows the message visibly and in the accessible text summary.",
+        example: "showValidationMessage(\"Mission ready!\");",
+      },
+      {
+        id: "adventure-mission-planner-function-save",
+        signature: "enableLocalSave(enabled)",
+        summary: "Turns the private simulated local-save behaviour on or off.",
+        parameters: [{ name: "enabled", type: "Boolean", description: "Use true or false." }],
+        effect: "Controls only the bounded simulated restart; it never writes Plasius or server storage.",
+        example: "enableLocalSave(true);",
+      },
+      {
+        id: "adventure-mission-planner-function-summary",
+        signature: "setAccessibleSummary(enabled)",
+        summary: "Keeps an equivalent text summary beside the visual planner.",
+        parameters: [{ name: "enabled", type: "Boolean", description: "Use true to keep the equivalent summary." }],
+        effect: "Controls the private preview text equivalent used by assistive technology and reduced-motion routes.",
+        example: "setAccessibleSummary(true);",
+      },
+    ],
+    boundedSuggestion: {
+      id: "adventure-mission-planner-m1-local-save-diff",
+      source: "authored-fallback",
+      intent: "Make the fictional mission survive the simulated private restart.",
+      constraints: [
+        "Change exactly one documented local-save setting.",
+        "Preserve the supplied semantic heading, fictional mission, validation and accessible summary.",
+        "Do not add network, external scripts, transmitting forms, trackers, personal data or server storage.",
+      ],
+      permittedArtifactId: "adventure-mission-planner-m1-code",
+      originalSnippet: "enableLocalSave(false);",
+      replacementSnippet: "enableLocalSave(true);",
+      explanationPrompt: "Did the mission survive the simulated restart, and which accessibility and privacy evidence stayed unchanged?",
+      aiOptional: false,
+      learnerApprovalRequired: true,
+      alternatives: ["accept", "reject"],
+    },
+  },
+  facilitator: {
+    artifacts: [
+      {
+        id: "adventure-mission-planner-m1-answer-key",
+        kind: "answer-key",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "adventure-mission-planner-m1-protected-tests",
+        kind: "protected-test",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+      {
+        id: "adventure-mission-planner-m1-safety-notes",
+        kind: "facilitator-note",
+        audience: "facilitator",
+        solutionBearing: true,
+      },
+    ],
+    protectedGoals: [
+      {
+        id: "adventure-mission-planner-m1-protected-boundary",
+        statement: "The planner rejects arbitrary text, personal data, scripts, network calls, transmitting forms, tracking and persistence outside the bounded simulator.",
+        visibility: "protected",
+        criterionIds: [
+          "adventure-mission-planner-edge-one",
+          "adventure-mission-planner-edge-two",
+        ],
+        completionRequired: false,
+        aiRequired: false,
+      },
+    ],
+    prompts: [
+      "Ask the learner to name the semantic heading, validation message and text-equivalent evidence before discussing local save.",
+      "Use only fictional supplied content; redirect names, contacts and real locations to the safe cards.",
+      "Reject must preserve source, and provider failure must never block the deterministic authored path.",
+    ],
+  },
+};
+
 export const ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1: MissionAuthoringBundleV1 = {
   version: MISSION_AUTHORING_CONTRACT_VERSION_V1,
   moduleId: "junior-coder.road-hopper-rally",

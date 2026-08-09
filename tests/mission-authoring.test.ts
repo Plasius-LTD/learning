@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1,
   BEACON_BOT_MISSION_ONE_AUTHORING_V1,
   DANCE_ROVER_MISSION_ONE_AUTHORING_V1,
   JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
@@ -88,6 +89,10 @@ const vibeIdeaStudio = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "vibe-idea-studio",
 )!;
 
+const adventureMissionPlanner = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "adventure-mission-planner",
+)!;
+
 function cloneBundle(): MissionAuthoringBundleV1 {
   return structuredClone(ROAD_HOPPER_RALLY_MISSION_ONE_AUTHORING_V1);
 }
@@ -146,7 +151,49 @@ function vibeIdeaStudioIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
   );
 }
 
+function adventureMissionPlannerIssueCodes(bundle: MissionAuthoringBundleV1): string[] {
+  return validateMissionAuthoringBundle(bundle, adventureMissionPlanner).map(
+    (entry) => entry.code,
+  );
+}
+
 describe("Junior Coder mission authoring", () => {
+  it("publishes an accessible and independently completable Adventure Mission Planner mission", () => {
+    const bundle = ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1;
+
+    expect(bundle).toMatchObject({
+      moduleId: "junior-coder.adventure-mission-planner",
+      moduleVersion: "1.1.0",
+      missionId: "adventure-mission-planner-mission-1",
+    });
+    expect(bundle.learner.stages.map((stage) => stage.kind)).toEqual(
+      JUNIOR_CODER_MISSION_STAGE_ORDER_V1,
+    );
+    expect(bundle.learner.functionReference?.map((entry) => entry.signature)).toEqual([
+      "setPlannerHeading(heading)",
+      "addMission(title, day)",
+      "showValidationMessage(message)",
+      "enableLocalSave(enabled)",
+      "setAccessibleSummary(enabled)",
+    ]);
+    expect(bundle.learner.boundedSuggestion).toMatchObject({
+      originalSnippet: "enableLocalSave(false);",
+      replacementSnippet: "enableLocalSave(true);",
+      aiOptional: false,
+      learnerApprovalRequired: true,
+      alternatives: ["accept", "reject"],
+    });
+    expect(bundle.learner.goals.map((goal) => goal.statement).join(" ")).toMatch(
+      /semantic|validation|array|state|local save|accessible/iu,
+    );
+    expect(bundle.learner.artifacts.every((artifact) => !artifact.solutionBearing)).toBe(true);
+    expect(bundle.facilitator.artifacts.every((artifact) => artifact.solutionBearing)).toBe(true);
+    expect(adventureMissionPlanner.hardware.mode).toBe("none");
+    expect(adventureMissionPlannerIssueCodes(bundle)).toEqual([]);
+    expect(() => assertValidMissionAuthoringBundle(bundle, adventureMissionPlanner))
+      .not.toThrow();
+  });
+
   it("publishes a goal-led and learner-approved Vibe Idea Studio mission", () => {
     const bundle = VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1;
 

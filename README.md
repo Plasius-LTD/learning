@@ -62,6 +62,7 @@ the exact catalog module that owns its rubric, mission and badges.
 
 ```ts
 import {
+  ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1,
   BEACON_BOT_MISSION_ONE_AUTHORING_V1,
   DANCE_ROVER_MISSION_ONE_AUTHORING_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
@@ -130,6 +131,9 @@ const vibeBugDetective = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
 const vibeIdeaStudio = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (module) => module.slug === "vibe-idea-studio",
 );
+const adventureMissionPlanner = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (module) => module.slug === "adventure-mission-planner",
+);
 
 if (
   !roadHopper ||
@@ -147,7 +151,8 @@ if (
   !rainbowRescueRover ||
   !vibeGameRemixLab ||
   !vibeBugDetective ||
-  !vibeIdeaStudio
+  !vibeIdeaStudio ||
+  !adventureMissionPlanner
 ) {
   throw new Error("Junior Coder module is missing");
 }
@@ -216,6 +221,10 @@ assertValidMissionAuthoringBundle(
   VIBE_IDEA_STUDIO_MISSION_ONE_AUTHORING_V1,
   vibeIdeaStudio,
 );
+assertValidMissionAuthoringBundle(
+  ADVENTURE_MISSION_PLANNER_MISSION_ONE_AUTHORING_V1,
+  adventureMissionPlanner,
+);
 ```
 
 ## Contract rules
@@ -268,6 +277,10 @@ assertValidMissionAuthoringBundle(
 - Vibe Idea Studio binds supplied child-safe idea, audience and acceptance-test
   cards to one permitted template. The learner predicts, reviews and controls
   the exact prototype diff before deterministic tests decide completion.
+- Adventure Mission Planner documents semantic structure, validation, arrays,
+  state, private simulated local save and an equivalent accessible summary.
+  The learner reviews the exact persistence diff; no form transmits data and
+  no network, real location or personal information enters the preview.
 
 See [the foundation design](docs/design/junior-coder-catalog-foundation.md),
 [the uniform pricing design](docs/design/junior-coder-uniform-pricing.md),
@@ -282,6 +295,7 @@ and [TDR 0008](docs/tdrs/tdr-0008-obstacle-explorer-sensing-watchdog-and-fail-sa
 See also [TDR 0010](docs/tdrs/tdr-0010-vibe-game-remix-bounded-suggestion-authoring.md).
 See also [TDR 0011](docs/tdrs/tdr-0011-vibe-bug-detective-evidence-led-repair.md).
 See also [TDR 0012](docs/tdrs/tdr-0012-vibe-idea-studio-bounded-goal-prototyping.md).
+See also [TDR 0013](docs/tdrs/tdr-0013-adventure-mission-planner-private-persistence.md).
 
 ## Development
 

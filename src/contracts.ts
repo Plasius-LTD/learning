@@ -405,8 +405,8 @@ export interface MissionFunctionReferenceV1 {
 }
 
 /**
- * One learner-safe change proposal. Vibe missions expose a diff for a single
- * authored artifact and always leave the final accept/reject decision to the
+ * One learner-safe change proposal. A mission may expose a diff for a single
+ * authored artifact and always leaves the final accept/reject decision to the
  * learner. Live AI is an optional adapter concern, never a completion input.
  */
 export interface MissionBoundedSuggestionV1 {
