@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.13] - 2026-08-09
+
+- **Added**
+  - (placeholder)
   - Added the versioned Rainbow Rescue Rover mission-one learner/facilitator
     bundle, five documented bounded integration-simulator functions, exact
     eight-item complete and four-item incremental camera-rover disclosures,
@@ -349,3 +363,4 @@ All notable changes to this project are documented in this file.
 [0.2.10]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.10
 [0.2.11]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.11
 [0.2.12]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.12
+[0.2.13]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.13
