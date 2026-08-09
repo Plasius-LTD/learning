@@ -6,6 +6,10 @@ All notable changes to this project are documented in this file.
 
 - **Added**
   - (placeholder)
+  - Added the versioned Servo Creature mission-one learner/facilitator bundle,
+    five documented bounded C++-style simulator functions, complete and
+    incremental servo hardware disclosure, equivalent reduced-motion telemetry
+    and distinct simulated and physical evidence rewards.
 
 - **Changed**
   - (placeholder)
@@ -15,6 +19,10 @@ All notable changes to this project are documented in this file.
 
 - **Security**
   - (placeholder)
+  - Kept the 30–150 degree movement boundary inside the private simulator and
+    every servo, regulated supply and common-ground arrangement unverified,
+    compatibility-unclaimed and physically ineligible until adult bench-test
+    evidence exists; the website cannot control the servo.
 
 ## [0.2.9] - 2026-08-08
 
