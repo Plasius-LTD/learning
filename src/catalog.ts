@@ -556,6 +556,9 @@ export const JUNIOR_CODER_MODULE_PRICE_V1_1 = Object.freeze({
   }),
 });
 
+/** Fixed price for the immutable 1.2.0 public catalog. */
+export const JUNIOR_CODER_MODULE_PRICE_V1_2 = JUNIOR_CODER_MODULE_PRICE_V1_1;
+
 /** Initial immutable Junior Coder path manifest for pilot grants and shadow pricing. */
 export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1: LearningPathVersionV1 = {
   id: "junior-coder.robot-rescue-arcade",
@@ -591,6 +594,28 @@ export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1: LearningPathVersionV1 = {
   })),
 };
 
-/** Current pilot catalog for server adapters that intentionally follow releases. */
+/**
+ * Public successor to the immutable 1.1.0 pilot catalog.
+ *
+ * The content and 50-Token price remain unchanged. New module and path versions
+ * make the public catalog state an explicit immutable publication decision.
+ */
+export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2: LearningPathVersionV1 = {
+  ...JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
+  version: "1.2.0",
+  catalogState: "public",
+  modules: JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.map((entry) => ({
+    ...entry,
+    version: "1.2.0",
+    contentRevision: "2026-08-09.1",
+    pricing: {
+      ...entry.pricing,
+      tokenSubunits: JUNIOR_CODER_MODULE_PRICE_V1_2.tokenSubunits,
+      referencePrice: JUNIOR_CODER_MODULE_PRICE_V1_2.referencePrice,
+    },
+  })),
+};
+
+/** Current public catalog for server adapters that intentionally follow releases. */
 export const JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT =
-  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1;
+  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2;

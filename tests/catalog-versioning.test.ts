@@ -2,8 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import {
   JUNIOR_CODER_MODULE_PRICE_V1_1,
+  JUNIOR_CODER_MODULE_PRICE_V1_2,
+  JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
+  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2,
   type ModuleEntitlementV1,
   validateLearningPath,
 } from "../src/index.js";
@@ -66,6 +69,30 @@ describe("Junior Coder immutable £5-equivalent catalog", () => {
         cashRedemptionAllowed: false,
       },
     });
+    expect(validateLearningPath(path)).toEqual([]);
+  });
+
+  it("publishes immutable 1.2.0 modules as the public 50-Token catalog", () => {
+    const path = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2;
+
+    expect(path).not.toBe(JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1);
+    expect(path.version).toBe("1.2.0");
+    expect(path.catalogState).toBe("public");
+    expect(path.modules).toHaveLength(19);
+    expect(new Set(path.modules.map((module) => module.version))).toEqual(
+      new Set(["1.2.0"]),
+    );
+    expect(
+      path.modules.every(
+        (module) =>
+          module.pricing.tokenSubunits
+            === JUNIOR_CODER_MODULE_PRICE_V1_2.tokenSubunits
+          && module.pricing.referencePrice
+            === JUNIOR_CODER_MODULE_PRICE_V1_2.referencePrice,
+      ),
+    ).toBe(true);
+    expect(JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT).toBe(path);
+    expect(JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.catalogState).toBe("pilot");
     expect(validateLearningPath(path)).toEqual([]);
   });
 

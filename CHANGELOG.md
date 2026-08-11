@@ -5,10 +5,12 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - Published immutable Junior Coder catalog `1.2.0` with
+    `catalogState: "public"` and nineteen fixed-price 50-Token modules.
 
 - **Changed**
-  - (placeholder)
+  - Advanced the intentional `JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT` alias to
+    the new public catalog while preserving 1.0.0 and 1.1.0 exports.
 
 - **Fixed**
   - (placeholder)

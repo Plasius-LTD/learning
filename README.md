@@ -7,8 +7,9 @@ The package does **not** provide HTTP handlers, persistence, authentication, Tok
 ## Junior Coder catalog
 
 The initial immutable catalog is exported as
-`JUNIOR_CODER_ROBOT_RESCUE_PATH_V1`. The current uniformly priced pilot
-catalog is exported as `JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1`, with
+`JUNIOR_CODER_ROBOT_RESCUE_PATH_V1`. The uniformly priced pilot remains
+exported as `JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1`; its immutable public
+successor is `JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2`, with
 `JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT` available to adapters that
 intentionally follow published successors. Each contains 19 independently
 sellable, self-contained project modules:
@@ -18,10 +19,10 @@ sellable, self-contained project modules:
 - 3 constrained Vibe Coding modules;
 - 3 web application modules.
 
-Both catalogs remain in `pilot-grant-only` commercial state. The immutable
-`1.1.0` modules each cost 50 Tokens (50,000 subunits), carrying a
-non-redeemable £5 reference value. Price metadata is not authorization to
-enable public checkout.
+Catalog 1.2.0 has `catalogState: "public"`. Its modules and the immutable 1.1.0
+pilot modules each cost 50 Tokens (50,000 subunits), carrying a non-redeemable
+£5 reference value. Price metadata is not authorization to bypass host-side
+checkout, allowance or entitlement controls.
 
 ## Install
 
