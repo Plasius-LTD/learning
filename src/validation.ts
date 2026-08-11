@@ -1,4 +1,5 @@
 import type {
+  ExternalLearningContentReferenceV1,
   LearningModuleVersionV1,
   LearningPathVersionV1,
   LearningValidationIssueV1,
@@ -6,6 +7,28 @@ import type {
 import { validateAssessmentRubric } from "./rubric-validation.js";
 
 const CANONICAL_TOKEN_SUBUNITS = /^(0|[1-9][0-9]*)$/u;
+const EXACT_PACKAGE_NAME = /^@plasius\/[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/u;
+const EXACT_SEMVER = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/u;
+const EXPORT_NAME = /^[A-Za-z_$][A-Za-z0-9_$]*$/u;
+const SHA256 = /^[a-f0-9]{64}$/u;
+
+/** Runtime guard for digest-pinned external learning content references. */
+export function isExternalLearningContentReferenceV1(
+  value: unknown,
+): value is ExternalLearningContentReferenceV1 {
+  if (typeof value !== "object" || value === null) return false;
+  const candidate = value as Partial<ExternalLearningContentReferenceV1>;
+  return (
+    typeof candidate.packageName === "string"
+    && EXACT_PACKAGE_NAME.test(candidate.packageName)
+    && typeof candidate.packageVersion === "string"
+    && EXACT_SEMVER.test(candidate.packageVersion)
+    && typeof candidate.exportName === "string"
+    && EXPORT_NAME.test(candidate.exportName)
+    && typeof candidate.sha256 === "string"
+    && SHA256.test(candidate.sha256)
+  );
+}
 
 function issue(
   code: LearningValidationIssueV1["code"],
@@ -156,6 +179,22 @@ function validateModule(
         "missing-missions",
         "A module requires at least one mission.",
         `${base}.missions`,
+        module.id,
+      ),
+    );
+  }
+
+
+  const externalContent = module.externalContent;
+  if (
+    externalContent
+    && !isExternalLearningContentReferenceV1(externalContent)
+  ) {
+    issues.push(
+      issue(
+        "invalid-external-content-reference",
+        "External content must use an exact @plasius package, stable semantic version, named export and lower-case SHA-256 digest.",
+        `${base}.externalContent`,
         module.id,
       ),
     );
