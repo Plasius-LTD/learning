@@ -200,6 +200,8 @@ export interface ExternalLearningContentReferenceV1 {
   packageVersion: string;
   /** Named ESM/CJS export containing the immutable content manifest. */
   exportName: string;
+  /** Exact schema version declared by the referenced exported manifest. */
+  schemaVersion: string;
   /** Lower-case SHA-256 of the canonical exported manifest JSON. */
   sha256: string;
 }

@@ -13,13 +13,14 @@ independently released course implementation:
 - package: `@plasius/learning-road-hopper-rally`
 - version: `1.0.0`
 - export: `ROAD_HOPPER_RALLY_COURSE_V2`
+- schema version: `2`
 - digest: canonical manifest JSON SHA-256
 
 ## Consumer checks
 
 A consumer deliberately selecting path `1.2.0` resolves the exact package,
 imports only the entry point appropriate to its trust boundary, canonicalizes
-the exported manifest and compares the digest. Any mismatch fails closed. The
+the exported manifest, verifies schema `2` and compares the digest. Any mismatch fails closed. The
 browser must never import the package's server-evaluator entry point.
 
 The catalog rubric keeps the protected final assessment mandatory. Backend

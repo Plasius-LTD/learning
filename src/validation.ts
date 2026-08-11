@@ -10,6 +10,7 @@ const CANONICAL_TOKEN_SUBUNITS = /^(0|[1-9][0-9]*)$/u;
 const EXACT_PACKAGE_NAME = /^@plasius\/[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/u;
 const EXACT_SEMVER = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/u;
 const EXPORT_NAME = /^[A-Za-z_$][A-Za-z0-9_$]*$/u;
+const CONTENT_SCHEMA_VERSION = /^(0|[1-9][0-9]*)$/u;
 const SHA256 = /^[a-f0-9]{64}$/u;
 
 /** Runtime guard for digest-pinned external learning content references. */
@@ -19,12 +20,15 @@ export function isExternalLearningContentReferenceV1(
   if (typeof value !== "object" || value === null) return false;
   const candidate = value as Partial<ExternalLearningContentReferenceV1>;
   return (
-    typeof candidate.packageName === "string"
+    Object.keys(value).length === 5
+    && typeof candidate.packageName === "string"
     && EXACT_PACKAGE_NAME.test(candidate.packageName)
     && typeof candidate.packageVersion === "string"
     && EXACT_SEMVER.test(candidate.packageVersion)
     && typeof candidate.exportName === "string"
     && EXPORT_NAME.test(candidate.exportName)
+    && typeof candidate.schemaVersion === "string"
+    && CONTENT_SCHEMA_VERSION.test(candidate.schemaVersion)
     && typeof candidate.sha256 === "string"
     && SHA256.test(candidate.sha256)
   );
@@ -193,7 +197,7 @@ function validateModule(
     issues.push(
       issue(
         "invalid-external-content-reference",
-        "External content must use an exact @plasius package, stable semantic version, named export and lower-case SHA-256 digest.",
+        "External content must use an exact @plasius package, stable semantic version, named export, schema version and lower-case SHA-256 digest.",
         `${base}.externalContent`,
         module.id,
       ),
