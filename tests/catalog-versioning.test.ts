@@ -154,6 +154,15 @@ describe("Junior Coder immutable £5-equivalent catalog", () => {
         packageVersion: "^1.0.0",
       }),
     ).toBe(false);
+    for (const invalidReference of [
+      null,
+      "@plasius/learning-road-hopper-rally@1.0.0",
+      { ...ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1, packageName: "learning-road-hopper-rally" },
+      { ...ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1, exportName: "not-an-export" },
+      { ...ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1, sha256: "A".repeat(64) },
+    ]) {
+      expect(isExternalLearningContentReferenceV1(invalidReference)).toBe(false);
+    }
 
     const invalidPath = structuredClone(JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2);
     const roadHopper = invalidPath.modules.find(
