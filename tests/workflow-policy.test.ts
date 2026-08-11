@@ -129,8 +129,12 @@ describe("production release workflow policy", () => {
     expect(cdWorkflow).toContain("name: release-sbom");
     expect(cdWorkflow).toContain('RUNNER_ENVIRONMENT: ${{ runner.environment }}');
     expect(cdWorkflow).toContain('REPOSITORY_PRIVATE: ${{ github.event.repository.private }}');
-    expect(cdWorkflow).toContain("npm publish ${FLAGS} --provenance");
-    expect(cdWorkflow).toContain("npm publish ${FLAGS} --registry");
+    expect(cdWorkflow).toContain(
+      "npm publish ${FLAGS} --provenance --registry",
+    );
+    expect(cdWorkflow).toContain(
+      "npm publish ${FLAGS} --provenance=false --registry",
+    );
   });
 
   it("does not request unsupported GitHub attestations for a private repository", () => {
