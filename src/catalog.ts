@@ -735,10 +735,7 @@ export const PADDLE_PULSE_EXTERNAL_CONTENT_V1 = Object.freeze({
 
 const paddlePulseV1_1 = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (entry) => entry.id === "junior-coder.paddle-pulse",
-);
-if (!paddlePulseV1_1) {
-  throw new Error("The immutable 1.1.0 Paddle Pulse module is missing.");
-}
+)!;
 
 const PADDLE_PULSE_V2_MISSIONS = [
   {
