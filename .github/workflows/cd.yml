@@ -295,7 +295,7 @@ jobs:
             npm publish ${FLAGS} --provenance --registry https://registry.npmjs.org
           else
             echo "::notice title=npm provenance unavailable::Publishing with the protected NPM_TOKEN because npm provenance does not support this runner/repository combination."
-            npm publish ${FLAGS} --registry https://registry.npmjs.org
+            npm publish ${FLAGS} --provenance=false --registry https://registry.npmjs.org
           fi
 
       - name: Publish GitHub Release
