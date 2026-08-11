@@ -601,10 +601,7 @@ export const ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1 = Object.freeze({
 
 const roadHopperV1_1 = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (entry) => entry.id === "junior-coder.road-hopper-rally",
-);
-if (!roadHopperV1_1) {
-  throw new Error("The immutable 1.1.0 Road Hopper Rally module is missing.");
-}
+)!;
 
 const ROAD_HOPPER_RALLY_V2_MISSIONS = [
   {
