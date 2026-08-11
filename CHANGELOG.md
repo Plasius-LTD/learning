@@ -12,10 +12,15 @@ All notable changes to this project are documented in this file.
     course package.
   - Added Junior Coder path `1.2.0`, upgrading only Road Hopper Rally while
     retaining every other module at `1.1.0`.
+  - Added Paddle Pulse module `2.0.0` as a six-mission, 360-minute module
+    referencing the immutable 54-stage `@plasius/learning-paddle-pulse@0.1.0`
+    content package.
+  - Added Junior Coder path `1.3.0`, upgrading Paddle Pulse alongside Road
+    Hopper Rally without mutating either legacy module record.
 
 - **Changed**
-  - Pointed `JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT` at the mixed-version
-    `1.2.0` path.
+  - Added the exact external content schema version to digest-pinned references
+    and pointed `JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT` at path `1.3.0`.
 
 - **Fixed**
   - Added a snapshot digest regression test proving the immutable `1.1.0`
@@ -25,6 +30,8 @@ All notable changes to this project are documented in this file.
   - Kept executable curriculum, protected scenarios and server evaluator code
     outside the catalog package and fail validation on loose or malformed
     external references.
+  - Kept Paddle Pulse v1.1 exports intact and fail closed on unexpected fields,
+    loose versions, schema aliases or digest mismatches.
 
 ## [0.2.21] - 2026-08-09
 

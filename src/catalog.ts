@@ -596,6 +596,7 @@ export const ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1 = Object.freeze({
   packageName: "@plasius/learning-road-hopper-rally",
   packageVersion: "1.0.0",
   exportName: "ROAD_HOPPER_RALLY_COURSE_V2",
+  schemaVersion: "2",
   sha256: "1a20741beba028004e0be527d05aae2b2881082d3b578e0d62308a59bf1323f0",
 });
 
@@ -723,6 +724,138 @@ export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2: LearningPathVersionV1 = {
       : entry),
 };
 
+/** Digest-pinned Paddle Pulse 2.0 reference-module content. */
+export const PADDLE_PULSE_EXTERNAL_CONTENT_V1 = Object.freeze({
+  packageName: "@plasius/learning-paddle-pulse",
+  packageVersion: "0.1.0",
+  exportName: "PADDLE_PULSE_MODULE_V2",
+  schemaVersion: "2",
+  sha256: "19f3666bdb523a3faf069341b0bc748996b3db282f89171e3c9f0a373a8c8f7e",
+});
+
+const paddlePulseV1_1 = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (entry) => entry.id === "junior-coder.paddle-pulse",
+);
+if (!paddlePulseV1_1) {
+  throw new Error("The immutable 1.1.0 Paddle Pulse module is missing.");
+}
+
+const PADDLE_PULSE_V2_MISSIONS = [
+  {
+    id: "court-coordinates",
+    title: "Court & Coordinates",
+    concepts: ["coordinates", "canvas primitives", "game loops", "bounds"],
+    statement: "Build a responsive 640 × 480 logical court with a bounded paddle and ball.",
+    sideAdventure: "Create an original high-contrast court palette without changing its geometry.",
+  },
+  {
+    id: "paddle-controls",
+    title: "Paddle Controls",
+    concepts: ["input state", "Pointer Events", "keyboard input", "clamping"],
+    statement: "Implement equivalent Arrow/A/D and direct horizontal pointer-drag controls.",
+    sideAdventure: "Add a semantic movement trace that does not rely on animation.",
+  },
+  {
+    id: "ball-motion",
+    title: "Ball Motion & Bounces",
+    concepts: ["velocity", "fixed timesteps", "reflection", "contact normals", "paddle angles"],
+    statement: "Implement deterministic ball motion plus controlled wall and paddle reflections.",
+    sideAdventure: "Design a reduced-motion trajectory inspector for one rally.",
+  },
+  {
+    id: "bricks-collisions",
+    title: "Bricks & Collisions",
+    concepts: ["arrays", "loops", "brick grids", "AABB collision", "resolution"],
+    statement: "Create an original brick grid whose bricks score once and disappear on impact.",
+    sideAdventure: "Invent a new visual brick pattern using the same bounded collision rules.",
+  },
+  {
+    id: "score-lives-states",
+    title: "Score, Lives & States",
+    concepts: ["state machines", "invariants", "scoring", "lives", "HUD state"],
+    statement: "Implement serve, pause, life loss, level clear, game over, score and HUD states.",
+    sideAdventure: "Add a printable state-transition table for a facilitator or screen-reader user.",
+  },
+  {
+    id: "levels-final-game",
+    title: "Levels, Sound & Final Game",
+    concepts: ["level data", "difficulty", "responsive rendering", "accessible audio", "testing"],
+    statement: "Assemble multiple original levels, optional generated cues and the integrated final game.",
+    sideAdventure: "After completion, add an optional original power-up without changing core assessment.",
+  },
+] as const;
+
+/** Paddle Pulse 2.0 catalog record; executable content stays in its package. */
+export const JUNIOR_CODER_PADDLE_PULSE_V2: LearningModuleVersionV1 = {
+  ...paddlePulseV1_1,
+  version: "2.0.0",
+  contentRevision: "2026-08-11.1",
+  summary: "Build an original Plasius brick-breaker while learning rendering, equivalent input, deterministic physics, collisions, score, lives, states, levels, accessible sound and testing.",
+  estimatedMinutes: 360,
+  tools: [
+    "JavaScript",
+    "QuickJS sandbox",
+    "Deterministic 60 Hz engine",
+    "Responsive Paddle Pulse renderer",
+  ],
+  concepts: [
+    "coordinates and rendering",
+    "game loops and fixed timesteps",
+    "keyboard and pointer input",
+    "velocity and reflection",
+    "collision detection and resolution",
+    "arrays and brick grids",
+    "scoring, lives and state machines",
+    "level data and difficulty",
+    "accessible generated audio",
+    "debugging and deterministic testing",
+  ],
+  missions: PADDLE_PULSE_V2_MISSIONS.map((missionDefinition, index) => ({
+    id: `paddle-pulse-mission-${index + 1}-${missionDefinition.id}`,
+    title: missionDefinition.title,
+    estimatedMinutes: 60,
+    concepts: [...missionDefinition.concepts],
+    goals: [{
+      id: `paddle-pulse-v2-${missionDefinition.id}`,
+      statement: missionDefinition.statement,
+      evidence: "assessment",
+    }],
+    sideAdventure: missionDefinition.sideAdventure,
+  })),
+  assessment: {
+    version: "2.0.0",
+    completionScore: 80,
+    criteria: [
+      { id: "paddle-pulse-v2-court", label: "The logical court, paddle and initial scene are finite, responsive and bounded.", dimension: "structure", points: 20, mandatory: false, visibility: "visible" },
+      { id: "paddle-pulse-v2-controls", label: "Keyboard and pointer paths produce equivalent clamped paddle input.", dimension: "behaviour", points: 15, mandatory: false, visibility: "visible" },
+      { id: "paddle-pulse-v2-motion", label: "Ball motion and wall/paddle reflections pass deterministic trajectories.", dimension: "behaviour", points: 15, mandatory: false, visibility: "visible" },
+      { id: "paddle-pulse-v2-bricks", label: "Brick face, corner and adjacent impacts resolve without double-scoring.", dimension: "behaviour", points: 20, mandatory: false, visibility: "visible" },
+      { id: "paddle-pulse-v2-states", label: "Score, lives, serve, pause, level-clear and game-over transitions preserve invariants.", dimension: "resilience", points: 10, mandatory: false, visibility: "visible" },
+      { id: "paddle-pulse-v2-final", label: "Multiple original levels and the integrated game pass protected deterministic scenarios.", dimension: "resilience", points: 10, mandatory: false, visibility: "protected" },
+      { id: "paddle-pulse-v2-safety", label: "Source, commands, runtime resources and assessment remain inside sandbox limits.", dimension: "safety", points: 10, mandatory: true, visibility: "visible" },
+    ],
+  },
+  badges: [
+    { id: "paddle-pulse-v2-court-builder", title: "Court Builder", evidence: "mission-score", tradeable: false, tokenConvertible: false },
+    { id: "paddle-pulse-v2-paddle-pilot", title: "Paddle Pilot", evidence: "mission-score", tradeable: false, tokenConvertible: false },
+    { id: "paddle-pulse-v2-rally-master", title: "Rally Master", evidence: "mission-score", tradeable: false, tokenConvertible: false },
+    { id: "paddle-pulse-v2-brick-breaker", title: "Brick Breaker", evidence: "mission-score", tradeable: false, tokenConvertible: false },
+    { id: "paddle-pulse-v2-game-keeper", title: "Game Keeper", evidence: "mission-score", tradeable: false, tokenConvertible: false },
+    { id: "paddle-pulse-v2-complete", title: "Paddle Pulse Champion", evidence: "module-score", tradeable: false, tokenConvertible: false },
+  ],
+  externalContent: PADDLE_PULSE_EXTERNAL_CONTENT_V1,
+};
+
+/** Mixed-version successor adding Paddle Pulse 2.0 without mutating v1.1. */
+export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3: LearningPathVersionV1 = {
+  ...JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2,
+  version: "1.3.0",
+  modules: JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2.modules.map((entry) =>
+    entry.id === JUNIOR_CODER_PADDLE_PULSE_V2.id
+      ? JUNIOR_CODER_PADDLE_PULSE_V2
+      : entry),
+};
+
 /** Current pilot catalog for server adapters that intentionally follow releases. */
 export const JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT =
-  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2;
+  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3;
