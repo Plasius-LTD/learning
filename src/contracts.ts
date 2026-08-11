@@ -190,6 +190,22 @@ export interface BadgeDefinitionV1 {
   tokenConvertible: false;
 }
 
+/** Immutable package export selected by the catalog without importing it. */
+export const EXTERNAL_LEARNING_CONTENT_REFERENCE_VERSION_V1 = "1" as const;
+
+export interface ExternalLearningContentReferenceV1 {
+  /** Exact public package name; ranges and aliases are not permitted. */
+  packageName: string;
+  /** Exact semantic version without a range operator. */
+  packageVersion: string;
+  /** Named ESM/CJS export containing the immutable content manifest. */
+  exportName: string;
+  /** Exact schema version declared by the referenced exported manifest. */
+  schemaVersion: string;
+  /** Lower-case SHA-256 of the canonical exported manifest JSON. */
+  sha256: string;
+}
+
 /** One immutable, independently sellable module version. */
 export interface LearningModuleVersionV1 {
   id: string;
@@ -211,6 +227,8 @@ export interface LearningModuleVersionV1 {
   assessment: AssessmentRubricV1;
   agents: ModuleAgentDefinitionV1[];
   badges: BadgeDefinitionV1[];
+  /** Optional separately released content implementation pinned by digest. */
+  externalContent?: ExternalLearningContentReferenceV1;
 }
 
 /** A versioned path is a recommendation and never a paid prerequisite chain. */
@@ -567,7 +585,8 @@ export interface LearningValidationIssueV1 {
     | "missing-mandatory-safety"
     | "missing-hardware-items"
     | "invalid-agent-authority"
-    | "missing-missions";
+    | "missing-missions"
+    | "invalid-external-content-reference";
   message: string;
   moduleId?: string;
   path: string;

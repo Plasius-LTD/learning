@@ -21,6 +21,37 @@ All notable changes to this project are documented in this file.
 - **Security**
   - (placeholder)
 
+## [0.2.22] - 2026-08-11
+
+- **Added**
+  - Added `ExternalLearningContentReferenceV1`, its runtime guard and catalog
+    validation for exact package/version/export/SHA-256 references.
+  - Added Road Hopper Rally module `2.0.0` as a six-mission, 450-minute module
+    referencing the immutable 54-stage `@plasius/learning-road-hopper-rally`
+    course package.
+  - Added Junior Coder path `1.2.0`, upgrading only Road Hopper Rally while
+    retaining every other module at `1.1.0`.
+  - Added Paddle Pulse module `2.0.0` as a six-mission, 360-minute module
+    referencing the immutable 54-stage `@plasius/learning-paddle-pulse@0.1.0`
+    content package.
+  - Added Junior Coder path `1.3.0`, upgrading Paddle Pulse alongside Road
+    Hopper Rally without mutating either legacy module record.
+
+- **Changed**
+  - Added the exact external content schema version to digest-pinned references
+    and pointed `JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT` at path `1.3.0`.
+
+- **Fixed**
+  - Added a snapshot digest regression test proving the immutable `1.1.0`
+    catalog serialization remains unchanged.
+
+- **Security**
+  - Kept executable curriculum, protected scenarios and server evaluator code
+    outside the catalog package and fail validation on loose or malformed
+    external references.
+  - Kept Paddle Pulse v1.1 exports intact and fail closed on unexpected fields,
+    loose versions, schema aliases or digest mismatches.
+
 ## [0.2.21] - 2026-08-09
 
 - **Added**
@@ -534,3 +565,4 @@ All notable changes to this project are documented in this file.
 [0.2.19]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.19
 [0.2.20]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.20
 [0.2.21]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.21
+[0.2.22]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.22

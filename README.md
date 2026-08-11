@@ -7,21 +7,38 @@ The package does **not** provide HTTP handlers, persistence, authentication, Tok
 ## Junior Coder catalog
 
 The initial immutable catalog is exported as
-`JUNIOR_CODER_ROBOT_RESCUE_PATH_V1`. The current uniformly priced pilot
-catalog is exported as `JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1`, with
-`JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT` available to adapters that
-intentionally follow published successors. Each contains 19 independently
-sellable, self-contained project modules:
+`JUNIOR_CODER_ROBOT_RESCUE_PATH_V1`, and its uniformly priced successor remains
+available as `JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1`. Path `1.2.0` upgrades Road
+Hopper Rally; path `1.3.0` is exported as
+`JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3` and selected by
+`JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT`. It also upgrades Paddle Pulse to
+module `2.0.0`; the other seventeen modules retain their prior immutable
+versions. Each path
+contains 19 independently sellable, self-contained project modules:
 
 - 8 original arcade game modules;
 - 5 simulator-backed robotics modules;
 - 3 constrained Vibe Coding modules;
 - 3 web application modules.
 
-Both catalogs remain in `pilot-grant-only` commercial state. The immutable
-`1.1.0` modules each cost 50 Tokens (50,000 subunits), carrying a
+All catalogs remain in `pilot-grant-only` commercial state. The immutable
+`1.1.0` modules, Road Hopper Rally `2.0.0` and Paddle Pulse `2.0.0` each cost 50 Tokens (50,000 subunits), carrying a
 non-redeemable £5 reference value. Price metadata is not authorization to
 enable public checkout.
+
+Road Hopper Rally `2.0.0` is a 450-minute, six-mission catalog record whose
+54-stage course, starter project, deterministic runtime, original assets and
+assessment definitions live in `@plasius/learning-road-hopper-rally@1.0.0`.
+The catalog pins the exact `ROAD_HOPPER_RALLY_COURSE_V2` export and its canonical
+SHA-256 digest through `ExternalLearningContentReferenceV1`; it does not import
+or bundle the executable content package.
+
+Paddle Pulse `2.0.0` is a 360-minute, six-mission catalog record whose 54-stage
+course, declarative program contracts, deterministic 60 Hz engine and protected
+assessment live in `@plasius/learning-paddle-pulse@0.1.0`. The catalog pins the
+exact `PADDLE_PULSE_MODULE_V2` export, schema `2` and canonical SHA-256 digest
+without importing the package. Paddle Pulse `1.1.0` and its mission-authoring
+export remain available unchanged.
 
 ## Install
 
@@ -38,6 +55,20 @@ import {
 } from "@plasius/learning";
 
 assertValidLearningPath(JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT);
+```
+
+Consumers resolving external course content must verify all five reference
+fields before use:
+
+```ts
+import {
+  ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1,
+  isExternalLearningContentReferenceV1,
+} from "@plasius/learning";
+
+if (!isExternalLearningContentReferenceV1(ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1)) {
+  throw new Error("Invalid external learning content reference");
+}
 ```
 
 ## Calculate an assessment
@@ -303,6 +334,8 @@ assertValidMissionAuthoringBundle(
 ## Contract rules
 
 - Published IDs and versions are immutable.
+- External course content uses exact package and export names, a stable semantic
+  version and a lower-case canonical SHA-256 digest; version ranges are invalid.
 - Reference prices are product-copy metadata and never create cash redemption
   rights.
 - A module entitlement must bind to an exact module version.
