@@ -591,6 +591,138 @@ export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1: LearningPathVersionV1 = {
   })),
 };
 
+/** Digest-pinned content package for the independently released 54-stage course. */
+export const ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1 = Object.freeze({
+  packageName: "@plasius/learning-road-hopper-rally",
+  packageVersion: "1.0.0",
+  exportName: "ROAD_HOPPER_RALLY_COURSE_V2",
+  sha256: "1a20741beba028004e0be527d05aae2b2881082d3b578e0d62308a59bf1323f0",
+});
+
+const roadHopperV1_1 = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
+  (entry) => entry.id === "junior-coder.road-hopper-rally",
+)!;
+
+const ROAD_HOPPER_RALLY_V2_MISSIONS = [
+  {
+    id: "board",
+    title: "Build the Rally Board",
+    concepts: ["coordinate grids", "arrays", "entity state", "rendering"],
+    statement: "Create the road, median, river and five distinct home bays in board.js.",
+    sideAdventure: "Design an original high-contrast board palette without changing its mechanics.",
+  },
+  {
+    id: "hopper",
+    title: "Move the Hopper",
+    concepts: ["events", "bounded movement", "keyboard input", "touch input", "respawning"],
+    statement: "Implement four-direction tile movement, bounds, equivalent inputs and respawning in hopper.js.",
+    sideAdventure: "Add an accessible movement status phrase for every successful hop.",
+  },
+  {
+    id: "traffic",
+    title: "Create Rally Traffic",
+    concepts: ["spawning", "fixed-step updates", "wrapping", "collision detection", "difficulty"],
+    statement: "Implement five deterministic traffic lanes, collisions, lives and difficulty in traffic.js.",
+    sideAdventure: "Invent an original vehicle type while preserving the entity and collision limits.",
+  },
+  {
+    id: "river",
+    title: "Cross the Moving River",
+    concepts: ["moving platforms", "carrying", "hazards", "state machines", "off-screen bounds"],
+    statement: "Implement logs, carrying, water deaths, diving platforms and edge hazards in river.js.",
+    sideAdventure: "Create an original visual warning for a platform that is about to dive.",
+  },
+  {
+    id: "rules",
+    title: "Add Rally Rules",
+    concepts: ["timers", "lives", "scoring", "bonuses", "levels", "game over"],
+    statement: "Implement homes, occupied and blocked bays, timer, scoring, bonuses and level progression in rules.js.",
+    sideAdventure: "Tune a practice-speed preset that keeps every rule deterministic.",
+  },
+  {
+    id: "game",
+    title: "Complete Road Hopper Rally",
+    concepts: ["system assembly", "pause and restart", "alternating players", "audio", "accessibility", "testing"],
+    statement: "Assemble the systems, accessibility modes and alternating-player finale in game.js, then pass the protected challenge.",
+    sideAdventure: "Polish the finished game with original captions, visual cues and reduced-motion feedback.",
+  },
+] as const;
+
+/** Road Hopper Rally 2.0 catalog record; course data stays in the referenced package. */
+export const JUNIOR_CODER_ROAD_HOPPER_RALLY_V2: LearningModuleVersionV1 = {
+  ...roadHopperV1_1,
+  version: "2.0.0",
+  contentRevision: "2026-08-11.1",
+  summary: "Recreate the systems behind a classic road-and-river crossing game using original Road Hopper Rally code, art, audio and presentation.",
+  estimatedMinutes: 450,
+  tools: [
+    "JavaScript",
+    "QuickJS sandbox",
+    "Deterministic 30 Hz engine",
+    "Road Hopper renderer",
+  ],
+  concepts: [
+    "coordinates",
+    "arrays and entity state",
+    "events and input",
+    "fixed-step update and render",
+    "spawning and movement",
+    "collision detection",
+    "state machines",
+    "timers, lives and scoring",
+    "difficulty progression",
+    "audio integration",
+    "debugging",
+    "deterministic testing",
+  ],
+  missions: ROAD_HOPPER_RALLY_V2_MISSIONS.map((missionDefinition, index) => ({
+    id: `road-hopper-rally-mission-${index + 1}-${missionDefinition.id}`,
+    title: missionDefinition.title,
+    estimatedMinutes: 75,
+    concepts: [...missionDefinition.concepts],
+    goals: [
+      {
+        id: `road-hopper-rally-v2-${missionDefinition.id}`,
+        statement: missionDefinition.statement,
+        evidence: "assessment",
+      },
+    ],
+    sideAdventure: missionDefinition.sideAdventure,
+  })),
+  assessment: {
+    version: "2.0.0",
+    completionScore: 80,
+    criteria: [
+      { id: "road-hopper-v2-structure", label: "All six bounded JavaScript files compile and assemble.", dimension: "structure", points: 20, mandatory: true, visibility: "visible" },
+      { id: "road-hopper-v2-road", label: "Board, input and traffic behaviours pass deterministic scenarios.", dimension: "behaviour", points: 15, mandatory: true, visibility: "visible" },
+      { id: "road-hopper-v2-river", label: "River platforms, carrying and hazards pass deterministic scenarios.", dimension: "behaviour", points: 15, mandatory: true, visibility: "visible" },
+      { id: "road-hopper-v2-rules", label: "Homes, timer, lives, scoring, bonuses and levels behave correctly.", dimension: "behaviour", points: 20, mandatory: true, visibility: "visible" },
+      { id: "road-hopper-v2-final", label: "The complete game passes the server-only protected final challenge.", dimension: "resilience", points: 20, mandatory: true, visibility: "protected" },
+      { id: "road-hopper-v2-safety", label: "The project stays within the sandbox, resource and privacy boundaries.", dimension: "safety", points: 10, mandatory: true, visibility: "visible" },
+    ],
+  },
+  badges: [
+    {
+      id: "road-hopper-rally-v2-complete",
+      title: "Road Hopper Rally Champion",
+      evidence: "module-score",
+      tradeable: false,
+      tokenConvertible: false,
+    },
+  ],
+  externalContent: ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1,
+};
+
+/** Mixed-version successor: Road Hopper 2.0 plus every other immutable 1.1 module. */
+export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2: LearningPathVersionV1 = {
+  ...JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
+  version: "1.2.0",
+  modules: JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.map((entry) =>
+    entry.id === JUNIOR_CODER_ROAD_HOPPER_RALLY_V2.id
+      ? JUNIOR_CODER_ROAD_HOPPER_RALLY_V2
+      : entry),
+};
+
 /** Current pilot catalog for server adapters that intentionally follow releases. */
 export const JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT =
-  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1;
+  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2;

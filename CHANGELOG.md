@@ -5,16 +5,26 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - Added `ExternalLearningContentReferenceV1`, its runtime guard and catalog
+    validation for exact package/version/export/SHA-256 references.
+  - Added Road Hopper Rally module `2.0.0` as a six-mission, 450-minute module
+    referencing the immutable 54-stage `@plasius/learning-road-hopper-rally`
+    course package.
+  - Added Junior Coder path `1.2.0`, upgrading only Road Hopper Rally while
+    retaining every other module at `1.1.0`.
 
 - **Changed**
-  - (placeholder)
+  - Pointed `JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT` at the mixed-version
+    `1.2.0` path.
 
 - **Fixed**
-  - (placeholder)
+  - Added a snapshot digest regression test proving the immutable `1.1.0`
+    catalog serialization remains unchanged.
 
 - **Security**
-  - (placeholder)
+  - Kept executable curriculum, protected scenarios and server evaluator code
+    outside the catalog package and fail validation on loose or malformed
+    external references.
 
 ## [0.2.21] - 2026-08-09
 
