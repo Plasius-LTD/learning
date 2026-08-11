@@ -54,6 +54,37 @@ const result = calculateAssessment(rubric, [
 console.log(result.score, result.completed);
 ```
 
+## Bind contextual and spoken help
+
+Contextual-help identifiers are immutable module/manifest references rather
+than free-form learner text. Voice consent is separate from general AI consent,
+and version one permits private-edge transcription only.
+
+```ts
+import {
+  CONTEXTUAL_HELP_CONTRACT_VERSION_V1,
+  assertValidContextualHelpIdentifier,
+  type ContextualHelpIdentifierV1,
+} from "@plasius/learning";
+
+const help: ContextualHelpIdentifierV1 = {
+  schemaVersion: "1",
+  contractVersion: CONTEXTUAL_HELP_CONTRACT_VERSION_V1,
+  kind: "command",
+  moduleId: "junior-coder.road-hopper-rally",
+  moduleVersion: "1.1.0",
+  manifestVersion: "1.0.0",
+  helpId: "command.draw-lane",
+};
+
+assertValidContextualHelpIdentifier(help);
+```
+
+The package also exports `GuardianVoiceConsentV1`,
+`VoiceHelpAvailabilityV1`, bounded voice question metadata/results and
+`CanonicalSpokenHelpDescriptorV1`. It does not record audio, persist consent,
+call a transcription or synthesis provider, or evaluate runtime rollout flags.
+
 ## Validate a Guardian-approved static project
 
 The publishing contracts cover only immutable evidence and safe render models.

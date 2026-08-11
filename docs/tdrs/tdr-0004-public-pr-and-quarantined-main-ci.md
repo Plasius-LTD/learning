@@ -20,4 +20,4 @@ Both event paths share one anchored step list, retaining lint, typecheck,
 runtime dependency audit, build, unit coverage, retained LCOV and best-effort
 Codecov behavior. Main CI remains on the approved quarantined self-hosted path;
 final npm publication moved to hosted OIDC under
-[ADR-0006](../adrs/adr-0006-hosted-oidc-package-publication.md).
+[ADR-0007](../adrs/adr-0007-hosted-oidc-package-publication.md).

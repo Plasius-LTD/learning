@@ -5,4 +5,5 @@
 - [ADR 0003: Mission authoring manifests are additive and separated](adr-0003-mission-authoring-manifests-are-additive-and-separated.md)
 - [ADR 0004: Robot mission hardware disclosures are additive and fail closed](adr-0004-robot-mission-hardware-disclosures-are-additive-and-fail-closed.md)
 - [ADR 0005: Static project publishing uses immutable evidence and trusted render models](adr-0005-static-project-publishing-uses-immutable-evidence-and-trusted-render-models.md)
-- [ADR-0006: Hosted OIDC Package Publication](./adr-0006-hosted-oidc-package-publication.md)
+- [ADR 0006: Contextual voice help is manifest-bound and transient](adr-0006-contextual-voice-help-is-manifest-bound-and-transient.md)
+- [ADR-0007: Hosted OIDC Package Publication](./adr-0007-hosted-oidc-package-publication.md)
