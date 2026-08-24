@@ -5,6 +5,20 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.23] - 2026-08-24
+
+- **Added**
   - Added immutable Road Hopper Rally module `2.1.0` and Junior Coder path
     `1.4.0`, preserving all earlier module and path snapshots.
 
@@ -568,3 +582,4 @@ All notable changes to this project are documented in this file.
 [0.2.20]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.20
 [0.2.21]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.21
 [0.2.22]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.22
+[0.2.23]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.23
