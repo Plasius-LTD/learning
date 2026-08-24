@@ -5,14 +5,17 @@ import {
   EXTERNAL_LEARNING_CONTENT_REFERENCE_VERSION_V1,
   JUNIOR_CODER_PADDLE_PULSE_V2,
   JUNIOR_CODER_ROAD_HOPPER_RALLY_V2,
+  JUNIOR_CODER_ROAD_HOPPER_RALLY_V2_1,
   JUNIOR_CODER_MODULE_PRICE_V1_1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_2,
   JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3,
+  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_4,
   PADDLE_PULSE_EXTERNAL_CONTENT_V1,
   ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1,
+  ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V2,
   isExternalLearningContentReferenceV1,
   type ModuleEntitlementV1,
   validateLearningPath,
@@ -136,9 +139,6 @@ describe("Junior Coder immutable £5-equivalent catalog", () => {
         .filter((module) => module.id !== "junior-coder.road-hopper-rally")
         .every((module) => module.version === "1.1.0"),
     ).toBe(true);
-    expect(JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT).toBe(
-      JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3,
-    );
     expect(validateLearningPath(path)).toEqual([]);
   });
 
@@ -223,8 +223,70 @@ describe("Junior Coder immutable £5-equivalent catalog", () => {
           && module.id !== "junior-coder.road-hopper-rally")
         .every((module) => module.version === "1.1.0"),
     ).toBe(true);
+    expect(validateLearningPath(path)).toEqual([]);
+  });
+
+  it("preserves the byte-compatible immutable 1.3.0 mixed catalog snapshot", () => {
+    expect(
+      createHash("sha256")
+        .update(JSON.stringify(JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3))
+        .digest("hex"),
+    ).toBe("7dc7a85d5835e62175b83f963a2c7809dcc5655526ccbfc29480df9eec3a06d8");
+  });
+
+  it("publishes only the evidence-led Road Hopper 2.1 module in path 1.4.0", () => {
+    const path = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_4;
+    const roadHopper = path.modules.find(
+      (module) => module.id === "junior-coder.road-hopper-rally",
+    );
+    const paddlePulse = path.modules.find(
+      (module) => module.id === "junior-coder.paddle-pulse",
+    );
+
+    expect(path.version).toBe("1.4.0");
+    expect(path.modules).toHaveLength(19);
+    expect(roadHopper).toBe(JUNIOR_CODER_ROAD_HOPPER_RALLY_V2_1);
+    expect(roadHopper).toMatchObject({
+      version: "2.1.0",
+      contentRevision: "2026-08-24.1",
+      estimatedMinutes: 450,
+      externalContent: ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V2,
+    });
+    expect(roadHopper?.missions.map((mission) => mission.title)).toEqual([
+      "Map the Rally Route",
+      "Move the Hopper",
+      "Build the Traffic Rally",
+      "Ride the Rescue River",
+      "Score the Rescue",
+      "Road Hopper Rally Challenge",
+    ]);
+    expect(paddlePulse).toBe(JUNIOR_CODER_PADDLE_PULSE_V2);
+    expect(
+      path.modules
+        .filter((module) =>
+          module.id !== "junior-coder.paddle-pulse"
+          && module.id !== "junior-coder.road-hopper-rally")
+        .every((module) => module.version === "1.1.0"),
+    ).toBe(true);
     expect(JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT).toBe(path);
     expect(validateLearningPath(path)).toEqual([]);
+  });
+
+  it("pins the evidence-led course by exact package, export, schema and digest", () => {
+    expect(ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V2).toEqual({
+      packageName: "@plasius/learning-road-hopper-rally",
+      packageVersion: "1.1.0",
+      exportName: "ROAD_HOPPER_RALLY_COURSE_V3",
+      schemaVersion: "3",
+      sha256: "f73b90f5f0e483b96724f978f2977435a5e6a1333f5f45fd0fc803b55ad21187",
+    });
+    expect(
+      isExternalLearningContentReferenceV1(ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V2),
+    ).toBe(true);
+    expect(isExternalLearningContentReferenceV1({
+      ...ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V2,
+      packageVersion: "^1.1.0",
+    })).toBe(false);
   });
 
   it("pins Paddle Pulse by exact package, export, schema and content digest", () => {

@@ -5,16 +5,22 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - Added immutable Road Hopper Rally module `2.1.0` and Junior Coder path
+    `1.4.0`, preserving all earlier module and path snapshots.
 
 - **Changed**
-  - (placeholder)
+  - Pinned Road Hopper to the evidence-led
+    `@plasius/learning-road-hopper-rally@1.1.0`
+    `ROAD_HOPPER_RALLY_COURSE_V3` export, schema `3` and canonical SHA-256
+    digest, and advanced the current catalog alias to path `1.4.0`.
 
 - **Fixed**
-  - (placeholder)
+  - Replaced the generic Road Hopper mission projection with named mission
+    metadata that corresponds to the 54 activity-specific learner checks.
 
 - **Security**
-  - (placeholder)
+  - Kept protected evaluator scenarios outside the catalog and retained exact,
+    fail-closed external-content validation.
 
 ## [0.2.22] - 2026-08-11
 
