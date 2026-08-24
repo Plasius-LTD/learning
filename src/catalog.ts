@@ -600,6 +600,15 @@ export const ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1 = Object.freeze({
   sha256: "1a20741beba028004e0be527d05aae2b2881082d3b578e0d62308a59bf1323f0",
 });
 
+/** Digest-pinned evidence-led successor; the immutable v2 reference remains available. */
+export const ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V2 = Object.freeze({
+  packageName: "@plasius/learning-road-hopper-rally",
+  packageVersion: "1.1.0",
+  exportName: "ROAD_HOPPER_RALLY_COURSE_V3",
+  schemaVersion: "3",
+  sha256: "f73b90f5f0e483b96724f978f2977435a5e6a1333f5f45fd0fc803b55ad21187",
+});
+
 const roadHopperV1_1 = JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_1.modules.find(
   (entry) => entry.id === "junior-coder.road-hopper-rally",
 )!;
@@ -712,6 +721,32 @@ export const JUNIOR_CODER_ROAD_HOPPER_RALLY_V2: LearningModuleVersionV1 = {
     },
   ],
   externalContent: ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V1,
+};
+
+const ROAD_HOPPER_RALLY_V2_1_MISSION_TITLES = [
+  "Map the Rally Route",
+  "Move the Hopper",
+  "Build the Traffic Rally",
+  "Ride the Rescue River",
+  "Score the Rescue",
+  "Road Hopper Rally Challenge",
+] as const;
+
+/** Evidence-led Road Hopper 2.1 record; the executable course remains external. */
+export const JUNIOR_CODER_ROAD_HOPPER_RALLY_V2_1: LearningModuleVersionV1 = {
+  ...JUNIOR_CODER_ROAD_HOPPER_RALLY_V2,
+  version: "2.1.0",
+  contentRevision: "2026-08-24.1",
+  summary: "Build Road Hopper Rally through 54 evidence-led activities: predict, edit, run, inspect, repair, explain and prove each deterministic game system.",
+  missions: JUNIOR_CODER_ROAD_HOPPER_RALLY_V2.missions.map((mission, index) => ({
+    ...mission,
+    title: ROAD_HOPPER_RALLY_V2_1_MISSION_TITLES[index]!,
+  })),
+  assessment: {
+    ...JUNIOR_CODER_ROAD_HOPPER_RALLY_V2.assessment,
+    version: "2.1.0",
+  },
+  externalContent: ROAD_HOPPER_RALLY_EXTERNAL_CONTENT_V2,
 };
 
 /** Mixed-version successor: Road Hopper 2.0 plus every other immutable 1.1 module. */
@@ -853,6 +888,16 @@ export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3: LearningPathVersionV1 = {
       : entry),
 };
 
+/** Mixed-version successor adding evidence-led Road Hopper without mutating v1.3. */
+export const JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_4: LearningPathVersionV1 = {
+  ...JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3,
+  version: "1.4.0",
+  modules: JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3.modules.map((entry) =>
+    entry.id === JUNIOR_CODER_ROAD_HOPPER_RALLY_V2_1.id
+      ? JUNIOR_CODER_ROAD_HOPPER_RALLY_V2_1
+      : entry),
+};
+
 /** Current pilot catalog for server adapters that intentionally follow releases. */
 export const JUNIOR_CODER_ROBOT_RESCUE_PATH_CURRENT =
-  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_3;
+  JUNIOR_CODER_ROBOT_RESCUE_PATH_V1_4;

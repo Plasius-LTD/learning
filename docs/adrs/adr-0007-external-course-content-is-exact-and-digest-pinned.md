@@ -27,7 +27,13 @@ validation and canonical nine-stage cycles.
 
 Path `1.3.0` additionally replaces only Paddle Pulse with module `2.0.0`, bound
 to `@plasius/learning-paddle-pulse@0.1.0`. Paddle Pulse `1.1.0` and its mission
-authoring bundle remain immutable. The current alias follows `1.3.0`.
+authoring bundle remain immutable. That release advanced the current alias to
+`1.3.0`.
+
+Path `1.4.0` replaces only Road Hopper `2.0.0` with the evidence-led module
+`2.1.0`, bound to `@plasius/learning-road-hopper-rally@1.1.0`, export
+`ROAD_HOPPER_RALLY_COURSE_V3` and schema `3`. The former course and all earlier
+catalog snapshots remain immutable. The current alias follows `1.4.0`.
 
 ## Consequences
 
