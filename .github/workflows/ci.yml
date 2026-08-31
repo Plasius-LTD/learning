@@ -111,7 +111,5 @@ jobs:
 
   main-build-test:
     if: github.event_name == 'push'
-    runs-on:
-      group: ${{ vars.CI_RUNNER_GROUP || 'Public CI - Quarantined' }}
-      labels: ${{ fromJSON(vars.CI_RUNNER_LABELS || '["self-hosted","Linux","X64"]') }}
+    runs-on: ubuntu-latest
     steps: *ci_steps
