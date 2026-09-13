@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.2.24] - 2026-09-13
+
 ### Changed
 - Refresh compatible npm dependencies from the registry for the weekly dependency maintenance wave.
 
@@ -591,3 +605,4 @@ All notable changes to this project are documented in this file.
 [0.2.21]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.21
 [0.2.22]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.22
 [0.2.23]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.23
+[0.2.24]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.24
