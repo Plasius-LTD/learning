@@ -42,6 +42,31 @@ exact `PADDLE_PULSE_MODULE_V2` export, schema `2` and canonical SHA-256 digest
 without importing the package. Paddle Pulse `1.1.0` and its mission-authoring
 export remain available unchanged.
 
+## Complete course and account-save contracts
+
+`LearningCourseV1` defines six missions with nine activities each, editable project
+files, learner guidance and a capstone assessment identifier. Use
+`validateLearningCourse` or `parseLearningCourse` for publication and loading.
+Structural validity is only one acceptance gate; authored content, working runtime
+and learner-journey evidence must also be verified for each course.
+
+`parseLearningCourseDraft` accepts only the declared project files, content version
+and navigation. It rejects account identifiers, scores, completion and evidence.
+`parseLearningSaveSlotId` accepts `auto` and manual slots `1`–`9`. Source limits are
+64,000 characters per file and 96,000 total across at most eight declared files.
+
+The pure progression functions `createLearningCourseProgress`,
+`completeVerifiedLearningActivity`, `recordLearningCourseAssessment`,
+`parseLearningCourseProgress` and `resolveLearningCourseStage` support host-owned
+state. They are **not browser mutation DTOs**. Hosts validate each activity, run
+protected deterministic checks, bind source digests and references to the signed-in
+account, and supply conditional/idempotent storage. Repair/reward need passing
+current-source evidence; completion additionally needs a passing capstone after
+all six missions. Loading a project cannot restore or manufacture progress.
+
+These contracts do not supply the seventeen full course implementations, execute
+learner code, save records or grant access. See [ADR 0009](docs/adrs/adr-0009-complete-course-project-and-progress-contracts.md).
+
 ## Install
 
 ```bash
