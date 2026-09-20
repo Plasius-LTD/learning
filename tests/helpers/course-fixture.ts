@@ -25,4 +25,3 @@ export function courseFixture(): LearningCourseV1 {
     completionBadge: { id: "maze-complete", title: "Maze Rescuer" },
   };
 }
-
