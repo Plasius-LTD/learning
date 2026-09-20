@@ -5,6 +5,20 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.4.0] - 2026-09-20
+
+- **Added**
   - Add a separate lazy Robot Maze Dash 2.0.0 learner curriculum with six authored
     missions, all 54 activities, starter blocks, references, formative questions,
     debugging guidance and extensions. Preserve immutable legacy catalogues.
@@ -644,3 +658,4 @@ All notable changes to this project are documented in this file.
 [0.2.24]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.24
 [0.2.25]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.25
 [0.3.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.3.0
+[0.4.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.4.0
