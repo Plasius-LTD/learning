@@ -4,6 +4,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- Add complete-course, bounded project/save and host-verified progression contracts
+  for the seventeen-module parity work (#79). Preserve immutable legacy curricula;
+  a course foundation is not a declaration that full module journeys are complete.
+
 - **Added**
   - (placeholder)
 

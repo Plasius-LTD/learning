@@ -8,3 +8,4 @@
 - [ADR 0006: Contextual voice help is manifest-bound and transient](adr-0006-contextual-voice-help-is-manifest-bound-and-transient.md)
 - [ADR 0007: External course content is exact and digest-pinned](adr-0007-external-course-content-is-exact-and-digest-pinned.md)
 - [ADR-0008: Hosted OIDC Package Publication](./adr-0008-hosted-oidc-package-publication.md)
+- [ADR 0009: Complete course project and progress contracts](adr-0009-complete-course-project-and-progress-contracts.md)
