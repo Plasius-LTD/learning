@@ -53,6 +53,15 @@ they are not protected runtime assessments or completion authority. Hosts verify
 responses, run protected checks and persist evidence independently.
 The root exports `CoursePracticeQuestion` as a type without importing lesson data.
 
+The same lazy course boundary also provides `courses/skywing-sprint`,
+`courses/meteor-shield` and `courses/pixel-trail-challenge`. Each has six authored
+missions and 54 activities, 18 formative questions, a real editable `game.js`
+starter and explicit state/input references. Their respective sequences teach
+flight and input timing; vector defence, timed shields and resource accounting;
+and ordered grid movement, bounded placement and moving-tail collisions. Hosts
+must implement and verify each documented game contract before exposing its
+course; lesson publication alone is not evidence of a working playable module.
+
 The runtime is supplied separately by `@plasius/learning-runtime`; this package
 does not execute the project or declare host readiness. The seventeen-course
 programme remains in development. This additive content does not alter immutable

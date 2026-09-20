@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/courses/robot-maze-dash.ts"],
+  entry: ["src/index.ts", "src/courses/robot-maze-dash.ts", "src/courses/skywing-sprint.ts", "src/courses/meteor-shield.ts", "src/courses/pixel-trail-challenge.ts"],
   dts: true,
   sourcemap: true,
   clean: true,
