@@ -51,6 +51,7 @@ visual starter project, function references, formative concept checks, debugging
 guidance and extensions. Formative answers are learner-safe teaching material;
 they are not protected runtime assessments or completion authority. Hosts verify
 responses, run protected checks and persist evidence independently.
+The root exports `CoursePracticeQuestion` as a type without importing lesson data.
 
 The runtime is supplied separately by `@plasius/learning-runtime`; this package
 does not execute the project or declare host readiness. The seventeen-course
