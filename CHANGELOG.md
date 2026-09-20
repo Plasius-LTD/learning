@@ -5,7 +5,9 @@ All notable changes to this project are documented in this file.
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - Add a separate lazy Robot Maze Dash 2.0.0 learner curriculum with six authored
+    missions, all 54 activities, starter blocks, references, formative questions,
+    debugging guidance and extensions. Preserve immutable legacy catalogues.
 
 - **Changed**
   - (placeholder)
