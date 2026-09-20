@@ -44,6 +44,22 @@ export remain available unchanged.
 
 ## Complete course and account-save contracts
 
+Complete learner curricula are separate lazy entry points. Import
+`{ course, practice }` from `@plasius/learning/courses/robot-maze-dash` for the
+Robot Maze `2.0.0` course: six distinct missions, 54 guided activities, a bounded
+visual starter project, function references, formative concept checks, debugging
+guidance and extensions. Formative answers are learner-safe teaching material;
+they are not protected runtime assessments or completion authority. Hosts verify
+responses, run protected checks and persist evidence independently.
+The root exports `CoursePracticeQuestion` as a type without importing lesson data.
+
+The runtime is supplied separately by `@plasius/learning-runtime`; this package
+does not execute the project or declare host readiness. The seventeen-course
+programme remains in development. This additive content does not alter immutable
+catalogue/pricing records or enable a public host rollout. New hosts compose
+their existing access controls with an independently disabled complete-course
+flag and must validate the full learner journey before enabling it.
+
 `LearningCourseV1` defines six missions with nine activities each, editable project
 files, learner guidance and a capstone assessment identifier. Use
 `validateLearningCourse` or `parseLearningCourse` for publication and loading.

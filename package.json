@@ -11,6 +11,11 @@
     "dist"
   ],
   "exports": {
+    "./courses/robot-maze-dash": {
+      "types": "./dist/courses/robot-maze-dash.d.ts",
+      "import": "./dist/courses/robot-maze-dash.js",
+      "require": "./dist/courses/robot-maze-dash.cjs"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
