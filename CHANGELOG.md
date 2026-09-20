@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.3.0] - 2026-09-20
+
 - Add complete-course, bounded project/save and host-verified progression contracts
   for the seventeen-module parity work (#79). Preserve immutable legacy curricula;
   a course foundation is not a declaration that full module journeys are complete.
@@ -627,3 +641,4 @@ All notable changes to this project are documented in this file.
 [0.2.23]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.23
 [0.2.24]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.24
 [0.2.25]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.25
+[0.3.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.3.0
