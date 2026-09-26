@@ -25,3 +25,12 @@ instructions, references, starter project and complete formative questions. Thes
 checks are necessary but insufficient: each host must also demonstrate runnable
 projects, passing reference solutions and failing wrong/edge cases, saved journeys
 and accessibility before calling a course complete or enabling rollout.
+
+The three complete web curricula use the same lazy boundary and module version
+2.0.0. A small internal authoring module shares the three editable-file limits,
+readable responsive starter styles and binding reference. Lesson content, model
+rules and formative checks remain independently authored. The public package
+contains no DOM renderer or runtime dependency; hosts compose the released
+bounded web compiler and isolated JavaScript execution. The planner's simulated
+snapshot data is distinct from account source persistence, and the control panel
+has no physical hardware entitlement. See TDR 0014 for progressive host checks.
