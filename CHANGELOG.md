@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.6.0] - 2026-09-26
+
 - Add complete curricula for Beacon Bot, Servo Creature, Dance Rover, Obstacle
   Explorer and Rainbow Rescue Rover, each with an editable C++ simulator project,
   six authored missions, 54 activities and 18 formative checks. Teach timing,
@@ -691,3 +705,4 @@ All notable changes to this project are documented in this file.
 [0.3.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.3.0
 [0.4.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.4.0
 [0.5.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.5.0
+[0.6.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.6.0
