@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- Add complete curricula for Beacon Bot, Servo Creature, Dance Rover, Obstacle
+  Explorer and Rainbow Rescue Rover, each with an editable C++ simulator project,
+  six authored missions, 54 activities and 18 formative checks. Teach timing,
+  signalling, bounded movement, sensor evidence, recovery and command protocols.
+  Executable host integration remains required; physical equipment access stays
+  outside these simulator courses.
+
 - **Added**
   - (placeholder)
 
