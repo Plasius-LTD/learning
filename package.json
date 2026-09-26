@@ -11,6 +11,16 @@
     "dist"
   ],
   "exports": {
+    "./courses/rescue-crew-commander": {
+      "types": "./dist/courses/rescue-crew-commander.d.ts",
+      "import": "./dist/courses/rescue-crew-commander.js",
+      "require": "./dist/courses/rescue-crew-commander.cjs"
+    },
+    "./courses/star-defender-squadron": {
+      "types": "./dist/courses/star-defender-squadron.d.ts",
+      "import": "./dist/courses/star-defender-squadron.js",
+      "require": "./dist/courses/star-defender-squadron.cjs"
+    },
     "./courses/pixel-trail-challenge": {
       "types": "./dist/courses/pixel-trail-challenge.d.ts",
       "import": "./dist/courses/pixel-trail-challenge.js",

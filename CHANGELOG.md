@@ -4,6 +4,11 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- Add Rescue Crew Commander and Star Defender Squadron complete curricula, with
+  coordinated rescue/search/resource lessons and arcade entity/projectile/protection
+  lessons respectively. Each provides 54 authored activities and 18 formative checks;
+  playable host integration remains required before rollout.
+
 - Add complete Skywing Sprint, Meteor Shield and Pixel Trail Challenge curricula
   as lazy course entry points, each with six authored missions, 54 activities,
   18 formative checks, an editable JavaScript project and specific simulation

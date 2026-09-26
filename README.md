@@ -62,6 +62,13 @@ and ordered grid movement, bounded placement and moving-tail collisions. Hosts
 must implement and verify each documented game contract before exposing its
 course; lesson publication alone is not evidence of a working playable module.
 
+`courses/rescue-crew-commander` adds shared-job ownership, bounded breadth-first
+routes, deterministic dispatch, round-trip energy, delivery conservation and
+recoverable route changes. `courses/star-defender-squadron` adds input/formation
+control, single-hit projectiles, damage grace periods, timed shields and complete
+wave outcomes. Both follow the same six-mission/54-activity contract with authored
+questions, starter projects and references, and require their own host validation.
+
 The runtime is supplied separately by `@plasius/learning-runtime`; this package
 does not execute the project or declare host readiness. The seventeen-course
 programme remains in development. This additive content does not alter immutable
