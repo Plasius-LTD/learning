@@ -101,6 +101,27 @@ project limits after replacement. Hosts must show the actual diff and obtain an
 explicit learner choice before using it. Neither helper executes code, approves
 a change, writes storage or awards evidence; independently assess the saved result.
 
+The web entries `courses/adventure-mission-planner`,
+`courses/creature-care-dashboard` and `courses/robot-mission-control` complete the
+set of seventeen learner curricula. Each exports `course` and `practice`, with
+six authored missions, 54 activities, 18 formative checks and editable
+`index.html`, `app.css` and `app.js` starter files. The planner teaches semantic
+forms, validated records, stable identities, revision and corrupt-snapshot
+recovery. Creature Care teaches resource accounting, deterministic time, rest
+versus pause and bounded history. Mission Control teaches connection, explicit
+arming, bounded motor commands, independent STOP, telemetry expiry and deliberate
+recovery. All include responsive styling, native labels, focus, readable feedback
+and accessibility verification in the authored journey.
+
+Web starters deliberately leave later behaviour for the learner to implement.
+They are HTML fragments with explicit data/action bindings and pure JavaScript
+state functions, not unrestricted browser scripts. The separately released
+runtime's lazy `/web` compiler and isolated JavaScript worker are host facilities;
+this package imports neither. Preview plan storage is simulated state, distinct
+from account source saves. Robot control is virtual and grants no hardware access.
+See [web course design](docs/tdrs/tdr-0014-complete-web-course-journeys.md) for the
+runtime boundary, progressive assessment scope and host acceptance obligations.
+
 The runtime is supplied separately by `@plasius/learning-runtime`; this package
 does not execute the project or declare host readiness. The seventeen-course
 programme remains in development. This additive content does not alter immutable

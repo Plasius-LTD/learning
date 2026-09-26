@@ -86,7 +86,22 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./courses/adventure-mission-planner": {
+      "types": "./dist/courses/adventure-mission-planner.d.ts",
+      "import": "./dist/courses/adventure-mission-planner.js",
+      "require": "./dist/courses/adventure-mission-planner.cjs"
+    },
+    "./courses/creature-care-dashboard": {
+      "types": "./dist/courses/creature-care-dashboard.d.ts",
+      "import": "./dist/courses/creature-care-dashboard.js",
+      "require": "./dist/courses/creature-care-dashboard.cjs"
+    },
+    "./courses/robot-mission-control": {
+      "types": "./dist/courses/robot-mission-control.d.ts",
+      "import": "./dist/courses/robot-mission-control.js",
+      "require": "./dist/courses/robot-mission-control.cjs"
+    }
   },
   "scripts": {
     "build": "tsup",

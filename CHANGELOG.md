@@ -4,6 +4,12 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- Add complete Adventure Mission Planner, Creature Care Dashboard and Robot
+  Mission Control learner curricula: each has six missions, 54 distinct guided
+  activities, 18 formative checks and three editable HTML/CSS/JavaScript files.
+  Include explicit validation, state, timing, recovery and accessibility rules;
+  complete host execution, assessment and saved journeys remain release gates.
+
 - **Added**
   - (placeholder)
 
