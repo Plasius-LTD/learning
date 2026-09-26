@@ -69,6 +69,18 @@ control, single-hit projectiles, damage grace periods, timed shields and complet
 wave outcomes. Both follow the same six-mission/54-activity contract with authored
 questions, starter projects and references, and require their own host validation.
 
+Robot curricula use the documented C++ simulator subset through the separately
+released runtime, with no physical equipment required. `courses/beacon-bot` teaches
+signals, non-blocking time, reusable patterns, input edges and bounded messages.
+`courses/servo-creature` teaches joint bounds, smooth motion, timed poses, modes,
+touch and fresh proximity checks. `courses/dance-rover` teaches differential
+movement, acceleration limits, reusable choreography and deliberate recovery.
+`courses/obstacle-explorer` teaches hysteresis, distinct sensor evidence, bounded
+turns, watchdogs and stopped arrival. `courses/rainbow-rescue-rover` teaches
+recognition confidence, steering, command identities, heartbeat expiry and
+repeat-safe rescue evidence. Each has 54 activities and 18 formative checks.
+Existing guardian and hardware protections remain separate from course completion.
+
 The runtime is supplied separately by `@plasius/learning-runtime`; this package
 does not execute the project or declare host readiness. The seventeen-course
 programme remains in development. This additive content does not alter immutable

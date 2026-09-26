@@ -11,6 +11,31 @@
     "dist"
   ],
   "exports": {
+    "./courses/obstacle-explorer": {
+      "types": "./dist/courses/obstacle-explorer.d.ts",
+      "import": "./dist/courses/obstacle-explorer.js",
+      "require": "./dist/courses/obstacle-explorer.cjs"
+    },
+    "./courses/rainbow-rescue-rover": {
+      "types": "./dist/courses/rainbow-rescue-rover.d.ts",
+      "import": "./dist/courses/rainbow-rescue-rover.js",
+      "require": "./dist/courses/rainbow-rescue-rover.cjs"
+    },
+    "./courses/dance-rover": {
+      "types": "./dist/courses/dance-rover.d.ts",
+      "import": "./dist/courses/dance-rover.js",
+      "require": "./dist/courses/dance-rover.cjs"
+    },
+    "./courses/servo-creature": {
+      "types": "./dist/courses/servo-creature.d.ts",
+      "import": "./dist/courses/servo-creature.js",
+      "require": "./dist/courses/servo-creature.cjs"
+    },
+    "./courses/beacon-bot": {
+      "types": "./dist/courses/beacon-bot.d.ts",
+      "import": "./dist/courses/beacon-bot.js",
+      "require": "./dist/courses/beacon-bot.cjs"
+    },
     "./courses/rescue-crew-commander": {
       "types": "./dist/courses/rescue-crew-commander.d.ts",
       "import": "./dist/courses/rescue-crew-commander.js",
