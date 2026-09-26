@@ -11,6 +11,21 @@
     "dist"
   ],
   "exports": {
+    "./courses/vibe-game-remix-lab": {
+      "types": "./dist/courses/vibe-game-remix-lab.d.ts",
+      "import": "./dist/courses/vibe-game-remix-lab.js",
+      "require": "./dist/courses/vibe-game-remix-lab.cjs"
+    },
+    "./courses/vibe-bug-detective": {
+      "types": "./dist/courses/vibe-bug-detective.d.ts",
+      "import": "./dist/courses/vibe-bug-detective.js",
+      "require": "./dist/courses/vibe-bug-detective.cjs"
+    },
+    "./courses/vibe-idea-studio": {
+      "types": "./dist/courses/vibe-idea-studio.d.ts",
+      "import": "./dist/courses/vibe-idea-studio.js",
+      "require": "./dist/courses/vibe-idea-studio.cjs"
+    },
     "./courses/obstacle-explorer": {
       "types": "./dist/courses/obstacle-explorer.d.ts",
       "import": "./dist/courses/obstacle-explorer.js",

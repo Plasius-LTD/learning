@@ -4,6 +4,15 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- Add full Vibe Game Remix Lab, Vibe Bug Detective and Vibe Idea Studio curricula,
+  each with 54 authored activities, 18 formative checks, editable JavaScript and
+  bounded brief/evidence records. Include real authored source-review proposals,
+  regression replay contracts and explicit test-first versus final validation.
+- Reuse the bounded-suggestion contract for course-stage proposals and provide
+  pure validation/replacement helpers that reject stale or ambiguous source and
+  preserve project limits. Hosts retain explicit review, execution and completion
+  authority; this release does not itself expose complete playable workspaces.
+
 - **Added**
   - (placeholder)
 

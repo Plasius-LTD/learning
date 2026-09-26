@@ -1,6 +1,6 @@
 # ADR 0009: Complete course project and progress contracts
 
-Status: Accepted for implementation; release pending.
+Status: Accepted; full host delivery remains in progress.
 Date: 2026-09-20.
 Tracking: learning #79; site Story #2236, Feature #1704, Epic #1701.
 
@@ -39,6 +39,17 @@ checks, bind evidence to the authenticated account/version/source, and persist
 conditional/idempotent transactions. Parsing storage records is shape validation,
 not proof of their authorship. No browser-supplied proof may call the reducer
 without host verification. Nine manual slots and an autosave have bounded IDs.
+
+Vibe curricula reuse `MissionBoundedSuggestionV1` through a course-stage wrapper;
+the permitted artifact ID is a declared project filename. Proposals are authored
+learner-safe teaching material and may intentionally contain a bad suggestion to
+reject. A pure helper validates bounded fields and another builds a replacement
+project from exactly one literal snippet match, including rejecting overlapping
+matches. Stale context is never applied fuzzily. Source limits are revalidated
+after replacement, other files stay intact, and the input project is not mutated.
+The host presents the real diff and retains explicit learner accept/reject control,
+conditional saving and independent current-source assessment. These helpers grant
+no approval or progress and do not execute the proposed programme.
 
 ## Consequences and rollout
 

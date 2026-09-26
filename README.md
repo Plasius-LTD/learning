@@ -81,6 +81,26 @@ recognition confidence, steering, command identities, heartbeat expiry and
 repeat-safe rescue evidence. Each has 54 activities and 18 formative checks.
 Existing guardian and hardware protections remain separate from course completion.
 
+The three lazy Vibe curricula (`courses/vibe-game-remix-lab`,
+`courses/vibe-bug-detective` and `courses/vibe-idea-studio`) each provide six missions,
+54 activities and 18 concept checks around editable JavaScript projects, bounded
+brief/evidence files and learner-authored replay cases. Their projects respectively
+teach a rescue-game remix with intermediate dash checks, evidence-led repairs of
+an intentionally broken game, and a budgeted mission-board prototype with undo
+and filtering. Idea Studio explicitly distinguishes test-first contract predictions
+from the final requirement that those cases pass against the learner's source.
+
+These entries also export `suggestions` using `LearningCourseSuggestionV1`, which
+reuses `MissionBoundedSuggestionV1`. Authored proposals include incorrect changes
+for learners to reject with evidence; publication is not an endorsement of every
+proposed replacement. No live AI is required. `parseLearningCourseSuggestion`
+validates stage and file references plus bounded proposal fields.
+`applyLearningCourseSuggestion` builds a new validated project using one exact,
+unambiguous literal snippet match. It rejects stale/ambiguous context and rechecks
+project limits after replacement. Hosts must show the actual diff and obtain an
+explicit learner choice before using it. Neither helper executes code, approves
+a change, writes storage or awards evidence; independently assess the saved result.
+
 The runtime is supplied separately by `@plasius/learning-runtime`; this package
 does not execute the project or declare host readiness. The seventeen-course
 programme remains in development. This additive content does not alter immutable
