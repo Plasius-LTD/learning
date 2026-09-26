@@ -4,6 +4,11 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- Add complete Skywing Sprint, Meteor Shield and Pixel Trail Challenge curricula
+  as lazy course entry points, each with six authored missions, 54 activities,
+  18 formative checks, an editable JavaScript project and specific simulation
+  contracts. Runtime and account-workspace integration remain host release gates.
+
 - **Added**
   - (placeholder)
 

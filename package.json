@@ -11,6 +11,21 @@
     "dist"
   ],
   "exports": {
+    "./courses/pixel-trail-challenge": {
+      "types": "./dist/courses/pixel-trail-challenge.d.ts",
+      "import": "./dist/courses/pixel-trail-challenge.js",
+      "require": "./dist/courses/pixel-trail-challenge.cjs"
+    },
+    "./courses/meteor-shield": {
+      "types": "./dist/courses/meteor-shield.d.ts",
+      "import": "./dist/courses/meteor-shield.js",
+      "require": "./dist/courses/meteor-shield.cjs"
+    },
+    "./courses/skywing-sprint": {
+      "types": "./dist/courses/skywing-sprint.d.ts",
+      "import": "./dist/courses/skywing-sprint.js",
+      "require": "./dist/courses/skywing-sprint.cjs"
+    },
     "./courses/robot-maze-dash": {
       "types": "./dist/courses/robot-maze-dash.d.ts",
       "import": "./dist/courses/robot-maze-dash.js",
