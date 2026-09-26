@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.5.0] - 2026-09-26
+
 - Add Rescue Crew Commander and Star Defender Squadron complete curricula, with
   coordinated rescue/search/resource lessons and arcade entity/projectile/protection
   lessons respectively. Each provides 54 authored activities and 18 formative checks;
@@ -669,3 +683,4 @@ All notable changes to this project are documented in this file.
 [0.2.25]: https://github.com/Plasius-LTD/learning/releases/tag/v0.2.25
 [0.3.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.3.0
 [0.4.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.4.0
+[0.5.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.5.0
