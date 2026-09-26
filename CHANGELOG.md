@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.8.0] - 2026-09-26
+
 - Add complete Adventure Mission Planner, Creature Care Dashboard and Robot
   Mission Control learner curricula: each has six missions, 54 distinct guided
   activities, 18 formative checks and three editable HTML/CSS/JavaScript files.
@@ -736,3 +750,4 @@ All notable changes to this project are documented in this file.
 [0.5.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.5.0
 [0.6.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.6.0
 [0.7.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.7.0
+[0.8.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.8.0
