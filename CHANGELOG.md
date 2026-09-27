@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.8.1] - 2026-09-27
+
 - Refresh npm dependency lockfile to current supported stable versions (weekly maintenance, 2026-09-27).
 
 - **Added**
@@ -753,3 +767,4 @@ All notable changes to this project are documented in this file.
 [0.6.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.6.0
 [0.7.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.7.0
 [0.8.0]: https://github.com/Plasius-LTD/learning/releases/tag/v0.8.0
+[0.8.1]: https://github.com/Plasius-LTD/learning/releases/tag/v0.8.1
