@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.8.6] - 2026-11-22
+
 - Refresh supported npm dependency and security tooling baselines; preserve runtime API contracts (weekly maintenance, 2026-11-22).
 
 - **Added**
@@ -838,3 +852,4 @@ All notable changes to this project are documented in this file.
 [0.8.3]: https://github.com/Plasius-LTD/learning/releases/tag/v0.8.3
 [0.8.4]: https://github.com/Plasius-LTD/learning/releases/tag/v0.8.4
 [0.8.5]: https://github.com/Plasius-LTD/learning/releases/tag/v0.8.5
+[0.8.6]: https://github.com/Plasius-LTD/learning/releases/tag/v0.8.6
